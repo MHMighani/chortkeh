@@ -1,7 +1,7 @@
 const rp = require("request-promise");
 const cheerio = require("cheerio");
-const getNumFromDotSepString = require("./getNumFromDotSepString");
 const fs = require("fs");
+const getNumFromDotSepString = require("./getNumFromDotSepString");
 
 const goldCurrencyUrl = "https://www.tgju.org/";
 
@@ -15,18 +15,18 @@ async function getCoinSellPrice(source, coinId) {
     "#coin-table"
   ).attr("data-price");
 
-  const price = getNumFromDotSepString(stringPrice);
-  return price;
+  return getNumFromDotSepString(stringPrice);
 }
 
 async function getCurrencySellPrice(source, currencyId) {
   source = await source;
+
   const stringPrice = source(
     `tr[data-market-row=${currencyId}]`,
     ".market-table"
   ).attr("data-price");
-  const price = getNumFromDotSepString(stringPrice);
-  return price;
+
+  return getNumFromDotSepString(stringPrice);
 }
 
 async function getGoldCurrencyHtmlSource() {
@@ -42,22 +42,22 @@ async function writePriceToJsonFile(prices) {
   names.map((item, index) => {
     pricesObject[item] = prices[index];
   });
-  console.log(pricesObject);
-  fs.writeFileSync("coinPrice.json", JSON.stringify({ pricesObject }));
+
+  fs.writeFileSync("prices.json", JSON.stringify({ prices: pricesObject }));
 }
 
 const coin = getCoinSellPrice(source, "sekeb");
 const halfCoin = getCoinSellPrice(source, "nim");
 const quarterCoin = getCoinSellPrice(source, "rob");
-const dollarPrice = getCurrencySellPrice(source, "price_dollar_rl");
-const euroPrice = getCurrencySellPrice(source, "price_eur");
+const dollar = getCurrencySellPrice(source, "price_dollar_rl");
+const euro = getCurrencySellPrice(source, "price_eur");
 
 const prices = {
   coin,
   halfCoin,
   quarterCoin,
-  dollarPrice,
-  euroPrice,
+  dollar,
+  euro,
 };
 
 writePriceToJsonFile(prices);
