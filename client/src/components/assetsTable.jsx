@@ -3,7 +3,7 @@ import Table from "./table";
 
 function AssetsTable(props) {
   const headerArr = ["ردیف", "نام دارایی", "تعداد", "ارزش روز", "ارزش کل"];
-  const { assetsData } = props;
+  const { assetsData, onDeleteAsset } = props;
   const [procData, setProcData] = useState(assetsData);
   const [assetsTotalValue, setAssetTotalValue] = useState(0);
 
@@ -11,7 +11,7 @@ function AssetsTable(props) {
   useEffect(() => {
     let total = 0;
     const procData = assetsData.map((item) => {
-      item["overallValue"] = item["amount"] * item["sellPrice"];
+      item["overallValue"] = item["amount"] * item["spotPrice"];
       total += item["overallValue"];
       return item;
     });
@@ -24,6 +24,7 @@ function AssetsTable(props) {
       data={procData}
       headerArr={headerArr}
       footerData={{ label: "ارزش کل دارایی", data: [assetsTotalValue] }}
+      onDeleteAsset={onDeleteAsset}
     />
   );
 }
