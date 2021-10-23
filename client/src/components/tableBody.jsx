@@ -15,7 +15,7 @@ function TableBody(props) {
               onClick={() => onDeleteAsset(row.id)}
               className="btn btn-danger"
             >
-              delete
+              حذف
             </button>
           </td>
         </tr>
