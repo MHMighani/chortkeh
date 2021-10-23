@@ -1,5 +1,6 @@
 import React from "react";
 
+// TODO: fix row index
 function TableBody(props) {
   const { data, onDeleteAsset } = props;
   console.log(data);

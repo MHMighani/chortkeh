@@ -1,31 +1,12 @@
-import { useEffect, useState } from "react";
-import { deleteAsset, getAssets } from "./sevices/assetsService";
-import AssetsTable from "./components/assetsTable";
+import Assets from "./components/assets";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
-  const [assetsData, setAssetsData] = useState([]);
-
-  useEffect(() => {
-    async function fetchApi() {
-      let response = await getAssets();
-
-      setAssetsData(response.data);
-    }
-
-    fetchApi();
-  }, []);
-
   return (
     <div className="App">
-      <AssetsTable
-        assetsData={assetsData}
-        onDeleteAsset={async (id) => {
-          const newAssetsData = assetsData.filter((asset) => asset.id !== id);
-
-          setAssetsData(newAssetsData);
-          deleteAsset(id);
-        }}
-      />
+      <Switch>
+        <Route exact path="/assets" component={Assets} />
+      </Switch>
     </div>
   );
 }
