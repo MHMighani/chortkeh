@@ -10,5 +10,5 @@ export function addAsset(assetData) {
 }
 
 export function deleteAsset(id) {
-  return axios.delete(id);
+  return axios.delete(`${serverUrl}/assets/${id}`);
 }
