@@ -1,6 +1,7 @@
 const rp = require("request-promise");
 const cheerio = require("cheerio");
-const fs = require("fs");
+const editJsonFile = require("edit-json-file");
+
 const getNumFromDotSepString = require("./getNumFromDotSepString");
 
 const goldCurrencyUrl = "https://www.tgju.org/";
@@ -43,7 +44,9 @@ async function writePriceToJsonFile(prices) {
     pricesObject[item] = prices[index];
   });
 
-  fs.writeFileSync("prices.json", JSON.stringify({ prices: pricesObject }));
+  let file = editJsonFile("./db.json");
+  file.set("prices", pricesObject);
+  file.save();
 }
 
 const coin = getCoinSellPrice(source, "sekeb");
