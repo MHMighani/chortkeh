@@ -1,13 +1,12 @@
 import React from "react";
 
-// TODO: fix row index
 function TableBody(props) {
   const { data, onDeleteAsset } = props;
-  console.log(data);
   return (
     <tbody>
       {data.map((row, rowIndex) => (
         <tr key={row.id}>
+          <td>{rowIndex + 1}</td>
           {Object.values(row).map((cell, cellIndex) => (
             <td key={cellIndex}>{cell}</td>
           ))}
