@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 function TableBody(props) {
   const { columns, data, onDeleteAsset } = props;
@@ -19,7 +21,7 @@ function TableBody(props) {
                 onClick={() => onDeleteAsset(row.id)}
                 className="btn btn-danger"
               >
-                حذف
+                <FontAwesomeIcon icon={faTrashAlt} />
               </button>
             </td>
           </tr>
