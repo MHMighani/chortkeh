@@ -1,12 +1,12 @@
 import React from "react";
 
-function TableHead({ headerArr }) {
+function TableHead({ columns }) {
   return (
     <thead>
       <tr>
-        {headerArr.map((header, index) => (
-          <th scope="col" key={index}>
-            {header}
+        {columns.map((column) => (
+          <th scope="col" key={column.name}>
+            {column.label}
           </th>
         ))}
       </tr>
