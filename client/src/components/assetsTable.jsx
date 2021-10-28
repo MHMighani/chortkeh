@@ -19,7 +19,7 @@ function AssetsTable(props) {
     let total = 0;
     const procData = assetsData.map((item) => {
       item["overallValue"] = Number(item["amount"]) * Number(prices[item.id]);
-      item["price"] = prices[item.id];
+      item["price"] = +prices[item.id];
       total += item["overallValue"];
       return item;
     });
