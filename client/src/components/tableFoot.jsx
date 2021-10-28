@@ -6,7 +6,7 @@ function TableFoot({ label, data }) {
       <tr>
         <th scope="row">{label}</th>
         {data.map((cell, index) => (
-          <td key={index}>{cell || ""}</td>
+          <td key={index}>{cell.toLocaleString() || ""}</td>
         ))}
       </tr>
     </tfoot>

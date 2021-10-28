@@ -12,7 +12,9 @@ function TableBody(props) {
             {columns.map((column) => {
               const cellContent =
                 column.name === "rowNum" ? rowIndex + 1 : row[column.name];
-              return <td key={column.name}>{cellContent || ""}</td>;
+              return (
+                <td key={column.name}>{cellContent.toLocaleString() || ""}</td>
+              );
             })}
 
             <td>
