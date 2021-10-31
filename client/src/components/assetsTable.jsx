@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DeleteBtn from "./deleteBtn";
 import Table from "./table";
 
 function AssetsTable(props) {
@@ -12,27 +13,30 @@ function AssetsTable(props) {
     { name: "amount", label: "مقدار" },
     { name: "price", label: "ارزش واحد" },
     { name: "overallValue", label: "ارزش کل" },
+    { name: "deleteBtn" },
   ];
 
   // calculating overall-value for each asset
   useEffect(() => {
     let total = 0;
-    const procData = assetsData.map((item) => {
+    let procData = assetsData.map((item) => {
       item["overallValue"] = Number(item["amount"]) * Number(prices[item.id]);
       item["price"] = +prices[item.id];
+      item["deleteBtn"] = (
+        <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
+      );
       total += item["overallValue"];
       return item;
     });
     setProcData(procData);
     setAssetTotalValue(total);
-  }, [prices, assetsData]);
+  }, [prices, assetsData, onDeleteAsset]);
 
   return (
     <Table
       data={procData}
       columns={columns}
       footerData={{ label: "ارزش کل دارایی", data: [assetsTotalValue] }}
-      onDeleteAsset={onDeleteAsset}
     />
   );
 }

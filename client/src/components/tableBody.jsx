@@ -1,8 +1,7 @@
 import React from "react";
-import DeleteBtn from "./deleteBtn";
 
 function TableBody(props) {
-  const { columns, data, onDeleteAsset } = props;
+  const { columns, data } = props;
 
   return (
     <tbody>
@@ -12,14 +11,8 @@ function TableBody(props) {
             {columns.map((column) => {
               const cellContent =
                 column.name === "rowNum" ? rowIndex + 1 : row[column.name];
-              return (
-                <td key={column.name}>{cellContent.toLocaleString() || ""}</td>
-              );
+              return <td key={column.name}>{cellContent || ""}</td>;
             })}
-
-            <td>
-              <DeleteBtn deleteMethod={() => onDeleteAsset(row.id)} />
-            </td>
           </tr>
         );
       })}
