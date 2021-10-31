@@ -14,8 +14,6 @@ const AddAsset = () => {
     setState({ ...state, [name]: value });
   };
 
-  console.log(state);
-
   return (
     <div className="addAsset container">
       <form className="form-group" onSubmit={handleSubmit}>
