@@ -1,12 +1,23 @@
+import { useState, useEffect } from "react";
 import { addAsset } from "../sevices/assetsService";
-import { useState } from "react";
-const AddAsset = () => {
+import { getPrices } from "../sevices/pricesService";
+import SelectForm from "./selectForm";
+
+const AssetForm = () => {
   const [state, setState] = useState({});
+  const [purchasePrices, setPurchasePrices] = useState({});
+
+  const options = [
+    { value: "", label: "" },
+    { value: "coin", label: "سکه تمام" },
+    { value: "halfCoin", label: "نیم سکه" },
+    { value: "quarterCoin", label: "ربع سکه" },
+  ];
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await addAsset(state);
-    console.log(response.status);
+    await addAsset(state);
   };
 
   const handleChange = (event) => {
@@ -14,26 +25,31 @@ const AddAsset = () => {
     setState({ ...state, [name]: value });
   };
 
+  useEffect(() => {
+    async function getPurchasePrices() {
+      const response = await getPrices();
+      setPurchasePrices(response.data);
+    }
+
+    getPurchasePrices();
+  }, []);
+
   return (
     <div className="addAsset container">
       <form className="form-group" onSubmit={handleSubmit}>
-        <label htmlFor="asset-choice">نوع دارایی</label>
-        <select
-          name="id"
-          className="custom-class form-control"
+        <SelectForm
           onChange={handleChange}
-        >
-          <option value=""></option>
-          <option value="coin">تمام سکه</option>
-          <option value="halfCoin">نیم سکه</option>
-          <option value="quarterCoin">ربع سکه</option>
-        </select>
+          options={options}
+          name="id"
+          label="نوع دارایی"
+        />
         <label htmlFor="spot-price">قیمت روز</label>
         <input
           name="price"
           type="number"
           className="form-control"
           onChange={handleChange}
+          value={state["price"] || purchasePrices[state["id"]] || 0}
         />
         <label htmlFor="amount">مقدار</label>
         <input
@@ -41,6 +57,7 @@ const AddAsset = () => {
           type="number"
           className="form-control"
           onChange={handleChange}
+          value={state["amount"] || 0}
         />
         <label htmlFor="date">تاریخ خرید</label>
         <input name="date" type="date" className="form-control" />
@@ -52,4 +69,4 @@ const AddAsset = () => {
   );
 };
 
-export default AddAsset;
+export default AssetForm;
