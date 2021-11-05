@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+import Joi from "joi";
 import { addAsset } from "../sevices/assetsService";
 import { getPrices } from "../sevices/pricesService";
 import SelectForm from "./selectForm";
+import Input from "./input";
 
-const AssetForm = () => {
+const AssetForm = (props) => {
   const [state, setState] = useState({});
   const [purchasePrices, setPurchasePrices] = useState({});
+  const [errors, setErrors] = useState({});
 
   const options = [
     { value: "", label: "" },
@@ -14,10 +17,26 @@ const AssetForm = () => {
     { value: "quarterCoin", label: "ربع سکه" },
   ];
 
+  const schema = Joi.object({
+    id: Joi.string().required(),
+    amount: Joi.number().min(1).required(),
+    price: Joi.number().min(1).required(),
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    await addAsset(state);
+    const result = schema.validate(state);
+    const { value, error } = result;
+
+    if (error) {
+      const name = error.details[0].context.key;
+      const errorMessage = error.details[0].message;
+      setErrors({ [name]: errorMessage });
+    } else {
+      await addAsset(value);
+      console.log("new asset added");
+    }
   };
 
   const handleChange = (event) => {
@@ -31,9 +50,16 @@ const AssetForm = () => {
       setPurchasePrices(response.data);
     }
 
-    getPurchasePrices();
-  }, []);
+    if (state.id && purchasePrices) {
+      setState({ ...state, price: purchasePrices[state.id] });
+    }
 
+    if (props.match.params.id === "new") {
+      getPurchasePrices();
+    } else {
+      console.log("in edit btn");
+    }
+  }, [state.id]);
   return (
     <div className="addAsset container">
       <form className="form-group" onSubmit={handleSubmit}>
@@ -42,25 +68,29 @@ const AssetForm = () => {
           options={options}
           name="id"
           label="نوع دارایی"
+          error={errors["id"]}
         />
-        <label htmlFor="spot-price">قیمت روز</label>
-        <input
+
+        <Input
+          label="قیمت خرید"
           name="price"
           type="number"
-          className="form-control"
+          min="0"
           onChange={handleChange}
-          value={state["price"] || purchasePrices[state["id"]] || 0}
+          value={state["price"] || 0}
+          error={errors["price"]}
         />
-        <label htmlFor="amount">مقدار</label>
-        <input
+
+        <Input
+          label="مقدار"
           name="amount"
           type="number"
-          className="form-control"
+          min="0"
           onChange={handleChange}
+          error={errors["amount"]}
           value={state["amount"] || 0}
         />
-        <label htmlFor="date">تاریخ خرید</label>
-        <input name="date" type="date" className="form-control" />
+
         <button type="submit" className="btn btn-primary">
           تایید
         </button>

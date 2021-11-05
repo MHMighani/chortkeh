@@ -1,9 +1,9 @@
 import React from "react";
 
-const SelectForm = ({ options, name, label, onChange }) => {
+const SelectForm = ({ options, name, error, label, onChange }) => {
   return (
-    <React.Fragment>
-      <label htmlFor="id">{label}</label>
+    <div className="form-group">
+      {label && <label htmlFor={name}>{label}</label>}
       <select
         onChange={onChange}
         className="custom-class form-control"
@@ -15,7 +15,8 @@ const SelectForm = ({ options, name, label, onChange }) => {
           </option>
         ))}
       </select>
-    </React.Fragment>
+      {error && <div className="alert alert-danger">{error}</div>}
+    </div>
   );
 };
 

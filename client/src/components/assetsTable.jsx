@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DeleteBtn from "./deleteBtn";
+import EditBtn from "./editBtn";
+// import { Link } from "react-router-dom";
 import Table from "./table";
 
 function AssetsTable(props) {
@@ -13,6 +15,7 @@ function AssetsTable(props) {
     { name: "amount", label: "مقدار" },
     { name: "price", label: "ارزش واحد" },
     { name: "overallValue", label: "ارزش کل" },
+    { name: "editBtn" },
     { name: "deleteBtn" },
   ];
 
@@ -25,6 +28,7 @@ function AssetsTable(props) {
       item["deleteBtn"] = (
         <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
       );
+      item["editBtn"] = <EditBtn assetId={item.id} />;
       total += item["overallValue"];
       return item;
     });
