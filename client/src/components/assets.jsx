@@ -21,7 +21,7 @@ const Assets = () => {
 
   return (
     <div className="assets">
-      <Link to="/add" className="btn btn-primary">
+      <Link to="assets/new" className="btn btn-primary">
         اضافه کردن
       </Link>
       <AssetsTable
