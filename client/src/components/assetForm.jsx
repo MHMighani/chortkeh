@@ -10,6 +10,9 @@ const AssetForm = (props) => {
   const [purchasePrices, setPurchasePrices] = useState({});
   const [errors, setErrors] = useState({});
 
+  const requiredErrorMsg = "این فیلد نمیتواند خالی باشد";
+  const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
+
   const options = [
     { value: "", label: "" },
     { value: "coin", label: "سکه تمام" },
@@ -18,9 +21,18 @@ const AssetForm = (props) => {
   ];
 
   const schema = Joi.object({
-    id: Joi.string().required(),
-    amount: Joi.number().min(1).required(),
-    price: Joi.number().min(1).required(),
+    id: Joi.string().required().messages({
+      "any.required": requiredErrorMsg,
+      "string.empty": requiredErrorMsg,
+    }),
+    amount: Joi.number().min(1).required().messages({
+      "any.required": requiredErrorMsg,
+      "number.min": minErrorMsg,
+    }),
+    price: Joi.number().min(1).messages({
+      "any.required": requiredErrorMsg,
+      "number.min": minErrorMsg,
+    }),
   });
 
   const handleSubmit = async (event) => {
@@ -28,7 +40,7 @@ const AssetForm = (props) => {
 
     const result = schema.validate(state);
     const { value, error } = result;
-
+    console.log(result);
     if (error) {
       const name = error.details[0].context.key;
       const errorMessage = error.details[0].message;
