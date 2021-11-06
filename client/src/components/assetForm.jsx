@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
 import Joi from "joi";
-import { addAsset } from "../sevices/assetsService";
+import { useState, useEffect } from "react";
+import { addAsset, getAsset, editAsset } from "../sevices/assetsService";
 import { getPrices } from "../sevices/pricesService";
 import SelectForm from "./selectForm";
 import Input from "./input";
 
 const AssetForm = (props) => {
+  const id = props.match.params.id;
   const [state, setState] = useState({});
   const [purchasePrices, setPurchasePrices] = useState({});
   const [errors, setErrors] = useState({});
@@ -40,14 +41,18 @@ const AssetForm = (props) => {
 
     const result = schema.validate(state);
     const { value, error } = result;
-    console.log(result);
+
     if (error) {
       const name = error.details[0].context.key;
       const errorMessage = error.details[0].message;
-      setErrors({ [name]: errorMessage });
-    } else {
-      await addAsset(value);
+      return setErrors({ [name]: errorMessage });
+    }
+
+    if (id === "new") {
       console.log("new asset added");
+      await addAsset(value);
+    } else {
+      await editAsset(id, value);
     }
   };
 
@@ -62,16 +67,23 @@ const AssetForm = (props) => {
       setPurchasePrices(response.data);
     }
 
+    async function getAssetData(id) {
+      const response = await getAsset(id);
+      console.log(response.data);
+      setState(response.data);
+    }
+
     if (state.id && purchasePrices) {
       setState({ ...state, price: purchasePrices[state.id] });
     }
+    getPurchasePrices();
 
-    if (props.match.params.id === "new") {
-      getPurchasePrices();
-    } else {
-      console.log("in edit btn");
+    // edit mode
+    if (id !== "new") {
+      getAssetData(id);
     }
   }, [state.id]);
+
   return (
     <div className="addAsset container">
       <form className="form-group" onSubmit={handleSubmit}>
@@ -81,6 +93,7 @@ const AssetForm = (props) => {
           name="id"
           label="نوع دارایی"
           error={errors["id"]}
+          value={state["id"]}
         />
 
         <Input
@@ -103,8 +116,11 @@ const AssetForm = (props) => {
           value={state["amount"] || 0}
         />
 
-        <button type="submit" className="btn btn-primary">
-          تایید
+        <button
+          type="submit"
+          className={`btn btn-${id === "new" ? "primary" : "success"}`}
+        >
+          {id === "new" ? "اضافه کردن" : "ویرایش"}
         </button>
       </form>
     </div>
