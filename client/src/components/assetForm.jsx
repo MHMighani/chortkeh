@@ -4,6 +4,7 @@ import { addAsset, getAsset, editAsset } from "../sevices/assetsService";
 import { getPrices } from "../sevices/pricesService";
 import SelectForm from "./selectForm";
 import Input from "./input";
+import preDefSources from "../preDefinedSources.json";
 
 const AssetForm = (props) => {
   const id = props.match.params.id;
@@ -15,10 +16,9 @@ const AssetForm = (props) => {
   const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
 
   const options = [
-    { value: "", label: "" },
-    { value: "coin", label: "سکه تمام" },
-    { value: "halfCoin", label: "نیم سکه" },
-    { value: "quarterCoin", label: "ربع سکه" },
+    { id: "", label: "" },
+    ...preDefSources.coin.sub,
+    ...preDefSources.currency.sub,
   ];
 
   const schema = Joi.object({
