@@ -11,7 +11,7 @@ const SelectForm = ({ options, name, error, value, label, onChange }) => {
         value={value}
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.id} value={option.id}>
             {option.label}
           </option>
         ))}
