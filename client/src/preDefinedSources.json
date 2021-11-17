@@ -1,31 +1,26 @@
 {
-    "coin": {
-        "label": "سکه",
-        "sub": [
-        {
-            "id":"emamCoin",
-            "label":"سکه امامی"
-        },{
-            "id": "coin",
-            "label":"سکه تمام بهار آزادی"
-        },{
-            "id":"halfCoin",
-            "label":"نیم سکه"
-        },{
-            "id":"quarterCoin",
-            "label":"ربع سکه"
-        }]
+    "emamCoin":{
+        "id":"emamCoin",
+        "label":"سکه امامی"
     },
-    "currency":{
-        "label":"ارز",
-        "sub":[
-            {
-                "id":"dollar",
-                "label":"دلار"
-            },{
-                "id":"euro",
-                "label":"یورو"
-            }
-        ]
-    }
+    "coin":{
+        "id": "coin",
+        "label":"سکه تمام بهار آزادی"
+    },
+    "halfCoin":{
+        "id":"halfCoin",
+        "label":"نیم سکه"
+    },
+    "quarterCoin":{
+        "id":"quarterCoin",
+        "label":"ربع سکه"
+    },
+    "dollar":{
+        "id":"dollar",
+        "label":"دلار"
+    },
+    "euro":{
+        "id":"euro",
+        "label":"یورو"
+    }       
 }

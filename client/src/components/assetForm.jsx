@@ -6,6 +6,19 @@ import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
 
+function formValidationCheck(schema, state) {
+  const result = schema.validate(state);
+  let { error, value } = result;
+
+  if (error) {
+    const name = error.details[0].context.key;
+    const errorMessage = error.details[0].message;
+    return { errors: { [name]: errorMessage }, value: false };
+  }
+
+  return { value, errors: false };
+}
+
 const AssetForm = (props) => {
   const id = props.match.params.id;
   const [state, setState] = useState({});
@@ -15,11 +28,7 @@ const AssetForm = (props) => {
   const requiredErrorMsg = "این فیلد نمیتواند خالی باشد";
   const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
 
-  const options = [
-    { id: "", label: "" },
-    ...preDefSources.coin.sub,
-    ...preDefSources.currency.sub,
-  ];
+  const options = [{ id: "", label: "" }, ...Object.values(preDefSources)];
 
   const schema = Joi.object({
     id: Joi.string().required().messages({
@@ -39,17 +48,16 @@ const AssetForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const result = schema.validate(state);
-    const { value, error } = result;
+    let { errors, value } = formValidationCheck(schema, state);
 
-    if (error) {
-      const name = error.details[0].context.key;
-      const errorMessage = error.details[0].message;
-      return setErrors({ [name]: errorMessage });
+    if (errors) {
+      return setErrors(errors);
     }
 
+    value = { ...value, label: preDefSources[value.id].label };
+
     if (id === "new") {
-      console.log("new asset added");
+      console.log("new asset added", value);
       await addAsset(value);
     } else {
       await editAsset(id, value);
@@ -69,7 +77,6 @@ const AssetForm = (props) => {
 
     async function getAssetData(id) {
       const response = await getAsset(id);
-      console.log(response.data);
       setState(response.data);
     }
 
