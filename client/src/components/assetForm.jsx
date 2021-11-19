@@ -5,6 +5,7 @@ import { getPrices } from "../sevices/pricesService";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
+import { toast } from "react-toastify";
 
 function formValidationCheck(schema, state) {
   const result = schema.validate(state);
@@ -29,6 +30,9 @@ const AssetForm = (props) => {
   const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
 
   const options = [{ id: "", label: "" }, ...Object.values(preDefSources)];
+
+  const successfulAdditionNotify = () =>
+    toast("آیتم انتخابی با موفقیت اضافه شد");
 
   const schema = Joi.object({
     id: Joi.string().required().messages({
@@ -57,8 +61,9 @@ const AssetForm = (props) => {
     value = { ...value, label: preDefSources[value.id].label };
 
     if (id === "new") {
-      console.log("new asset added", value);
       await addAsset(value);
+      successfulAdditionNotify();
+      props.history.push("/assets");
     } else {
       await editAsset(id, value);
     }
