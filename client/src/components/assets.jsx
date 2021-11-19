@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteAsset, getAssets } from "../sevices/assetsService";
 import { getPrices } from "../sevices/pricesService";
+import CustomModal from "./modal";
 import AssetsTable from "./assetsTable";
 
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
   const [prices, setPrices] = useState({});
+  const [delMessageDisplay, setDelMessageDisplay] = useState(false);
+  const [toDeleteAsset, setToDeleteAsset] = useState(null);
 
   useEffect(() => {
     async function fetchApi() {
@@ -19,20 +22,39 @@ const Assets = () => {
     fetchApi();
   }, []);
 
+  const handleDelMsgClose = () => {
+    setDelMessageDisplay(false);
+    setToDeleteAsset(null);
+  };
+  const handleDelMsgDisplay = (id) => {
+    setDelMessageDisplay(true);
+    setToDeleteAsset(id);
+  };
+  const handleDelMsgConfirm = async () => {
+    const newAssetsData = assetsData.filter(
+      (asset) => asset.id !== toDeleteAsset
+    );
+
+    setAssetsData(newAssetsData);
+    deleteAsset(toDeleteAsset);
+    handleDelMsgClose();
+  };
+
   return (
     <div className="assets">
+      <CustomModal
+        title="آیا از حذف این دارایی اطمینان دارید؟"
+        handleClose={handleDelMsgClose}
+        show={delMessageDisplay}
+        handleConfirm={handleDelMsgConfirm}
+      />
       <Link to="assets/new" className="btn btn-primary">
-        اضافه کردن
+        افزودن
       </Link>
       <AssetsTable
         assetsData={assetsData}
         prices={prices}
-        onDeleteAsset={async (id) => {
-          const newAssetsData = assetsData.filter((asset) => asset.id !== id);
-
-          setAssetsData(newAssetsData);
-          deleteAsset(id);
-        }}
+        onDeleteAsset={handleDelMsgDisplay}
       />
     </div>
   );
