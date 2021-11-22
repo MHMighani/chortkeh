@@ -20,13 +20,16 @@ const AssetForm = (props) => {
   const options = [{ id: "", label: "" }, ...Object.values(preDefSources)];
 
   const successfulAdditionNotify = () =>
-    toast("آیتم انتخابی با موفقیت اضافه شد");
+    toast.success("آیتم انتخابی با موفقیت اضافه شد");
+
+  const successfulEditionNotify = () => toast.info("ویرایش با موفقیت انجام شد");
 
   const schema = Joi.object({
     id: Joi.string().required().messages({
       "any.required": requiredErrorMsg,
       "string.empty": requiredErrorMsg,
     }),
+    label: Joi.string(),
     amount: Joi.number().min(1).required().messages({
       "any.required": requiredErrorMsg,
       "number.min": minErrorMsg,
@@ -51,10 +54,11 @@ const AssetForm = (props) => {
     if (id === "new") {
       await addAsset(value);
       successfulAdditionNotify();
-      props.history.push("/assets");
     } else {
       await editAsset(id, value);
+      successfulEditionNotify();
     }
+    props.history.push("/assets");
   };
 
   const handleChange = (event) => {
