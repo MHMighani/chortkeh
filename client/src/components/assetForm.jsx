@@ -6,19 +6,7 @@ import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
 import { toast } from "react-toastify";
-
-function formValidationCheck(schema, state) {
-  const result = schema.validate(state);
-  let { error, value } = result;
-
-  if (error) {
-    const name = error.details[0].context.key;
-    const errorMessage = error.details[0].message;
-    return { errors: { [name]: errorMessage }, value: false };
-  }
-
-  return { value, errors: false };
-}
+import formValidationCheck from "../utils/formValidationCheck";
 
 const AssetForm = (props) => {
   const id = props.match.params.id;
