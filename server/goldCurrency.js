@@ -23,7 +23,7 @@ async function getCurrencySellPrice(source, currencyId) {
   source = await source;
 
   const stringPrice = source(
-    `tr[data-market-row=${currencyId}] td.market-currency-price`,
+    `tr[data-market-row=${currencyId}] td.market-price`,
     ".currency-overview-content"
   );
 
