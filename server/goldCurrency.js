@@ -23,11 +23,11 @@ async function getCurrencySellPrice(source, currencyId) {
   source = await source;
 
   const stringPrice = source(
-    `tr[data-market-row=${currencyId}]`,
-    ".market-table"
-  ).attr("data-price");
+    `tr[data-market-row=${currencyId}] td.market-currency-price`,
+    ".currency-overview-content"
+  );
 
-  return getNumFromDotSepString(stringPrice);
+  return getNumFromDotSepString(stringPrice.text().trim());
 }
 
 async function getGoldCurrencyHtmlSource() {
