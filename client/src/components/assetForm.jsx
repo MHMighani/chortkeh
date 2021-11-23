@@ -24,6 +24,8 @@ const AssetForm = (props) => {
 
   const successfulEditionNotify = () => toast.info("ویرایش با موفقیت انجام شد");
 
+  const duplicateAssetError = () => toast.error("این دارایی تکراری است");
+
   const schema = Joi.object({
     id: Joi.string().required().messages({
       "any.required": requiredErrorMsg,
@@ -51,14 +53,20 @@ const AssetForm = (props) => {
 
     value = { ...value, label: preDefSources[value.id].label };
 
-    if (id === "new") {
-      await addAsset(value);
-      successfulAdditionNotify();
-    } else {
-      await editAsset(id, value);
-      successfulEditionNotify();
+    try {
+      if (id === "new") {
+        await addAsset(value);
+        successfulAdditionNotify();
+      } else {
+        await editAsset(id, value);
+        successfulEditionNotify();
+      }
+      props.history.push("/assets");
+    } catch (error) {
+      if (error.response.status === 500) {
+        duplicateAssetError();
+      }
     }
-    props.history.push("/assets");
   };
 
   const handleChange = (event) => {
