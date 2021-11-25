@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DeleteBtn from "./deleteBtn";
 import EditBtn from "./editBtn";
 import Table from "./table";
+import getPercentChange from "../utils/getPercentChange";
 
 function AssetsTable(props) {
   const { assetsData, onDeleteAsset, prices } = props;
@@ -12,7 +13,9 @@ function AssetsTable(props) {
     { name: "rowNum", label: "ردیف" },
     { name: "label", label: "نام دارایی" },
     { name: "amount", label: "مقدار" },
-    { name: "price", label: "ارزش واحد" },
+    { name: "purchasePrice", label: "قیمت خرید" },
+    { name: "price", label: "ارزش روز" },
+    { name: "changePercent", label: "درصد سود یا زیان" },
     { name: "overallValue", label: "ارزش کل" },
     { name: "editBtn" },
     { name: "deleteBtn" },
@@ -26,6 +29,12 @@ function AssetsTable(props) {
       item["price"] = +prices[item.id];
       item["deleteBtn"] = (
         <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
+      );
+
+      item["changePercent"] = getPercentChange(
+        item["purchasePrice"],
+        item["price"],
+        2
       );
       item["editBtn"] = <EditBtn assetId={item.id} />;
       total += item["overallValue"];
