@@ -48,6 +48,7 @@ async function writePriceToJsonFile(prices) {
   file.save();
 }
 
+const coinEmami = getCoinSellPrice(source, "sekee");
 const coin = getCoinSellPrice(source, "sekeb");
 const halfCoin = getCoinSellPrice(source, "nim");
 const quarterCoin = getCoinSellPrice(source, "rob");
@@ -60,6 +61,7 @@ const prices = {
   quarterCoin,
   dollar,
   euro,
+  coinEmami,
 };
 
 writePriceToJsonFile(prices);
