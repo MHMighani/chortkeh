@@ -11,7 +11,7 @@ import formValidationCheck from "../utils/formValidationCheck";
 const AssetForm = (props) => {
   const id = props.match.params.id;
   const [state, setState] = useState({});
-  const [purchasePrices, setPurchasePrices] = useState({});
+  const [marketPrices, setMarketPrices] = useState({});
   const [errors, setErrors] = useState({});
 
   const requiredErrorMsg = "این فیلد نمیتواند خالی باشد";
@@ -36,23 +36,22 @@ const AssetForm = (props) => {
       "any.required": requiredErrorMsg,
       "number.min": minErrorMsg,
     }),
-    price: Joi.number().min(1).messages({
+    purchasePrice: Joi.number().min(1).messages({
       "any.required": requiredErrorMsg,
       "number.min": minErrorMsg,
     }),
+    marketPrice: Joi.number(),
   });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     let { errors, value } = formValidationCheck(schema, state);
-
     if (errors) {
       return setErrors(errors);
     }
 
     value = { ...value, label: preDefSources[value.id].label };
-
     try {
       if (id === "new") {
         await addAsset(value);
@@ -75,9 +74,9 @@ const AssetForm = (props) => {
   };
 
   useEffect(() => {
-    async function getPurchasePrices() {
+    async function getMarketPrices() {
       const response = await getPrices();
-      setPurchasePrices(response.data);
+      setMarketPrices(response.data);
     }
 
     async function getAssetData(id) {
@@ -85,10 +84,14 @@ const AssetForm = (props) => {
       setState(response.data);
     }
 
-    if (state.id && purchasePrices) {
-      setState({ ...state, price: purchasePrices[state.id] });
+    if (state.id && marketPrices) {
+      setState({
+        ...state,
+        // marketPrice: marketPrices[state.id],
+        purchasePrice: marketPrices[state.id],
+      });
     }
-    getPurchasePrices();
+    getMarketPrices();
 
     // edit mode
     if (id !== "new") {
@@ -110,12 +113,22 @@ const AssetForm = (props) => {
 
         <Input
           label="قیمت خرید"
-          name="price"
+          name="purchasePrice"
           type="number"
           min="0"
           onChange={handleChange}
-          value={state["price"] || 0}
-          error={errors["price"]}
+          value={state["purchasePrice"] || state["price"] || 0}
+          error={errors["purchasePrice"]}
+        />
+
+        <Input
+          label="قیمت روز"
+          name="marketPrice"
+          type="number"
+          // onChange={handleChange}
+          readOnly={true}
+          value={marketPrices[state.id] || 0}
+          error={errors["marketPrice"]}
         />
 
         <Input
