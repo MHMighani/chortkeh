@@ -87,7 +87,6 @@ const AssetForm = (props) => {
     if (state.id && marketPrices) {
       setState({
         ...state,
-        // marketPrice: marketPrices[state.id],
         purchasePrice: marketPrices[state.id],
       });
     }
@@ -125,7 +124,6 @@ const AssetForm = (props) => {
           label="قیمت روز"
           name="marketPrice"
           type="number"
-          // onChange={handleChange}
           readOnly={true}
           value={marketPrices[state.id] || 0}
           error={errors["marketPrice"]}
@@ -139,6 +137,14 @@ const AssetForm = (props) => {
           onChange={handleChange}
           error={errors["amount"]}
           value={state["amount"] || 0}
+        />
+
+        <Input
+          label="ارزش کل"
+          name="totalValue"
+          type="number"
+          readOnly={true}
+          value={marketPrices[state.id] * state.amount || 0}
         />
 
         <button
