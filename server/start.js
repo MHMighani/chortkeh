@@ -1,7 +1,9 @@
 const jsonServer = require("json-server");
+const configFile = require("./config.json");
 require("./goldCurrency.js");
+require("./stock.js");
 
-const PORT = 3001;
+const PORT = configFile.runningPort;
 const server = jsonServer.create();
 const pricesRouter = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();

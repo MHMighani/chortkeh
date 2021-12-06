@@ -1,10 +1,11 @@
 const rp = require("request-promise");
 const cheerio = require("cheerio");
+const configFile = require("./config.json");
 const editJsonFile = require("edit-json-file");
 
 const getNumFromDotSepString = require("./getNumFromDotSepString");
 
-const goldCurrencyUrl = "https://www.tgju.org/";
+const goldCurrencyUrl = configFile.goldCurrencyPriceSource;
 
 const source = getGoldCurrencyHtmlSource();
 
