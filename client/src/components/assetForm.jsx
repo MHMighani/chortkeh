@@ -1,18 +1,25 @@
 import Joi from "joi";
 import { useState, useEffect } from "react";
-import { addAsset, getAsset, editAsset } from "../sevices/assetsService";
-import { getPrices } from "../sevices/pricesService";
+import { addAsset, getAsset, editAsset } from "../services/assetsServices";
+import { getPrices } from "../services/pricesServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
 import { toast } from "react-toastify";
 import formValidationCheck from "../utils/formValidationCheck";
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import DatePicker from "react-modern-calendar-datepicker";
 
 const AssetForm = (props) => {
   const id = props.match.params.id;
-  const [state, setState] = useState({});
+  const [state, setState] = useState({
+    id: "",
+    amount: 0,
+    purchasePrice: 0,
+  });
   const [marketPrices, setMarketPrices] = useState({});
   const [errors, setErrors] = useState({});
+  const [selectedDay, setSelectedDay] = useState(null);
 
   const requiredErrorMsg = "این فیلد نمیتواند خالی باشد";
   const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
@@ -45,13 +52,19 @@ const AssetForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     let { errors, value } = formValidationCheck(schema, state);
     if (errors) {
+      console.log(errors);
       return setErrors(errors);
     }
+    console.log("Here I am");
 
-    value = { ...value, label: preDefSources[value.id].label };
+    value = {
+      ...value,
+      label: preDefSources[value.id].label,
+      pruchaseDate: selectedDay,
+    };
+
     try {
       if (id === "new") {
         await addAsset(value);
@@ -70,6 +83,7 @@ const AssetForm = (props) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(name, value);
     setState({ ...state, [name]: value });
   };
 
@@ -116,7 +130,7 @@ const AssetForm = (props) => {
           type="number"
           min="0"
           onChange={handleChange}
-          value={state["purchasePrice"] || state["price"] || 0}
+          value={state["purchasePrice"]}
           error={errors["purchasePrice"]}
         />
 
@@ -125,7 +139,7 @@ const AssetForm = (props) => {
           name="marketPrice"
           type="number"
           readOnly={true}
-          value={marketPrices[state.id] || 0}
+          value={marketPrices[state.id]}
           error={errors["marketPrice"]}
         />
 
@@ -136,7 +150,7 @@ const AssetForm = (props) => {
           min="0"
           onChange={handleChange}
           error={errors["amount"]}
-          value={state["amount"] || 0}
+          value={state["amount"]}
         />
 
         <Input
@@ -146,6 +160,16 @@ const AssetForm = (props) => {
           readOnly={true}
           value={marketPrices[state.id] * state.amount || 0}
         />
+        <div className="form-group">
+          <DatePicker
+            value={selectedDay}
+            onChange={setSelectedDay}
+            inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
+            locale="fa"
+            name="purchaseDate"
+            shouldHighlightWeekends
+          />
+        </div>
 
         <button
           type="submit"
