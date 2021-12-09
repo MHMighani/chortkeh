@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteAsset, getAssets } from "../sevices/assetsService";
-import { getPrices } from "../sevices/pricesService";
+import { deleteAsset, getAssets } from "../services/assetsServices";
+import { getPrices } from "../services/pricesServices";
 import CustomModal from "./modal";
 import AssetsTable from "./assetsTable";
 
