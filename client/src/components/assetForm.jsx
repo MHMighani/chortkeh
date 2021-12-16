@@ -63,6 +63,7 @@ const AssetForm = (props) => {
       ...value,
       label: preDefSources[value.id].label,
       pruchaseDate: selectedDay,
+      assetClass: "goldCurrency",
     };
 
     try {
