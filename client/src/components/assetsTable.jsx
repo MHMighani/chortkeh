@@ -25,8 +25,10 @@ function AssetsTable(props) {
   useEffect(() => {
     let total = 0;
     let procData = assetsData.map((item) => {
-      item["overallValue"] = Number(item["amount"]) * Number(prices[item.id]);
-      item["price"] = +prices[item.id];
+      console.log(prices, prices[item.assetClass]);
+      item["overallValue"] =
+        Number(item["amount"]) * Number(prices[item.assetClass][item.id]);
+      item["price"] = +prices[item.assetClass][item.id];
       item["deleteBtn"] = (
         <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
       );

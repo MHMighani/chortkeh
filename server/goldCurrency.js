@@ -36,16 +36,18 @@ async function getGoldCurrencyHtmlSource() {
 }
 
 async function writePriceToJsonFile(prices) {
-  const pricesObject = {};
+  const pricesArray = [];
   const names = Object.keys(prices);
   prices = Object.values(prices);
   prices = await Promise.all(prices).catch((e) => console.log(console.log(e)));
   names.map((item, index) => {
-    pricesObject[item] = prices[index];
+    // pricesArray[item] = prices[index];
+    pricesArray.push({ id: item, price: prices[index] });
   });
 
   let file = editJsonFile("./db.json");
-  file.set("prices", pricesObject);
+  // file.set("prices", [{ id: "goldCurrency", pricesArray }]);
+  file.set("goldcurrency", pricesArray);
   file.save();
 }
 

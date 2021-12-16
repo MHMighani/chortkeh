@@ -14,9 +14,12 @@ const Assets = () => {
   useEffect(() => {
     async function fetchApi() {
       let assetsResponse = await getAssets();
-      let pricesResponse = await getPrices();
+      let goldCurrencyPricesResponse = await getPrices("goldcurrency");
+      let stockPricesResponse = await getPrices("stock");
+
+      console.log(goldCurrencyPricesResponse);
       setAssetsData(assetsResponse.data);
-      setPrices(pricesResponse.data);
+      setPrices(goldCurrencyPricesResponse.data, stockPricesResponse);
     }
 
     fetchApi();
@@ -48,7 +51,7 @@ const Assets = () => {
         show={delMessageDisplay}
         handleConfirm={handleDelMsgConfirm}
       />
-      <Link to="assets/new" className="btn btn-primary">
+      <Link to="add" className="btn btn-primary">
         افزودن
       </Link>
       <AssetsTable

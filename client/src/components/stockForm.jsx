@@ -41,6 +41,7 @@ const StockForm = () => {
       purchasePrice: selectedStockInfo.purchasePrice,
       amount: selectedStockInfo.amount,
       label: selectedStockInfo.name,
+      assetClass: "stock",
     };
     await addAsset(asset);
   }
