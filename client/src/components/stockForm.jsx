@@ -36,8 +36,9 @@ const StockForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    console.log(selectedStockInfo);
     const asset = {
-      id: selectedStockInfo.name,
+      id: selectedStockInfo.id,
       purchasePrice: selectedStockInfo.purchasePrice,
       amount: selectedStockInfo.amount,
       label: selectedStockInfo.name,
@@ -50,6 +51,7 @@ const StockForm = () => {
     const { data } = await axios.get(`${url}/${opt.value}`);
     setSelectedStockInfo({
       ...selectedStockInfo,
+      id: data.id,
       name: data.name,
       lastTradePrice: data.lastTradePrice,
       lastPrice: data.lastPrice,
