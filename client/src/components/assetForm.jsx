@@ -84,25 +84,29 @@ const AssetForm = (props) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
     setState({ ...state, [name]: value });
   };
 
   useEffect(() => {
     async function getMarketPrices() {
-      const response = await getPrices();
+      const response = await getPrices("goldCurrency");
       setMarketPrices(response.data);
     }
 
-    async function getAssetData(id) {
-      const response = await getAsset(id);
-      setState(response.data);
+    function getAssetData(id) {
+      // const response = await getAsset(id);
+      const assetData = marketPrices.find((price) => price.id === id);
+      console.log(assetData);
+
+      // setState(response.data);
     }
 
     if (state.id && marketPrices) {
+      const { price } = marketPrices.find((price) => price.id === state.id);
+      console.log(price);
       setState({
         ...state,
-        purchasePrice: marketPrices[state.id],
+        purchasePrice: price,
       });
     }
     getMarketPrices();

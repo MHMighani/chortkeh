@@ -4,6 +4,7 @@ import { deleteAsset, getAssets } from "../services/assetsServices";
 import { getPrices } from "../services/pricesServices";
 import CustomModal from "./modal";
 import AssetsTable from "./assetsTable";
+import mapPricesToAssets from "../utils/mapPricesToAssets";
 
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
@@ -17,9 +18,11 @@ const Assets = () => {
       let goldCurrencyPricesResponse = await getPrices("goldcurrency");
       let stockPricesResponse = await getPrices("stock");
 
-      console.log(goldCurrencyPricesResponse);
       setAssetsData(assetsResponse.data);
-      setPrices(goldCurrencyPricesResponse.data, stockPricesResponse);
+      setPrices({
+        goldCurrency: [...goldCurrencyPricesResponse.data],
+        stock: [...stockPricesResponse.data],
+      });
     }
 
     fetchApi();
@@ -55,8 +58,7 @@ const Assets = () => {
         افزودن
       </Link>
       <AssetsTable
-        assetsData={assetsData}
-        prices={prices}
+        assetsData={mapPricesToAssets(prices, assetsData) || []}
         onDeleteAsset={handleDelMsgDisplay}
       />
     </div>
