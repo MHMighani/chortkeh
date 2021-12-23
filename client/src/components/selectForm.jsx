@@ -1,21 +1,11 @@
 import React from "react";
+import Select from "react-select";
 
-const SelectForm = ({ options, name, error, value, label, onChange }) => {
+const SelectForm = ({ options, error, label, placeholder, onChange }) => {
   return (
     <div className="form-group">
-      {label && <label htmlFor={name}>{label}</label>}
-      <select
-        onChange={onChange}
-        className="custom-class form-control"
-        name={name}
-        value={value}
-      >
-        {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      {label && <label>{label}</label>}
+      <Select options={options} placeholder={placeholder} onChange={onChange} />
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
