@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import BootModal from "react-bootstrap/Modal";
 
 function CustomModal({ title, show, body, handleConfirm, handleClose }) {

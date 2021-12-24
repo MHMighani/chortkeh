@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Select from "react-select";
 import Input from "./input";
 import DatePicker from "react-modern-calendar-datepicker";
 import { addAsset } from "../services/assetsServices";
-import { serverUrl } from "../config.json";
+import SelectForm from "./selectForm";
+import useMarketPrices from "../hooks/useMarketPrices";
+import { getStockPrice } from "../services/pricesServices";
+import useFormErrorHandler from "../hooks/useFormErrorHandler";
+import notifications from "../utils/notifications";
 
 const StockForm = () => {
-  const url = `${serverUrl}/stock`;
   const [options, setOptions] = useState([]);
-  const [selectedStockInfo, setSelectedStockInfo] = useState({
+  const [formState, setFormState] = useState({
     name: "",
     lastTradePrice: 0,
     lastPrice: 0,
@@ -17,40 +18,51 @@ const StockForm = () => {
     amount: 0,
     purchaseDate: "",
   });
+  const errors = useFormErrorHandler("stock", formState);
+  const marketPrices = useMarketPrices("stock");
   const [purchaseDate, setPurchaseDate] = useState(null);
 
-  useEffect(() => {
-    async function getStockSymbols() {
-      const res = await axios.get(url);
-      const mapedOptions = Object.values(res.data).map((option) => {
-        return {
-          label: `${option.name} -- ${option.fullName}`,
-          value: option.id,
-        };
-      });
-      setOptions(mapedOptions);
-    }
+  function mapPricesToOptions(prices) {
+    const options = prices.map((option) => {
+      return {
+        label: `${option.name} -- ${option.fullName}`,
+        value: option.id,
+      };
+    });
 
-    getStockSymbols();
-  }, []);
+    return options;
+  }
+
+  useEffect(() => {
+    const options = mapPricesToOptions(marketPrices);
+
+    setOptions(options);
+  }, [marketPrices]);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(selectedStockInfo);
+
+    if (errors) {
+      return;
+    }
+
     const asset = {
-      id: selectedStockInfo.id,
-      purchasePrice: selectedStockInfo.purchasePrice,
-      amount: selectedStockInfo.amount,
-      label: selectedStockInfo.name,
+      id: formState.id,
+      purchasePrice: formState.purchasePrice,
+      amount: formState.amount,
+      label: formState.name,
       assetClass: "stock",
     };
+
     await addAsset(asset);
+    notifications.successfulAdditionNotify();
   }
 
   async function stockSelectorChangeHandler(opt) {
-    const { data } = await axios.get(`${url}/${opt.value}`);
-    setSelectedStockInfo({
-      ...selectedStockInfo,
+    const { data } = await getStockPrice(opt.value);
+
+    setFormState({
+      ...formState,
       id: data.id,
       name: data.name,
       lastTradePrice: data.lastTradePrice,
@@ -61,55 +73,54 @@ const StockForm = () => {
 
   function formFieldChangeHandler(e) {
     const { value, name } = e.target;
-    setSelectedStockInfo({ ...selectedStockInfo, [name]: value });
+    setFormState({ ...formState, [name]: value });
   }
 
   return (
     <div className="addStock container">
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="form-group">
-          <Select
+          <SelectForm
+            placeholder="نام نماد را وارد کنید"
             options={options}
             onChange={stockSelectorChangeHandler}
-            placeholder="نام نماد را وارد کنید"
           />
-        </div>
-
-        <div className="form-group">
           <Input
             label="قیمت آخرین معامله"
             type="number"
-            value={selectedStockInfo.lastTradePrice}
+            value={formState.lastTradePrice}
             min="0"
             readOnly={true}
           />
           <Input
             label="قیمت پایانی"
             type="number"
-            value={selectedStockInfo.lastPrice}
+            value={formState.lastPrice}
             min="0"
             readOnly={true}
           />
           <Input
             label="مقدار سهام خریداری شده"
             type="number"
-            value={selectedStockInfo.amount}
+            value={formState.amount}
             min="0"
             name="amount"
             onChange={formFieldChangeHandler}
+            error={errors["amount"]}
           />
           <Input
             label="قیمت خرید سهم"
             type="number"
-            value={selectedStockInfo.purchasePrice}
+            value={formState.purchasePrice}
             min="0"
             name="purchasePrice"
             onChange={formFieldChangeHandler}
+            error={errors["purchasePrice"]}
           />
           <Input
             label="ارزش کل سهام خریداری شده"
             type="number"
-            value={selectedStockInfo.purchasePrice * selectedStockInfo.amount}
+            value={formState.purchasePrice * formState.amount}
             min="0"
             name="totalPurchaseValue"
             readOnly={true}

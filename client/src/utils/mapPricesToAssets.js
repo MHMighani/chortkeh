@@ -1,4 +1,5 @@
 import getPercentChange from "../utils/getPercentChange";
+import getCommaSepNum from "./getCommaSepNum";
 
 function getAssetPrice(prices, assetClass, assetId) {
   const priceObject = prices.find((price) => price.id === assetId);
