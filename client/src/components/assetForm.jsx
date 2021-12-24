@@ -1,67 +1,40 @@
-import Joi from "joi";
 import { useState, useEffect } from "react";
-import { addAsset, getAsset, editAsset } from "../services/assetsServices";
-import { getPrices } from "../services/pricesServices";
+import { addAsset, editAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
-import { toast } from "react-toastify";
-import formValidationCheck from "../utils/formValidationCheck";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker from "react-modern-calendar-datepicker";
+import useMarketPrices from "../hooks/useMarketPrices";
+import useFormErrorHandler from "../hooks/useFormErrorHandler";
+import notifications from "../utils/notifications";
+import getCommaSepNum from "../utils/getCommaSepNum";
+
+import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 const AssetForm = (props) => {
   const id = props.match.params.id;
-  const [state, setState] = useState({
+
+  const [formState, setFormState] = useState({
     id: "",
     amount: 0,
     purchasePrice: 0,
+    marketPrice: 0,
   });
-  const [marketPrices, setMarketPrices] = useState({});
-  const [errors, setErrors] = useState({});
+  const marketPrices = useMarketPrices("goldCurrency");
   const [selectedDay, setSelectedDay] = useState(null);
+  const errors = useFormErrorHandler("goldCurrency", formState);
 
-  const requiredErrorMsg = "این فیلد نمیتواند خالی باشد";
-  const minErrorMsg = "مقدار این فیلد نمیتواند صفر باشد";
-
-  const options = [{ id: "", label: "" }, ...Object.values(preDefSources)];
-
-  const successfulAdditionNotify = () =>
-    toast.success("آیتم انتخابی با موفقیت اضافه شد");
-
-  const successfulEditionNotify = () => toast.info("ویرایش با موفقیت انجام شد");
-
-  const duplicateAssetError = () => toast.error("این دارایی تکراری است");
-
-  const schema = Joi.object({
-    id: Joi.string().required().messages({
-      "any.required": requiredErrorMsg,
-      "string.empty": requiredErrorMsg,
-    }),
-    label: Joi.string(),
-    amount: Joi.number().min(1).required().messages({
-      "any.required": requiredErrorMsg,
-      "number.min": minErrorMsg,
-    }),
-    purchasePrice: Joi.number().min(1).messages({
-      "any.required": requiredErrorMsg,
-      "number.min": minErrorMsg,
-    }),
-    marketPrice: Joi.number(),
-  });
+  const options = [...Object.values(preDefSources)];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    let { errors, value } = formValidationCheck(schema, state);
     if (errors) {
-      console.log(errors);
-      return setErrors(errors);
+      return;
     }
-    console.log("Here I am");
 
-    value = {
-      ...value,
-      label: preDefSources[value.id].label,
+    const value = {
+      ...formState,
+      label: preDefSources[formState.id].label,
       pruchaseDate: selectedDay,
       assetClass: "goldCurrency",
     };
@@ -69,64 +42,51 @@ const AssetForm = (props) => {
     try {
       if (id === "new") {
         await addAsset(value);
-        successfulAdditionNotify();
+        notifications.successfulAdditionNotify();
       } else {
         await editAsset(id, value);
-        successfulEditionNotify();
+        notifications.successfulEditionNotify();
       }
       props.history.push("/assets");
     } catch (error) {
       if (error.response.status === 500) {
-        duplicateAssetError();
+        notifications.duplicateAssetError();
       }
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState({ ...state, [name]: value });
+    setFormState({ ...formState, [name]: value });
   };
 
+  const selectorHandler = (opt) => {
+    setFormState({ ...formState, id: opt.id });
+  };
+
+  // filling form by updated info
   useEffect(() => {
-    async function getMarketPrices() {
-      const response = await getPrices("goldCurrency");
-      setMarketPrices(response.data);
-    }
-
     function getAssetData(id) {
-      // const response = await getAsset(id);
-      const assetData = marketPrices.find((price) => price.id === id);
-      console.log(assetData);
+      if (marketPrices.length) {
+        const { price: marketPrice } = marketPrices.find(
+          (price) => price.id === id
+        );
 
-      // setState(response.data);
+        setFormState({ ...formState, marketPrice, purchasePrice: marketPrice });
+      }
     }
 
-    if (state.id && marketPrices) {
-      const { price } = marketPrices.find((price) => price.id === state.id);
-      console.log(price);
-      setState({
-        ...state,
-        purchasePrice: price,
-      });
-    }
-    getMarketPrices();
-
-    // edit mode
-    if (id !== "new") {
-      getAssetData(id);
-    }
-  }, [state.id]);
+    getAssetData(formState.id);
+  }, [formState.id]);
 
   return (
     <div className="addAsset container">
       <form className="form-group" onSubmit={handleSubmit}>
         <SelectForm
-          onChange={handleChange}
+          onChange={selectorHandler}
           options={options}
-          name="id"
-          label="نوع دارایی"
+          placeholder="نوع دارایی را مشخص کنید"
           error={errors["id"]}
-          value={state["id"]}
         />
 
         <Input
@@ -135,7 +95,7 @@ const AssetForm = (props) => {
           type="number"
           min="0"
           onChange={handleChange}
-          value={state["purchasePrice"]}
+          value={formState["purchasePrice"]}
           error={errors["purchasePrice"]}
         />
 
@@ -144,7 +104,7 @@ const AssetForm = (props) => {
           name="marketPrice"
           type="number"
           readOnly={true}
-          value={marketPrices[state.id]}
+          value={formState["marketPrice"]}
           error={errors["marketPrice"]}
         />
 
@@ -155,7 +115,7 @@ const AssetForm = (props) => {
           min="0"
           onChange={handleChange}
           error={errors["amount"]}
-          value={state["amount"]}
+          value={formState["amount"]}
         />
 
         <Input
@@ -163,7 +123,7 @@ const AssetForm = (props) => {
           name="totalValue"
           type="number"
           readOnly={true}
-          value={marketPrices[state.id] * state.amount || 0}
+          value={formState.marketPrice * formState.amount || 0}
         />
         <div className="form-group">
           <DatePicker

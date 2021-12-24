@@ -1,5 +1,6 @@
 function formValidationCheck(schema, state) {
-  const result = schema.validate(state);
+  const result = schema.validate(state, { allowUnknown: true });
+
   let { error, value } = result;
 
   if (error) {
