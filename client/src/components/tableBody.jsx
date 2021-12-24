@@ -1,4 +1,5 @@
 import React from "react";
+import getCommaSepNum from "../utils/getCommaSepNum";
 
 function TableBody(props) {
   const { columns, data } = props;
@@ -11,7 +12,9 @@ function TableBody(props) {
             {columns.map((column) => {
               const cellContent =
                 column.name === "rowNum" ? rowIndex + 1 : row[column.name];
-              return <td key={column.name}>{cellContent || ""}</td>;
+              return (
+                <td key={column.name}>{getCommaSepNum(cellContent) || ""}</td>
+              );
             })}
           </tr>
         );
