@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const DeleteBtn = ({ assetId }) => {
+const DeleteBtn = ({ assetData }) => {
+  const { id, assetClass } = assetData;
   return (
-    <Link to={`assets/${assetId}`} className="btn btn-success">
+    <Link
+      replace={true}
+      to={{ pathname: `add/${assetClass}`, state: { id } }}
+      className="btn btn-success"
+    >
       <FontAwesomeIcon icon={faEdit} />
     </Link>
   );
