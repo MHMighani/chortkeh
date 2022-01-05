@@ -1,83 +1,81 @@
 import { useState, useEffect } from "react";
-import { addAsset, editAsset } from "../services/assetsServices";
+import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import preDefSources from "../preDefinedSources.json";
 import DatePicker from "react-modern-calendar-datepicker";
 import useMarketPrices from "../hooks/useMarketPrices";
-import useFormErrorHandler from "../hooks/useFormErrorHandler";
-import notifications from "../utils/notifications";
-import getCommaSepNum from "../utils/getCommaSepNum";
+import SubmitBtn from "./submitBtn";
+import useAssetFormHandler from "../hooks/useAssetFormHandler";
 
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
 const AssetForm = (props) => {
-  const id = props.match.params.id;
-
-  const [formState, setFormState] = useState({
+  const initialState = {
     id: "",
     amount: 0,
     purchasePrice: 0,
     marketPrice: 0,
-  });
+    purchaseDate: "",
+    assetClass: "goldCurrency",
+  };
+
+  const {
+    formState,
+    setFormState,
+    handleChange,
+    editState,
+    handleSubmit,
+    errors,
+  } = useAssetFormHandler(initialState, props);
+
   const marketPrices = useMarketPrices("goldCurrency");
-  const [selectedDay, setSelectedDay] = useState(null);
-  const errors = useFormErrorHandler("goldCurrency", formState);
+  const [selectedOption, setSelectedOption] = useState({
+    value: "",
+    label: "",
+  });
 
-  const options = [...Object.values(preDefSources)];
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (errors) {
-      return;
-    }
-
-    const value = {
-      ...formState,
-      label: preDefSources[formState.id].label,
-      pruchaseDate: selectedDay,
-      assetClass: "goldCurrency",
-    };
-
-    try {
-      if (id === "new") {
-        await addAsset(value);
-        notifications.successfulAdditionNotify();
-      } else {
-        await editAsset(id, value);
-        notifications.successfulEditionNotify();
-      }
-      props.history.push("/assets");
-    } catch (error) {
-      if (error.response.status === 500) {
-        notifications.duplicateAssetError();
-      }
-    }
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({ ...formState, [name]: value });
-  };
+  const options = [...Object.values(preDefSources)].map((obj) => {
+    obj["value"] = obj["id"];
+    return obj;
+  });
 
   const selectorHandler = (opt) => {
-    setFormState({ ...formState, id: opt.id });
+    setSelectedOption(opt);
   };
 
   // filling form by updated info
   useEffect(() => {
-    function getAssetData(id) {
+    function getMarketPrice(id) {
       if (marketPrices.length) {
         const { price: marketPrice } = marketPrices.find(
           (price) => price.id === id
         );
 
-        setFormState({ ...formState, marketPrice, purchasePrice: marketPrice });
+        setFormState({
+          ...formState,
+          id,
+          marketPrice,
+          purchasePrice: marketPrice,
+        });
       }
     }
 
-    getAssetData(formState.id);
-  }, [formState.id]);
+    getMarketPrice(selectedOption.value);
+  }, [selectedOption]);
+
+  // set edited asset data when in edit mode
+  useEffect(() => {
+    async function setAssetData(id) {
+      const { data } = await getAsset(id);
+      setFormState({ ...formState, ...data });
+      const label = preDefSources[id].label;
+      setSelectedOption({ label, value: id });
+    }
+    if (editState) {
+      setAssetData(formState.id);
+    }
+  }, [editState]);
 
   return (
     <div className="addAsset container">
@@ -87,6 +85,8 @@ const AssetForm = (props) => {
           options={options}
           placeholder="نوع دارایی را مشخص کنید"
           error={errors["id"]}
+          value={selectedOption}
+          isDisabled={editState}
         />
 
         <Input
@@ -127,8 +127,10 @@ const AssetForm = (props) => {
         />
         <div className="form-group">
           <DatePicker
-            value={selectedDay}
-            onChange={setSelectedDay}
+            value={formState.purchaseDate}
+            onChange={(newValue) =>
+              setFormState({ ...formState, purchaseDate: newValue })
+            }
             inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
             locale="fa"
             name="purchaseDate"
@@ -136,12 +138,7 @@ const AssetForm = (props) => {
           />
         </div>
 
-        <button
-          type="submit"
-          className={`btn btn-${id === "new" ? "primary" : "success"}`}
-        >
-          {id === "new" ? "اضافه کردن" : "ویرایش"}
-        </button>
+        <SubmitBtn editState={editState} />
       </form>
     </div>
   );

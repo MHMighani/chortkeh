@@ -1,26 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Input from "./input";
 import DatePicker from "react-modern-calendar-datepicker";
-import { addAsset } from "../services/assetsServices";
+import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import useMarketPrices from "../hooks/useMarketPrices";
-import { getStockPrice } from "../services/pricesServices";
-import useFormErrorHandler from "../hooks/useFormErrorHandler";
-import notifications from "../utils/notifications";
+import useAssetFormHandler from "../hooks/useAssetFormHandler";
+import SubmitBtn from "./submitBtn";
 
-const StockForm = () => {
+const StockForm = (props) => {
+  const [selectedOption, setSelectedOption] = useState({
+    value: "",
+    label: "",
+  });
   const [options, setOptions] = useState([]);
-  const [formState, setFormState] = useState({
+  const initialState = {
     name: "",
     lastTradePrice: 0,
     lastPrice: 0,
     purchasePrice: 0,
     amount: 0,
     purchaseDate: "",
-  });
-  const errors = useFormErrorHandler("stock", formState);
+    assetClass: "stock",
+  };
+  const {
+    formState,
+    setFormState,
+    handleChange,
+    editState,
+    handleSubmit,
+    errors,
+  } = useAssetFormHandler(initialState, props);
   const marketPrices = useMarketPrices("stock");
-  const [purchaseDate, setPurchaseDate] = useState(null);
 
   function mapPricesToOptions(prices) {
     const options = prices.map((option) => {
@@ -33,48 +43,47 @@ const StockForm = () => {
     return options;
   }
 
+  // mapping options
   useEffect(() => {
     const options = mapPricesToOptions(marketPrices);
-
     setOptions(options);
   }, [marketPrices]);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  // filling form by updated info
+  useEffect(() => {
+    function getMarketPrice(id) {
+      if (marketPrices.length && selectedOption) {
+        const data = marketPrices.find((price) => price.id === id);
 
-    if (errors) {
-      return;
+        setFormState({
+          ...formState,
+          id: data.id,
+          name: data.name,
+          lastTradePrice: data.lastTradePrice,
+          lastPrice: data.lastPrice,
+          purchasePrice: data.lastTradePrice,
+        });
+      }
     }
 
-    const asset = {
-      id: formState.id,
-      purchasePrice: formState.purchasePrice,
-      amount: formState.amount,
-      label: formState.name,
-      assetClass: "stock",
-    };
+    getMarketPrice(selectedOption.value);
+  }, [selectedOption]);
 
-    await addAsset(asset);
-    notifications.successfulAdditionNotify();
-  }
+  // set edited asset data when in edit mode
+  useEffect(() => {
+    async function setAssetData(id) {
+      const { data } = await getAsset(id);
+      setFormState({ ...formState, ...data });
 
-  async function stockSelectorChangeHandler(opt) {
-    const { data } = await getStockPrice(opt.value);
-
-    setFormState({
-      ...formState,
-      id: data.id,
-      name: data.name,
-      lastTradePrice: data.lastTradePrice,
-      lastPrice: data.lastPrice,
-      purchasePrice: data.lastTradePrice,
-    });
-  }
-
-  function formFieldChangeHandler(e) {
-    const { value, name } = e.target;
-    setFormState({ ...formState, [name]: value });
-  }
+      const option = options.length
+        ? options.find((opt) => opt.value === id)
+        : "";
+      setSelectedOption(option);
+    }
+    if (editState) {
+      setAssetData(formState.id);
+    }
+  }, [editState, options]);
 
   return (
     <div className="addStock container">
@@ -83,7 +92,10 @@ const StockForm = () => {
           <SelectForm
             placeholder="نام نماد را وارد کنید"
             options={options}
-            onChange={stockSelectorChangeHandler}
+            value={selectedOption}
+            onChange={setSelectedOption}
+            isDisabled={editState}
+            error={errors["name"]}
           />
           <Input
             label="قیمت آخرین معامله"
@@ -105,7 +117,7 @@ const StockForm = () => {
             value={formState.amount}
             min="0"
             name="amount"
-            onChange={formFieldChangeHandler}
+            onChange={handleChange}
             error={errors["amount"]}
           />
           <Input
@@ -114,7 +126,7 @@ const StockForm = () => {
             value={formState.purchasePrice}
             min="0"
             name="purchasePrice"
-            onChange={formFieldChangeHandler}
+            onChange={handleChange}
             error={errors["purchasePrice"]}
           />
           <Input
@@ -125,17 +137,19 @@ const StockForm = () => {
             name="totalPurchaseValue"
             readOnly={true}
           />
-          <DatePicker
-            value={purchaseDate}
-            onChange={setPurchaseDate}
-            inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
-            locale="fa"
-            name="purchaseDate"
-            shouldHighlightWeekends
-          />
-          <button type="submit" className="btn btn-primary">
-            تایید
-          </button>
+          <div className="form-group">
+            <DatePicker
+              value={formState.purchaseDate}
+              onChange={(newValue) =>
+                setFormState({ ...formState, purchaseDate: newValue })
+              }
+              inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
+              locale="fa"
+              name="purchaseDate"
+              shouldHighlightWeekends
+            />
+          </div>
+          <SubmitBtn editState={editState} />
         </div>
       </form>
     </div>

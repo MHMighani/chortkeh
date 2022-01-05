@@ -29,7 +29,9 @@ function AssetsTable(props) {
         <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
       );
 
-      item["editBtn"] = <EditBtn assetId={item.id} />;
+      item["editBtn"] = (
+        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+      );
       total += item["overallValue"];
       return item;
     });
