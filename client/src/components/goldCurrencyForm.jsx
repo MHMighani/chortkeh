@@ -10,7 +10,7 @@ import useAssetFormHandler from "../hooks/useAssetFormHandler";
 
 import "react-modern-calendar-datepicker/lib/DatePicker.css";
 
-const AssetForm = (props) => {
+const GoldCurrencyForm = (props) => {
   const initialState = {
     id: "",
     amount: 0,
@@ -144,4 +144,4 @@ const AssetForm = (props) => {
   );
 };
 
-export default AssetForm;
+export default GoldCurrencyForm;
