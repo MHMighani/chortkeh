@@ -5,6 +5,7 @@ import useFormErrorHandler from "./useFormErrorHandler";
 import { utils } from "react-modern-calendar-datepicker";
 
 const useAssetFormHandler = (initialState = {}, props) => {
+  const [isSubmited, setIsSubmited] = useState(false);
   const todayPersianDate = utils("fa").getToday();
   const id = props.location.state?.id || "";
   // initializing
@@ -20,6 +21,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmited(true);
     if (errors) {
       return;
     }
@@ -61,7 +63,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
     handleChange,
     editState,
     handleSubmit,
-    errors,
+    errors: isSubmited ? errors : "",
   };
 };
 
