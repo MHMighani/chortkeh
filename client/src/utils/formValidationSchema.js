@@ -29,9 +29,18 @@ const stockSchema = Joi.object({
   amount: noneZeroRequiredSchema,
 });
 
+const cashSchema = Joi.object({
+  name: Joi.string().required().messages({
+    "any.required": requiredErrorMsg,
+    "string.empty": requiredErrorMsg,
+  }),
+  amount: noneZeroRequiredSchema,
+});
+
 const schemas = {
   goldCurrency: goldCurrencySchema,
   stock: stockSchema,
+  cash: cashSchema,
 };
 
 export default schemas;

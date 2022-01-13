@@ -12,7 +12,7 @@ const AssetCategorySelect = () => {
         <Link to="/add/stock" className="list-group-item">
           سهام
         </Link>
-        <Link to="#" className="list-group-item">
+        <Link to="/add/cash" className="list-group-item">
           نقدی
         </Link>
       </ul>

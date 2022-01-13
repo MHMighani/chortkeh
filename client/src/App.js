@@ -4,9 +4,10 @@ import GoldCurrencyForm from "./components/goldCurrencyForm";
 import AssetCategorySelect from "./components/assetCategorySelect";
 import { ToastContainer } from "react-toastify";
 import NavbarT from "./components/navbar";
-import "react-toastify/dist/ReactToastify.css";
-
 import StockForm from "./components/stockForm";
+import CashForm from "./components/cashForm";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/assets" component={Assets} />
         <Route exact path="/add/goldcurrency/" component={GoldCurrencyForm} />
         <Route exact path="/add/stock" component={StockForm} />
+        <Route exact path="/add/cash" component={CashForm} />
         <Route exact path="/add" component={AssetCategorySelect} />
       </Switch>
       <ToastContainer />
