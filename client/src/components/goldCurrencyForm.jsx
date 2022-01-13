@@ -54,6 +54,7 @@ const GoldCurrencyForm = (props) => {
 
         setFormState({
           ...formState,
+          label: selectedOption.label,
           id,
           marketPrice,
           purchasePrice: marketPrice,
