@@ -19,14 +19,12 @@ const CashForm = (props) => {
     errors,
   } = useAssetFormHandler(initialState, props);
 
-  console.log(errors);
-
   return (
     <div className="addAsset container">
-      <form className="form-group" onSubmit={() => console.log("submited")}>
+      <form className="form-group" onSubmit={handleSubmit}>
         <Input
           label="نام منبع نقدی"
-          name="label"
+          name="name"
           type="text"
           onChange={handleChange}
           value={formState["name"]}

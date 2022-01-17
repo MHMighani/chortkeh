@@ -25,8 +25,11 @@ const useAssetFormHandler = (initialState = {}, props) => {
     if (errors) {
       return;
     }
+
     const label =
-      formState.assetClass === "stock" ? formState.name : formState.label;
+      formState.assetClass === "stock" || formState.assetClass === "cash"
+        ? formState.name
+        : formState.label;
 
     const value = {
       id: formState.id,
@@ -36,7 +39,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
       assetClass: formState.assetClass,
       purchasePrice: formState.purchasePrice,
     };
-
+    console.log(value);
     try {
       if (editState) {
         await editAsset(formState.id, value);

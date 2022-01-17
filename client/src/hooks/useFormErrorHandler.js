@@ -7,6 +7,7 @@ const useFormErrorHandler = (assetClass, formState) => {
   useEffect(() => {
     const schema = validationSchemas[assetClass];
     const { errors } = formValidationCheck(schema, formState);
+
     setErrors(errors);
   }, [formState, assetClass]);
 
