@@ -13,6 +13,7 @@ const Assets = () => {
   const [prices, setPrices] = useState({});
   const [delMessageDisplay, setDelMessageDisplay] = useState(false);
   const [toDeleteAsset, setToDeleteAsset] = useState(null);
+  const [overallValue, setOverallValue] = useState(0);
 
   const tables = {
     goldcurrency: AssetsTable,
@@ -46,6 +47,26 @@ const Assets = () => {
     fetchApi();
   }, []);
 
+  // calculating totalValue
+  useEffect(() => {
+    let total = 0;
+    assetsData.forEach(
+      (asset) => (total += Number(asset.price || 1) * Number(asset.amount))
+    );
+    setOverallValue(total);
+  }, [prices]);
+
+  // get total value for each asset class
+  function getTotalValue(assets) {
+    const total = assets.reduce((total, asset) => {
+      const price = Number(asset.price) || 1;
+
+      return total + Number(asset.amount) * Number(price);
+    }, 0);
+    return total;
+  }
+
+  // render assets based on their asset class
   function renderAssetTables() {
     const data = _.groupBy(assetsData, "assetClass");
 
@@ -56,7 +77,10 @@ const Assets = () => {
       let props;
 
       if (assetClass === "cash") {
-        props = { assetsData: assets, onDeleteAsset: handleDelMsgDisplay };
+        props = {
+          assetsData: assets,
+          onDeleteAsset: handleDelMsgDisplay,
+        };
       } else {
         props = {
           assetsData: mapPricesToAssets(prices, assets) || [],
@@ -99,6 +123,7 @@ const Assets = () => {
       </Link>
 
       {renderAssetTables()}
+      {overallValue}
     </div>
   );
 };
