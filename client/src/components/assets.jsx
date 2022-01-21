@@ -54,7 +54,7 @@ const Assets = () => {
       (asset) => (total += Number(asset.price || 1) * Number(asset.amount))
     );
     setOverallValue(total);
-  }, [prices]);
+  }, [prices, assetsData]);
 
   // get total value for each asset class
   function getTotalValue(assets) {
