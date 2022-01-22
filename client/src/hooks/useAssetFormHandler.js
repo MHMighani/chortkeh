@@ -19,6 +19,16 @@ const useAssetFormHandler = (initialState = {}, props) => {
 
   const editState = id ? true : false;
 
+  // gets form element and returns common props
+  function getFormElementProps(name) {
+    return {
+      name,
+      onChange: handleChange,
+      value: formState[name],
+      error: errors[name],
+    };
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmited(true);
@@ -39,7 +49,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
       assetClass: formState.assetClass,
       purchasePrice: formState.purchasePrice,
     };
-    console.log(value);
+
     try {
       if (editState) {
         await editAsset(formState.id, value);
@@ -66,6 +76,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
     handleChange,
     editState,
     handleSubmit,
+    getFormElementProps,
     errors: isSubmited ? errors : "",
   };
 };

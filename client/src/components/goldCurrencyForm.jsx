@@ -23,9 +23,9 @@ const GoldCurrencyForm = (props) => {
   const {
     formState,
     setFormState,
-    handleChange,
     editState,
     handleSubmit,
+    getFormElementProps,
     errors,
   } = useAssetFormHandler(initialState, props);
 
@@ -92,32 +92,17 @@ const GoldCurrencyForm = (props) => {
 
         <Input
           label="قیمت خرید"
-          name="purchasePrice"
-          type="number"
           min="0"
-          onChange={handleChange}
-          value={formState["purchasePrice"]}
-          error={errors["purchasePrice"]}
+          {...getFormElementProps("purchasePrice")}
         />
 
         <Input
           label="قیمت روز"
-          name="marketPrice"
-          type="number"
           readOnly={true}
-          value={formState["marketPrice"]}
-          error={errors["marketPrice"]}
+          {...getFormElementProps("purchasePrice")}
         />
 
-        <Input
-          label="مقدار"
-          name="amount"
-          type="number"
-          min="0"
-          onChange={handleChange}
-          error={errors["amount"]}
-          value={formState["amount"]}
-        />
+        <Input label="مقدار" min="0" {...getFormElementProps("amount")} />
 
         <Input
           label="ارزش کل"

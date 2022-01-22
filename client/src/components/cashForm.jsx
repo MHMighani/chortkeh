@@ -14,10 +14,9 @@ const CashForm = (props) => {
   const {
     formState,
     setFormState,
-    handleChange,
     editState,
     handleSubmit,
-    errors,
+    getFormElementProps,
   } = useAssetFormHandler(initialState, props);
 
   // set edited asset data when in edit mode
@@ -36,20 +35,10 @@ const CashForm = (props) => {
       <form className="form-group" onSubmit={handleSubmit}>
         <Input
           label="نام منبع نقدی"
-          name="name"
           type="text"
-          onChange={handleChange}
-          value={formState["name"]}
-          error={errors["name"]}
+          {...getFormElementProps("name")}
         />
-        <Input
-          label="موجودی"
-          name="amount"
-          type="number"
-          onChange={handleChange}
-          value={formState["amount"]}
-          error={errors["amount"]}
-        />
+        <Input label="موجودی" {...getFormElementProps("amount")} />
         <SubmitBtn editState={editState} />
       </form>
     </div>
