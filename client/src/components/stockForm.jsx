@@ -25,10 +25,10 @@ const StockForm = (props) => {
   const {
     formState,
     setFormState,
-    handleChange,
     editState,
     handleSubmit,
     errors,
+    getFormElementProps,
   } = useAssetFormHandler(initialState, props);
   const marketPrices = useMarketPrices("stock");
 
@@ -99,35 +99,25 @@ const StockForm = (props) => {
           />
           <Input
             label="قیمت آخرین معامله"
-            type="number"
             value={formState.lastTradePrice}
             min="0"
             readOnly={true}
           />
           <Input
             label="قیمت پایانی"
-            type="number"
             value={formState.lastPrice}
             min="0"
             readOnly={true}
           />
           <Input
             label="مقدار سهام خریداری شده"
-            type="number"
-            value={formState.amount}
             min="0"
-            name="amount"
-            onChange={handleChange}
-            error={errors["amount"]}
+            {...getFormElementProps("amount")}
           />
           <Input
             label="قیمت خرید سهم"
-            type="number"
-            value={formState.purchasePrice}
             min="0"
-            name="purchasePrice"
-            onChange={handleChange}
-            error={errors["purchasePrice"]}
+            {...getFormElementProps("purchasePrice")}
           />
           <Input
             label="ارزش کل سهام خریداری شده"
