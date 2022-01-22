@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "./input";
 import SubmitBtn from "./submitBtn";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
+import { getAsset } from "../services/assetsServices";
 
 const CashForm = (props) => {
   const initialState = {
@@ -18,6 +19,17 @@ const CashForm = (props) => {
     handleSubmit,
     errors,
   } = useAssetFormHandler(initialState, props);
+
+  // set edited asset data when in edit mode
+  useEffect(() => {
+    async function setAssetData(id) {
+      const { data } = await getAsset(id);
+      setFormState({ ...formState, name: data.label, ...data });
+    }
+    if (editState) {
+      setAssetData(formState.id);
+    }
+  }, [editState]);
 
   return (
     <div className="addAsset container">
@@ -38,7 +50,7 @@ const CashForm = (props) => {
           value={formState["amount"]}
           error={errors["amount"]}
         />
-        <SubmitBtn />
+        <SubmitBtn editState={editState} />
       </form>
     </div>
   );

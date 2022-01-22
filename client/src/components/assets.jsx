@@ -6,6 +6,7 @@ import { getPrices } from "../services/pricesServices";
 import CustomModal from "./modal";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
+import getCommaSepNum from "../utils/getCommaSepNum";
 import CashTable from "./cashTable";
 
 const Assets = () => {
@@ -88,7 +89,10 @@ const Assets = () => {
         };
       }
 
-      return React.createElement(table, props);
+      return React.createElement(
+        table,
+        (props = { ...props, key: assetClass })
+      );
     });
   }
 
@@ -123,7 +127,7 @@ const Assets = () => {
       </Link>
 
       {renderAssetTables()}
-      {overallValue}
+      {getCommaSepNum(overallValue)}
     </div>
   );
 };
