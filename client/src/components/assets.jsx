@@ -75,24 +75,12 @@ const Assets = () => {
       const assetClass = assets[0].assetClass;
       const table = tables[assetClass];
 
-      let props;
-
-      if (assetClass === "cash") {
-        props = {
-          assetsData: assets,
-          onDeleteAsset: handleDelMsgDisplay,
-        };
-      } else {
-        props = {
-          assetsData: mapPricesToAssets(prices, assets) || [],
-          onDeleteAsset: handleDelMsgDisplay,
-        };
-      }
-
-      return React.createElement(
-        table,
-        (props = { ...props, key: assetClass })
-      );
+      return React.createElement(table, {
+        assetsData:
+          assetClass === "cash" ? assets : mapPricesToAssets(prices, assets),
+        onDeleteAsset: handleDelMsgDisplay,
+        key: assetClass,
+      });
     });
   }
 

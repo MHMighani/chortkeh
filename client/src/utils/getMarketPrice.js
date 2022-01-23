@@ -1,6 +1,5 @@
 function getMarketPriceData(marketPrices, id) {
-  const data = marketPrices.find((price) => price.id === id);
-  return data;
+  return marketPrices.find((price) => price.id === id);
 }
 
 export default getMarketPriceData;

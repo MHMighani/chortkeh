@@ -1,21 +1,20 @@
 import getPercentChange from "../utils/getPercentChange";
+import getMarketPriceData from "./getMarketPrice";
 
-function getAssetPrice(prices, assetClass, assetId) {
-  const priceObject = prices.find((price) => price.id === assetId);
-  return assetClass === "stock"
-    ? priceObject.lastTradePrice
-    : priceObject.price;
+function getPriceKey(assetClass) {
+  return assetClass === "stock" ? "lastTradePrice" : "price";
 }
 
 function mapPricesToAssets(prices, assetsData) {
   if (Object.keys(prices).length) {
     const mappedAssets = assetsData.map((assetData) => {
-      const assetClassPrices = prices[assetData.assetClass];
-      const price = getAssetPrice(
-        assetClassPrices,
-        assetData.assetClass,
+      const { assetClass } = assetData;
+
+      const price = getMarketPriceData(
+        prices[assetData.assetClass],
         assetData.id
-      );
+      )[getPriceKey(assetClass)];
+
       // mapping
       assetData["price"] = price;
       assetData["overallValue"] = assetData["amount"] * price;
@@ -29,6 +28,7 @@ function mapPricesToAssets(prices, assetsData) {
 
     return mappedAssets;
   }
+  return [];
 }
 
 export default mapPricesToAssets;
