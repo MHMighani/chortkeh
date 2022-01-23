@@ -107,7 +107,6 @@ const GoldCurrencyForm = (props) => {
         <Input
           label="ارزش کل"
           name="totalValue"
-          type="number"
           readOnly={true}
           value={formState.marketPrice * formState.amount || 0}
         />

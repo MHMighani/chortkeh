@@ -6,6 +6,7 @@ import SelectForm from "./selectForm";
 import useMarketPrices from "../hooks/useMarketPrices";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import SubmitBtn from "./submitBtn";
+import getMarketPriceData from "../utils/getMarketPrice";
 
 const StockForm = (props) => {
   const [selectedOption, setSelectedOption] = useState({
@@ -49,25 +50,21 @@ const StockForm = (props) => {
     setOptions(options);
   }, [marketPrices]);
 
-  // filling form by updated info
+  // filling form by changing selected option
   useEffect(() => {
-    function getMarketPrice(id) {
-      if (marketPrices.length && selectedOption) {
-        const data = marketPrices.find((price) => price.id === id);
+    if (marketPrices.length && selectedOption.value) {
+      const data = getMarketPriceData(marketPrices, selectedOption.value);
 
-        setFormState({
-          ...formState,
-          id: data.id,
-          name: data.name,
-          lastTradePrice: data.lastTradePrice,
-          lastPrice: data.lastPrice,
-          purchasePrice: data.lastTradePrice,
-        });
-      }
+      setFormState({
+        ...formState,
+        id: data.id,
+        name: data.name,
+        lastTradePrice: data.lastTradePrice,
+        lastPrice: data.lastPrice,
+        purchasePrice: data.lastTradePrice,
+      });
     }
-
-    getMarketPrice(selectedOption.value);
-  }, [selectedOption]);
+  }, [selectedOption, marketPrices]);
 
   // set edited asset data when in edit mode
   useEffect(() => {
@@ -121,7 +118,6 @@ const StockForm = (props) => {
           />
           <Input
             label="ارزش کل سهام خریداری شده"
-            type="number"
             value={formState.purchasePrice * formState.amount}
             min="0"
             name="totalPurchaseValue"
