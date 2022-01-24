@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
-import preDefSources from "../preDefinedSources.json";
 import DatePicker from "react-modern-calendar-datepicker";
 import useMarketPrices from "../hooks/useMarketPrices";
 import SubmitBtn from "./submitBtn";
@@ -35,10 +34,10 @@ const GoldCurrencyForm = (props) => {
     label: "",
   });
 
-  const options = [...Object.values(preDefSources)].map((obj) => {
-    obj["value"] = obj["id"];
-    return obj;
-  });
+  const options = marketPrices.map((marketDetail) => ({
+    label: marketDetail.label,
+    value: marketDetail.id,
+  }));
 
   const selectorHandler = (opt) => {
     setSelectedOption(opt);
@@ -70,13 +69,15 @@ const GoldCurrencyForm = (props) => {
     async function setAssetData(id) {
       const { data } = await getAsset(id);
       setFormState({ ...formState, ...data });
-      const label = preDefSources[id].label;
+      const { label } = marketPrices.length
+        ? marketPrices.find((price) => price.id === id)
+        : "";
       setSelectedOption({ label, value: id });
     }
     if (editState) {
       setAssetData(formState.id);
     }
-  }, [editState]);
+  }, [editState, marketPrices]);
 
   return (
     <div className="addAsset container">

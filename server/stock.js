@@ -1,12 +1,12 @@
 const axios = require("axios");
 const editJsonFile = require("edit-json-file");
-const configFile = require("./config.json");
+const { tse_watchlist_url, databasePath } = require("./config.json");
 
-const file = editJsonFile(`${__dirname}/db.json`);
+const file = editJsonFile(databasePath);
 
 // returns all stock symbols and their last updated prices
 async function getTseSymbols() {
-  const url = configFile.tse_watchlist_url;
+  const url = tse_watchlist_url;
   const res = await axios.get(url);
   const data = res.data.split(";");
 

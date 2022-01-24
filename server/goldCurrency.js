@@ -1,11 +1,20 @@
 const rp = require("request-promise");
 const cheerio = require("cheerio");
-const configFile = require("./config.json");
+const { goldCurrencyPriceSource, databasePath } = require("./config.json");
 const editJsonFile = require("edit-json-file");
 
 const getNumFromDotSepString = require("./getNumFromDotSepString");
 
-const goldCurrencyUrl = configFile.goldCurrencyPriceSource;
+const labels = {
+  coinEmami: "سکه امامی",
+  coin: "سکه تمام بهار آزادی",
+  halfCoin: "نیم سکه",
+  quarterCoin: "ربع سکه",
+  dollar: "دلار",
+  euro: "یورو",
+};
+
+const goldCurrencyUrl = goldCurrencyPriceSource;
 
 const source = getGoldCurrencyHtmlSource();
 
@@ -41,12 +50,10 @@ async function writePriceToJsonFile(prices) {
   prices = Object.values(prices);
   prices = await Promise.all(prices).catch((e) => console.log(console.log(e)));
   names.map((item, index) => {
-    // pricesArray[item] = prices[index];
-    pricesArray.push({ id: item, price: prices[index] });
+    pricesArray.push({ id: item, price: prices[index], label: labels[item] });
   });
 
-  let file = editJsonFile("./db.json");
-  // file.set("prices", [{ id: "goldCurrency", pricesArray }]);
+  let file = editJsonFile(databasePath);
   file.set("goldcurrency", pricesArray);
   file.save();
 }
