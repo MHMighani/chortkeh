@@ -100,7 +100,7 @@ const GoldCurrencyForm = (props) => {
         <Input
           label="قیمت روز"
           readOnly={true}
-          {...getFormElementProps("purchasePrice")}
+          {...getFormElementProps("marketPrice")}
         />
 
         <Input label="مقدار" min="0" {...getFormElementProps("amount")} />
