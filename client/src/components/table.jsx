@@ -21,7 +21,9 @@ function Table({ data, columns, footerData, onDeleteAsset }) {
         data={sortedData}
         onDeleteAsset={onDeleteAsset}
       />
-      <TableFoot label={footerData["label"]} data={footerData.data} />
+      {footerData && (
+        <TableFoot label={footerData["label"]} data={footerData.data} />
+      )}
     </table>
   );
 }
