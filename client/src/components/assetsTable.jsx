@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeleteBtn from "./deleteBtn";
-import EditBtn from "./editBtn";
+import EyeBtn from "./eyeBtn";
 import Table from "./table";
 
 function AssetsTable(props) {
@@ -12,11 +12,11 @@ function AssetsTable(props) {
     { name: "rowNum", label: "ردیف" },
     { name: "label", label: "نام دارایی" },
     { name: "amount", label: "مقدار" },
-    { name: "purchasePrice", label: "قیمت خرید" },
+    { name: "purchasePrice", label: "میانگین قیمت خرید" },
     { name: "price", label: "ارزش روز" },
     { name: "changePercent", label: "درصد سود یا زیان" },
     { name: "overallValue", label: "ارزش کل" },
-    { name: "editBtn" },
+    { name: "detailBtn" },
     { name: "deleteBtn" },
   ];
 
@@ -26,12 +26,18 @@ function AssetsTable(props) {
 
     let procData = assetsData.map((item) => {
       item["deleteBtn"] = (
-        <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
+        <DeleteBtn deleteMethod={() => onDeleteAsset(item.assetSubClass)} />
       );
 
-      item["editBtn"] = (
-        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+      item["detailBtn"] = (
+        <EyeBtn
+          requiredInfo={{
+            assetSubClass: item.assetSubClass,
+            assetClass: item.assetClass,
+          }}
+        />
       );
+
       total += item["overallValue"];
       return item;
     });
