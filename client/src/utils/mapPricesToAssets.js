@@ -1,31 +1,65 @@
 import getPercentChange from "../utils/getPercentChange";
 import getMarketPriceData from "./getMarketPrice";
+import _ from "lodash";
 
 function getPriceKey(assetClass) {
   return assetClass === "stock" ? "lastTradePrice" : "price";
 }
 
+// TODO: refactor to neat and more general function
+function getSumByKey(collection, key, initial = 0) {
+  return _.reduce(
+    collection,
+    (sum, current) => (sum += Number(current[key])),
+    initial
+  );
+}
+
+function getWeightedSum(collection, key1, key2, initial = 0) {
+  return _.reduce(
+    collection,
+    (sum, current) => (sum += Number(current[key1] * current[key2])),
+    initial
+  );
+}
+
+function flattenSubAssets(assetsData) {
+  const amountSum = getSumByKey(assetsData, "amount");
+
+  const averagePurchasePrice = Math.ceil(
+    getWeightedSum(assetsData, "purchasePrice", "amount") / amountSum
+  );
+
+  const initial = {
+    ...assetsData[0],
+    amount: amountSum,
+    purchasePrice: averagePurchasePrice,
+  };
+
+  return initial;
+}
+
 function mapPricesToAssets(prices, assetsData) {
+  const dataBySubClass = _.groupBy(assetsData, "assetSubClass");
+
   if (Object.keys(prices).length) {
-    const mappedAssets = assetsData.map((assetData) => {
-      const { assetClass } = assetData;
-
+    const mappedAssets = Object.values(dataBySubClass).map((assetData) => {
+      const flattenedObject = flattenSubAssets(assetData);
+      const { assetClass } = flattenedObject;
       const price = getMarketPriceData(
-        prices[assetData.assetClass],
-        assetData.id
+        prices[flattenedObject.assetClass],
+        flattenedObject.assetSubClass
       )[getPriceKey(assetClass)];
-
       // mapping
-      assetData["price"] = price;
-      assetData["overallValue"] = assetData["amount"] * price;
-      assetData["changePercent"] = getPercentChange(
-        assetData["purchasePrice"],
+      flattenedObject["price"] = price;
+      flattenedObject["overallValue"] = flattenedObject["amount"] * price;
+      flattenedObject["changePercent"] = getPercentChange(
+        flattenedObject["purchasePrice"],
         price,
         2
       );
-      return assetData;
+      return flattenedObject;
     });
-
     return mappedAssets;
   }
   return [];

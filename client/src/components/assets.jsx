@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
-import { deleteAsset, getAssets } from "../services/assetsServices";
+import { getAssets, deleteAssetBySubClass } from "../services/assetsServices";
 import { getPrices } from "../services/pricesServices";
 import CustomModal from "./modal";
 import AssetsTable from "./assetsTable";
@@ -92,13 +92,14 @@ const Assets = () => {
     setDelMessageDisplay(true);
     setToDeleteAsset(id);
   };
-  const handleDelMsgConfirm = async () => {
+  const handleDelMsgConfirm = () => {
     const newAssetsData = assetsData.filter(
-      (asset) => asset.id !== toDeleteAsset
+      (asset) => asset.assetSubClass !== toDeleteAsset
     );
 
     setAssetsData(newAssetsData);
-    deleteAsset(toDeleteAsset);
+    deleteAssetBySubClass(toDeleteAsset);
+
     handleDelMsgClose();
   };
 
