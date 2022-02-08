@@ -41,13 +41,16 @@ const useAssetFormHandler = (initialState = {}, props) => {
         ? formState.name
         : formState.label;
 
+    console.log(typeof formState.purchasePrice);
+
     const value = {
-      id: formState.id,
+      // id: formState.id,
       label,
-      amount: formState.amount,
+      amount: Number(formState.amount),
       purchaseDate: formState.purchaseDate,
       assetClass: formState.assetClass,
-      purchasePrice: formState.purchasePrice,
+      assetSubClass: formState.id,
+      purchasePrice: Number(formState.purchasePrice),
     };
 
     try {
