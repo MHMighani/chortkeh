@@ -42,27 +42,36 @@ function flattenSubAssets(assetsData) {
 function mapPricesToAssets(prices, assetsData) {
   const dataBySubClass = _.groupBy(assetsData, "assetSubClass");
 
-  if (Object.keys(prices).length) {
-    const mappedAssets = Object.values(dataBySubClass).map((assetData) => {
-      const flattenedObject = flattenSubAssets(assetData);
-      const { assetClass } = flattenedObject;
-      const price = getMarketPriceData(
-        prices[flattenedObject.assetClass],
-        flattenedObject.assetSubClass
-      )[getPriceKey(assetClass)];
-      // mapping
-      flattenedObject["price"] = price;
-      flattenedObject["overallValue"] = flattenedObject["amount"] * price;
-      flattenedObject["changePercent"] = getPercentChange(
-        flattenedObject["purchasePrice"],
-        price,
-        2
-      );
-      return flattenedObject;
-    });
-    return mappedAssets;
+  if (assetsData[0].assetClass === "cash") {
+    return [assetsData, _.sumBy(assetsData, "amount")];
   }
-  return [];
+
+  if (_.isEmpty(prices)) return [[], 0];
+
+  let overallValueByAssetClass = 0;
+
+  const mappedAssets = Object.values(dataBySubClass).map((assetData) => {
+    const flattenedObject = flattenSubAssets(assetData);
+    const { assetClass } = flattenedObject;
+
+    const price = getMarketPriceData(
+      prices[flattenedObject.assetClass],
+      flattenedObject.assetSubClass
+    )[getPriceKey(assetClass)];
+    // mapping
+    flattenedObject["price"] = price;
+    flattenedObject["overallValue"] = flattenedObject["amount"] * price;
+    flattenedObject["changePercent"] = getPercentChange(
+      flattenedObject["purchasePrice"],
+      price,
+      2
+    );
+
+    overallValueByAssetClass += flattenedObject["amount"] * price;
+    return flattenedObject;
+  });
+
+  return [mappedAssets, overallValueByAssetClass];
 }
 
 export default mapPricesToAssets;

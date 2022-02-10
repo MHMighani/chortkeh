@@ -4,9 +4,8 @@ import EyeBtn from "./eyeBtn";
 import Table from "./table";
 
 function AssetsTable(props) {
-  const { assetsData, onDeleteAsset, prices } = props;
+  const { assetsData, onDeleteAsset, prices, overallValue } = props;
   const [procData, setProcData] = useState(assetsData);
-  const [assetsTotalValue, setAssetTotalValue] = useState(0);
 
   const columns = [
     { name: "rowNum", label: "ردیف" },
@@ -20,10 +19,8 @@ function AssetsTable(props) {
     { name: "deleteBtn" },
   ];
 
-  // calculating overall-value for each asset
+  // mapping buttons
   useEffect(() => {
-    let total = 0;
-
     let procData = assetsData.map((item) => {
       item["deleteBtn"] = (
         <DeleteBtn deleteMethod={() => onDeleteAsset(item.assetSubClass)} />
@@ -38,18 +35,16 @@ function AssetsTable(props) {
         />
       );
 
-      total += item["overallValue"];
       return item;
     });
     setProcData(procData);
-    setAssetTotalValue(total);
   }, [prices, assetsData, onDeleteAsset]);
 
   return (
     <Table
       data={procData}
       columns={columns}
-      footerData={{ label: "ارزش کل دارایی", data: [assetsTotalValue] }}
+      footerData={{ label: "ارزش کل دارایی", data: [overallValue] }}
     />
   );
 }
