@@ -14,8 +14,8 @@ const Assets = () => {
   const [prices, setPrices] = useState({});
   const [delMessageDisplay, setDelMessageDisplay] = useState(false);
   const [toDeleteAsset, setToDeleteAsset] = useState(null);
-  const [overallValue, setOverallValue] = useState(0);
 
+  const [mappedAssets, setMappedAssets] = useState([]);
   const tables = {
     goldcurrency: AssetsTable,
     goldCurrency: AssetsTable,
@@ -48,36 +48,31 @@ const Assets = () => {
     fetchApi();
   }, []);
 
-  // calculating totalValue
+  // setting mappedAssets
   useEffect(() => {
-    let total = 0;
-    assetsData.forEach(
-      (asset) => (total += Number(asset.price || 1) * Number(asset.amount))
-    );
-    setOverallValue(total);
+    function getMappedAssets() {
+      const data = _.groupBy(assetsData, "assetClass");
+
+      return Object.values(data).map((assets) => {
+        const assetClass = assets[0].assetClass;
+
+        const [mappedAssets, overallValue] = mapPricesToAssets(prices, assets);
+
+        return { assetClass, data: mappedAssets, overallValue };
+      });
+    }
+    setMappedAssets(getMappedAssets());
   }, [prices, assetsData]);
 
-  // get total value for each asset class
-  function getTotalValue(assets) {
-    const total = assets.reduce((total, asset) => {
-      const price = Number(asset.price) || 1;
-
-      return total + Number(asset.amount) * Number(price);
-    }, 0);
-    return total;
-  }
-
-  // render assets based on their asset class
+  // render asset's table based on their asset class
   function renderAssetTables() {
-    const data = _.groupBy(assetsData, "assetClass");
-
-    return Object.values(data).map((assets) => {
-      const assetClass = assets[0].assetClass;
+    return mappedAssets.map((assets) => {
+      const assetClass = assets.assetClass;
       const table = tables[assetClass];
 
       return React.createElement(table, {
-        assetsData:
-          assetClass === "cash" ? assets : mapPricesToAssets(prices, assets),
+        assetsData: assets.data,
+        overallValue: assets.overallValue,
         onDeleteAsset: handleDelMsgDisplay,
         key: assetClass,
       });
@@ -116,7 +111,7 @@ const Assets = () => {
       </Link>
 
       {renderAssetTables()}
-      {getCommaSepNum(overallValue)}
+      {getCommaSepNum(_.sumBy(mappedAssets, "overallValue"))}
     </div>
   );
 };

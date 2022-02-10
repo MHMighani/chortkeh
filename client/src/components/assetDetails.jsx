@@ -4,11 +4,24 @@ import { getPriceBySubClass } from "../services/pricesServices";
 import getPercentChange from "../utils/getPercentChange";
 import { Card } from "react-bootstrap";
 import Table from "./table";
+import EditBtn from "./editBtn";
+import DeleteBtn from "./deleteBtn";
 
 const AssetDetails = (props) => {
   const { assetClass, assetSubClass } = props.location.state;
   const [assetData, setAssetData] = useState([]);
   const [marketPrice, setMarketPrice] = useState(0);
+
+  const columns = [
+    { name: "rowNum", label: "ردیف" },
+    { name: "amount", label: "مقدار" },
+    { name: "purchasePrice", label: "قیمت خرید" },
+    { name: "changePercent", label: "درصد سود یا زیان" },
+    { name: "purchaseDate", label: "تاریخ خرید" },
+    { name: "overallValue", label: "ارزش کل" },
+    { name: "editBtn" },
+    { name: "deleteBtn" },
+  ];
 
   // getting assets
   useEffect(() => {
@@ -31,7 +44,7 @@ const AssetDetails = (props) => {
   }, [assetSubClass, assetClass]);
 
   function getStringDate(date) {
-    return date.join("/");
+    return date.reverse().join("/");
   }
 
   function getProcessedData(data) {
@@ -41,21 +54,23 @@ const AssetDetails = (props) => {
       const overallValue = item.amount * marketPrice;
       const changePercent = getPercentChange(item.purchasePrice, marketPrice);
       const purchaseDate = getStringDate(Object.values(date));
+      const deleteBtn = (
+        <DeleteBtn deleteMethod={() => console.log("delete btn clicked")} />
+      );
+      const editBtn = (
+        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+      );
 
-      return { ...item, overallValue, changePercent, purchaseDate };
+      return {
+        ...item,
+        overallValue,
+        changePercent,
+        purchaseDate,
+        deleteBtn,
+        editBtn,
+      };
     });
   }
-
-  const columns = [
-    { name: "rowNum", label: "ردیف" },
-    { name: "amount", label: "مقدار" },
-    { name: "purchasePrice", label: "قیمت خرید" },
-    { name: "changePercent", label: "درصد سود یا زیان" },
-    { name: "purchaseDate", label: "تاریخ خرید" },
-    { name: "overallValue", label: "ارزش کل" },
-    // { name: "editBtn" },
-    // { name: "deleteBtn" },
-  ];
 
   return (
     <div>
