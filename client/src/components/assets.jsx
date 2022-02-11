@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
-import { getAssets, deleteAssetBySubClass } from "../services/assetsServices";
+import {
+  getAssets,
+  deleteAssetBySubClass,
+  deleteAsset,
+} from "../services/assetsServices";
 import { getPrices } from "../services/pricesServices";
-import CustomModal from "./modal";
+import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import getCommaSepNum from "../utils/getCommaSepNum";
@@ -12,8 +16,7 @@ import CashTable from "./cashTable";
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
   const [prices, setPrices] = useState({});
-  const [delMessageDisplay, setDelMessageDisplay] = useState(false);
-  const [toDeleteAsset, setToDeleteAsset] = useState(null);
+  const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
   const [mappedAssets, setMappedAssets] = useState([]);
   const tables = {
@@ -79,33 +82,21 @@ const Assets = () => {
     });
   }
 
-  const handleDelMsgClose = () => {
-    setDelMessageDisplay(false);
-    setToDeleteAsset(null);
-  };
-  const handleDelMsgDisplay = (id) => {
-    setDelMessageDisplay(true);
-    setToDeleteAsset(id);
-  };
-  const handleDelMsgConfirm = () => {
+  function handleConfirm(toDeleteAsset) {
     const newAssetsData = assetsData.filter(
-      (asset) => asset.assetSubClass !== toDeleteAsset
+      (asset) => asset.id !== toDeleteAsset.id
     );
-
     setAssetsData(newAssetsData);
-    deleteAssetBySubClass(toDeleteAsset);
-
-    handleDelMsgClose();
-  };
+    if (toDeleteAsset.assetClass === "cash") {
+      deleteAsset(toDeleteAsset.id);
+    } else {
+      deleteAssetBySubClass(toDeleteAsset.assetSubClass);
+    }
+  }
 
   return (
     <div className="assets">
-      <CustomModal
-        title="آیا از حذف این دارایی اطمینان دارید؟"
-        handleClose={handleDelMsgClose}
-        show={delMessageDisplay}
-        handleConfirm={handleDelMsgConfirm}
-      />
+      {modalBody}
       <Link to="add" className="btn btn-primary">
         افزودن
       </Link>

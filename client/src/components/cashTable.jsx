@@ -19,7 +19,7 @@ function CashTable(props) {
   useEffect(() => {
     let procData = assetsData.map((item) => {
       item["deleteBtn"] = (
-        <DeleteBtn deleteMethod={() => onDeleteAsset(item.id)} />
+        <DeleteBtn deleteMethod={() => onDeleteAsset(item)} />
       );
 
       item["editBtn"] = (

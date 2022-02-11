@@ -23,7 +23,7 @@ function AssetsTable(props) {
   useEffect(() => {
     let procData = assetsData.map((item) => {
       item["deleteBtn"] = (
-        <DeleteBtn deleteMethod={() => onDeleteAsset(item.assetSubClass)} />
+        <DeleteBtn deleteMethod={() => onDeleteAsset(item)} />
       );
 
       item["detailBtn"] = (
