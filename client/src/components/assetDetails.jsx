@@ -6,11 +6,14 @@ import { Card } from "react-bootstrap";
 import Table from "./table";
 import EditBtn from "./editBtn";
 import DeleteBtn from "./deleteBtn";
+import { deleteAsset } from "../services/assetsServices";
+import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
 const AssetDetails = (props) => {
   const { assetClass, assetSubClass } = props.location.state;
   const [assetData, setAssetData] = useState([]);
   const [marketPrice, setMarketPrice] = useState(0);
+  const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
   const columns = [
     { name: "rowNum", label: "ردیف" },
@@ -22,6 +25,11 @@ const AssetDetails = (props) => {
     { name: "editBtn" },
     { name: "deleteBtn" },
   ];
+
+  function handleConfirm(item) {
+    deleteAsset(item.id);
+    setAssetData(assetData.filter((asset) => asset.id !== item.id));
+  }
 
   // getting assets
   useEffect(() => {
@@ -55,7 +63,7 @@ const AssetDetails = (props) => {
       const changePercent = getPercentChange(item.purchasePrice, marketPrice);
       const purchaseDate = getStringDate(Object.values(date));
       const deleteBtn = (
-        <DeleteBtn deleteMethod={() => console.log("delete btn clicked")} />
+        <DeleteBtn deleteMethod={() => handleDelMsgDisplay(item)} />
       );
       const editBtn = (
         <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
@@ -74,6 +82,7 @@ const AssetDetails = (props) => {
 
   return (
     <div>
+      {modalBody}
       <Card>
         <Card.Header>
           <span>{assetData.length && assetData[0].label}</span>
