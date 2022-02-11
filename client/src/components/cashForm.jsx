@@ -23,7 +23,9 @@ const CashForm = (props) => {
   useEffect(() => {
     async function setAssetData(id) {
       const { data } = await getAsset(id);
-      setFormState({ ...formState, name: data.label, ...data });
+      const assetId = formState.id;
+
+      setFormState({ ...formState, name: data.label, assetId, ...data });
     }
     if (editState) {
       setAssetData(formState.id);

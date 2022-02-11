@@ -70,10 +70,11 @@ const StockForm = (props) => {
   useEffect(() => {
     async function setAssetData(id) {
       const { data } = await getAsset(id);
-      setFormState({ ...formState, ...data });
+      const assetId = id;
+      setFormState({ ...formState, assetId, ...data });
 
       const option = options.length
-        ? options.find((opt) => opt.value === id)
+        ? options.find((opt) => opt.value === data.assetSubClass)
         : "";
       setSelectedOption(option);
     }
