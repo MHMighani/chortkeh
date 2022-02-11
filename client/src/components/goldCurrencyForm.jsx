@@ -51,10 +51,12 @@ const GoldCurrencyForm = (props) => {
           (price) => price.id === id
         );
 
+        let assetId = formState.id;
         setFormState({
           ...formState,
           label: selectedOption.label,
           id,
+          assetId,
           marketPrice,
           purchasePrice: marketPrice,
         });
@@ -69,10 +71,7 @@ const GoldCurrencyForm = (props) => {
     async function setAssetData(id) {
       const { data } = await getAsset(id);
       setFormState({ ...formState, ...data });
-      const { label } = marketPrices.length
-        ? marketPrices.find((price) => price.id === id)
-        : "";
-      setSelectedOption({ label, value: id });
+      setSelectedOption({ label: data.label, value: data.assetSubClass });
     }
     if (editState) {
       setAssetData(formState.id);
