@@ -6,6 +6,7 @@ import { Card } from "react-bootstrap";
 import Table from "./table";
 import EditBtn from "./editBtn";
 import DeleteBtn from "./deleteBtn";
+import { detailsTableColumns as columns } from "../services/columns";
 import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
@@ -14,17 +15,6 @@ const AssetDetails = (props) => {
   const [assetData, setAssetData] = useState([]);
   const [marketPrice, setMarketPrice] = useState(0);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
-
-  const columns = [
-    { name: "rowNum", label: "ردیف" },
-    { name: "amount", label: "مقدار" },
-    { name: "purchasePrice", label: "قیمت خرید" },
-    { name: "changePercent", label: "درصد سود یا زیان" },
-    { name: "purchaseDate", label: "تاریخ خرید" },
-    { name: "overallValue", label: "ارزش کل" },
-    { name: "editBtn" },
-    { name: "deleteBtn" },
-  ];
 
   function handleConfirm(item) {
     deleteAsset(item.id);
