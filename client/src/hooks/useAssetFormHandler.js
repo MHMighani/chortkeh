@@ -71,6 +71,10 @@ const useAssetFormHandler = (initialState = {}, props) => {
     setFormState({ ...formState, [name]: value });
   };
 
+  function handleDateChange(newValue) {
+    setFormState({ ...formState, purchaseDate: newValue });
+  }
+
   return {
     formState,
     setFormState,
@@ -78,6 +82,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
     editState,
     handleSubmit,
     getFormElementProps,
+    handleDateChange,
     errors: isSubmited ? errors : "",
   };
 };

@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
-import DatePicker from "react-modern-calendar-datepicker";
+// import DatePicker from "react-modern-calendar-datepicker";
 import useMarketPrices from "../hooks/useMarketPrices";
 import SubmitBtn from "./submitBtn";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
-
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
+import PurchaseDate from "./purchaseDate";
 
 const GoldCurrencyForm = (props) => {
   const initialState = {
@@ -26,6 +25,7 @@ const GoldCurrencyForm = (props) => {
     handleSubmit,
     getFormElementProps,
     errors,
+    handleDateChange,
   } = useAssetFormHandler(initialState, props);
 
   const marketPrices = useMarketPrices("goldCurrency");
@@ -111,15 +111,9 @@ const GoldCurrencyForm = (props) => {
           value={formState.marketPrice * formState.amount || 0}
         />
         <div className="form-group">
-          <DatePicker
+          <PurchaseDate
             value={formState.purchaseDate}
-            onChange={(newValue) =>
-              setFormState({ ...formState, purchaseDate: newValue })
-            }
-            inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
-            locale="fa"
-            name="purchaseDate"
-            shouldHighlightWeekends
+            onChange={handleDateChange}
           />
         </div>
 
