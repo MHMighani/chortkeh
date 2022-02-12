@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DeleteBtn from "./deleteBtn";
+import { cashTableColumns as columns } from "../services/columns";
 import EditBtn from "./editBtn";
 import Table from "./table";
 
 function CashTable(props) {
   const { assetsData, onDeleteAsset, overallValue } = props;
   const [procData, setProcData] = useState(assetsData);
-
-  const columns = [
-    { name: "rowNum", label: "ردیف" },
-    { name: "label", label: "نام دارایی" },
-    { name: "amount", label: "مقدار" },
-    { name: "editBtn" },
-    { name: "deleteBtn" },
-  ];
 
   //   // calculating overall-value for each asset
   useEffect(() => {
