@@ -1,8 +1,8 @@
 const jsonServer = require("json-server");
 const { runningPort, databasePath } = require("./config.json");
+require("./initialDbSetup.js");
 require("./goldCurrency.js");
 require("./stock.js");
-require("./initialDbSetup.js");
 
 const PORT = runningPort;
 const server = jsonServer.create();

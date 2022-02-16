@@ -2,9 +2,14 @@ const editJsonFile = require("edit-json-file");
 const { databasePath } = require("./config.json");
 
 let file = editJsonFile(databasePath);
-console.log(Object.keys(file.data));
+const mainPaths = Object.keys(file.data);
 
-if (!Object.keys(file.data).includes("assets")) {
+if (!mainPaths.includes("assets")) {
   file.set("assets", []);
+  file.save();
+}
+
+if (!mainPaths.includes("history")) {
+  file.set("history", []);
   file.save();
 }
