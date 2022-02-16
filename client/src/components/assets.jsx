@@ -6,6 +6,7 @@ import {
   deleteAssetBySubClass,
   deleteAsset,
 } from "../services/assetsServices";
+import { saveOverallHistory } from "../services/historyService";
 import { getPrices } from "../services/pricesServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
@@ -50,6 +51,30 @@ const Assets = () => {
 
     fetchApi();
   }, []);
+
+  // checking if data is ready for saving in history
+  function checkMappedValidation(mappedAssets) {
+    const isDataFetchComplete =
+      mappedAssets.length && !mappedAssets.some((item) => !item.data.length);
+
+    if (isDataFetchComplete) return true;
+  }
+
+  // saving overallValues in history
+  useEffect(() => {
+    if (checkMappedValidation(mappedAssets)) {
+      const normalizedOverall = mappedAssets.reduce(
+        (prev, current) => {
+          prev[current.assetClass] = current.overallValue;
+          prev.overall += current.overallValue;
+          return prev;
+        },
+        { overall: 0 }
+      );
+
+      saveOverallHistory(normalizedOverall);
+    }
+  }, [mappedAssets]);
 
   // setting mappedAssets
   useEffect(() => {
