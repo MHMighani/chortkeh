@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { assetsTableColumns as columns } from "../services/columns";
+import { assetsTableColumns as columns } from "../utils/columns";
 import DeleteBtn from "./deleteBtn";
 import EyeBtn from "./eyeBtn";
 import Table from "./table";

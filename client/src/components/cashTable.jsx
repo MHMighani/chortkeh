@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DeleteBtn from "./deleteBtn";
-import { cashTableColumns as columns } from "../services/columns";
+import { cashTableColumns as columns } from "../utils/columns";
 import EditBtn from "./editBtn";
 import Table from "./table";
 

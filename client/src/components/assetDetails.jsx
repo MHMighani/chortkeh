@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 import Table from "./table";
 import EditBtn from "./editBtn";
 import DeleteBtn from "./deleteBtn";
-import { detailsTableColumns as columns } from "../services/columns";
+import { detailsTableColumns as columns } from "../utils/columns";
 import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
