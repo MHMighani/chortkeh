@@ -95,15 +95,16 @@ const Assets = () => {
   // render asset's table based on their asset class
   function renderAssetTables() {
     return mappedAssets.map((assets) => {
-      const assetClass = assets.assetClass;
-      const table = tables[assetClass];
+      const table = tables[assets.assetClass];
 
-      return React.createElement(table, {
+      const props = {
         assetsData: assets.data,
         overallValue: assets.overallValue,
         onDeleteAsset: handleDelMsgDisplay,
-        key: assetClass,
-      });
+        key: assets.assetClass,
+      };
+
+      return React.createElement(table, props);
     });
   }
 
