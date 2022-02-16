@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
-// import DatePicker from "react-modern-calendar-datepicker";
 import useMarketPrices from "../hooks/useMarketPrices";
 import SubmitBtn from "./submitBtn";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
