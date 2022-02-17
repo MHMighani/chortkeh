@@ -1,7 +1,7 @@
 # chortkeh
 
-Chortkeh helps you have updated value of your investments and keep track of their efficiency
+Chortkeh helps you have updated value of your investments and keep track of their efficiency.
 
 # project status
 
-Elementary graduate student :)
+Goes to college and has history for theirself :)
