@@ -44,3 +44,12 @@ export const detailsTableColumns = [
   editBtnCol,
   deleteBtnCol,
 ];
+
+export const historyTableColumns = [
+  rowNum,
+  { name: "id", label: "تاریخ" },
+  { name: "goldCurrency", label: "طلا و ارز" },
+  { name: "stock", label: "بورس" },
+  { name: "cash", label: "نقدی" },
+  { name: "overall", label: "ارزش کل" },
+];

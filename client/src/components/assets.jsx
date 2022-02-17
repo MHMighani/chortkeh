@@ -6,18 +6,23 @@ import {
   deleteAssetBySubClass,
   deleteAsset,
 } from "../services/assetsServices";
-import { saveOverallHistory } from "../services/historyService";
+import {
+  saveOverallHistory,
+  getHistoryRecord,
+} from "../services/historyService";
 import { getPrices } from "../services/pricesServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import getCommaSepNum from "../utils/getCommaSepNum";
 import CashTable from "./cashTable";
+import History from "./history";
 
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
   const [prices, setPrices] = useState({});
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
+  const [historyRecord, setHistoryRecord] = useState([]);
 
   const [mappedAssets, setMappedAssets] = useState([]);
   const tables = {
@@ -27,7 +32,17 @@ const Assets = () => {
     cash: CashTable,
   };
 
-  // getting updated market prices
+  // gets all history
+  useEffect(() => {
+    async function fetchHistoryApi() {
+      const { data } = await getHistoryRecord();
+      setHistoryRecord(data);
+    }
+
+    fetchHistoryApi();
+  }, []);
+
+  // gets updated market prices
   useEffect(() => {
     async function fetchApi() {
       let goldCurrencyPricesResponse = await getPrices("goldcurrency");
@@ -41,7 +56,7 @@ const Assets = () => {
     fetchApi();
   }, []);
 
-  // getting assets information
+  // gets assets information
   useEffect(() => {
     async function fetchApi() {
       let { data } = await getAssets();
@@ -52,7 +67,7 @@ const Assets = () => {
     fetchApi();
   }, []);
 
-  // checking if data is ready for saving in history
+  // checks if data is ready to save in history record
   function checkMappedValidation(mappedAssets) {
     const isDataFetchComplete =
       mappedAssets.length && !mappedAssets.some((item) => !item.data.length);
@@ -60,7 +75,7 @@ const Assets = () => {
     if (isDataFetchComplete) return true;
   }
 
-  // saving overallValues in history
+  // saves overallValues in history
   useEffect(() => {
     if (checkMappedValidation(mappedAssets)) {
       const normalizedOverall = mappedAssets.reduce(
@@ -76,7 +91,7 @@ const Assets = () => {
     }
   }, [mappedAssets]);
 
-  // setting mappedAssets
+  // sets mappedAssets
   useEffect(() => {
     function getMappedAssets() {
       const data = _.groupBy(assetsData, "assetClass");
@@ -129,6 +144,7 @@ const Assets = () => {
 
       {renderAssetTables()}
       {getCommaSepNum(_.sumBy(mappedAssets, "overallValue"))}
+      <History data={historyRecord} />
     </div>
   );
 };

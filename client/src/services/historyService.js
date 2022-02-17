@@ -9,7 +9,7 @@ function getDateId() {
   return Object.values(utils("fa").getToday()).join("-");
 }
 
-export function getHistory(date) {
+export function getHistoryRecord(date = "") {
   return axios.get(`${baseUrl}/${date}`);
 }
 
@@ -18,7 +18,7 @@ export async function saveOverallHistory(data) {
   const todayDate = getDateId();
   try {
     // checking for past histories for today
-    await getHistory(todayDate);
+    await getHistoryRecord(todayDate);
     // updating last overallValue data for today
     await axios.patch(`${baseUrl}/${todayDate}`, data);
   } catch (error) {
