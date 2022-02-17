@@ -1,5 +1,7 @@
-function getPercentChange(firstValue, secondValue, decimalPoint) {
-  return Number((((secondValue - firstValue) / firstValue) * 100).toFixed(2));
+function getPercentChange(firstValue, secondValue, decimalPoint = 2) {
+  return Number(
+    (((secondValue - firstValue) / firstValue) * 100).toFixed(decimalPoint)
+  );
 }
 
 export default getPercentChange;
