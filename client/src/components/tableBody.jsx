@@ -1,6 +1,17 @@
 import React from "react";
 import getCommaSepNum from "../utils/getCommaSepNum";
 
+function getCellContent(column, row, rowIndex) {
+  let cellContent = row[column.name];
+  if (column.name === "rowNum") {
+    cellContent = rowIndex + 1;
+  } else if (typeof +cellContent === "number" && !isNaN(+cellContent)) {
+    cellContent = getCommaSepNum(row[column.name]);
+  }
+
+  return cellContent;
+}
+
 function TableBody(props) {
   const { columns, data } = props;
 
@@ -10,10 +21,10 @@ function TableBody(props) {
         return (
           <tr key={row.id}>
             {columns.map((column) => {
-              const cellContent =
-                column.name === "rowNum" ? rowIndex + 1 : row[column.name];
               return (
-                <td key={column.name}>{getCommaSepNum(cellContent) || ""}</td>
+                <td key={column.name}>
+                  {getCellContent(column, row, rowIndex)}
+                </td>
               );
             })}
           </tr>
