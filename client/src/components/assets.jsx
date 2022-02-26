@@ -14,7 +14,6 @@ import { getPrices } from "../services/pricesServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
-import getCommaSepNum from "../utils/getCommaSepNum";
 import CashTable from "./cashTable";
 import History from "./history";
 
@@ -25,11 +24,20 @@ const Assets = () => {
   const [historyRecord, setHistoryRecord] = useState([]);
 
   const [mappedAssets, setMappedAssets] = useState([]);
+
+  // TODO: fix 'goldcurrency', 'goldCurrency'. one of them is enough
   const tables = {
     goldcurrency: AssetsTable,
     goldCurrency: AssetsTable,
     stock: AssetsTable,
     cash: CashTable,
+  };
+
+  const titles = {
+    goldCurrency: "طلا و ارز",
+    goldcurrency: "طلا و ارز",
+    stock: "بورس",
+    cash: "نقدی",
   };
 
   // gets all history
@@ -111,12 +119,14 @@ const Assets = () => {
   function renderAssetTables() {
     return mappedAssets.map((assets) => {
       const table = tables[assets.assetClass];
+      const title = titles[assets.assetClass];
 
       const props = {
         assetsData: assets.data,
         overallValue: assets.overallValue,
         onDeleteAsset: handleDelMsgDisplay,
         key: assets.assetClass,
+        title,
       };
 
       return React.createElement(table, props);
@@ -143,7 +153,6 @@ const Assets = () => {
       </Link>
 
       {renderAssetTables()}
-      {getCommaSepNum(_.sumBy(mappedAssets, "overallValue"))}
       <History data={historyRecord} />
     </div>
   );
