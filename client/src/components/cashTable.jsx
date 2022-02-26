@@ -4,11 +4,12 @@ import { cashTableColumns as columns } from "../utils/columns";
 import EditBtn from "./editBtn";
 import Table from "./table";
 
-function CashTable(props) {
-  const { assetsData, onDeleteAsset, overallValue } = props;
+import TableContainer from "./tableContainer";
+
+function CashTable({ assetsData, onDeleteAsset, overallValue }) {
   const [procData, setProcData] = useState(assetsData);
 
-  //   // calculating overall-value for each asset
+  // calculating overall-value for each asset
   useEffect(() => {
     let procData = assetsData.map((item) => {
       item["deleteBtn"] = (
@@ -24,11 +25,9 @@ function CashTable(props) {
   }, [assetsData, onDeleteAsset]);
 
   return (
-    <Table
-      data={procData}
-      columns={columns}
-      footerData={{ label: "ارزش کل دارایی", data: [overallValue] }}
-    />
+    <TableContainer title="نقدی" value={overallValue}>
+      <Table data={procData} columns={columns} />
+    </TableContainer>
   );
 }
 

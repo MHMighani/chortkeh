@@ -3,9 +3,10 @@ import { assetsTableColumns as columns } from "../utils/columns";
 import DeleteBtn from "./deleteBtn";
 import EyeBtn from "./eyeBtn";
 import Table from "./table";
+import TableContainer from "./tableContainer";
 
 function AssetsTable(props) {
-  const { assetsData, onDeleteAsset, prices, overallValue } = props;
+  const { assetsData, onDeleteAsset, prices, overallValue, title } = props;
   const [procData, setProcData] = useState(assetsData);
 
   // mapping buttons
@@ -30,11 +31,9 @@ function AssetsTable(props) {
   }, [prices, assetsData, onDeleteAsset]);
 
   return (
-    <Table
-      data={procData}
-      columns={columns}
-      footerData={{ label: "ارزش کل دارایی", data: [overallValue] }}
-    />
+    <TableContainer value={overallValue} title={title}>
+      <Table data={procData} columns={columns} />
+    </TableContainer>
   );
 }
 

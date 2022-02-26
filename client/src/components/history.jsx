@@ -5,6 +5,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import getPercentChange from "../utils/getPercentChange";
 import getCommaSepNum from "../utils/getCommaSepNum";
 import Table from "./table";
+import TableContainer from "./tableContainer";
 
 import _ from "lodash";
 
@@ -40,12 +41,12 @@ const History = ({ data }) => {
   }
 
   return (
-    <>
+    <TableContainer title="سابقه ارزش ها">
       <Table
         columns={historyTableColumns}
         data={getProcessedData(_.sortBy(data, "id")).reverse()}
       />
-    </>
+    </TableContainer>
   );
 };
 
