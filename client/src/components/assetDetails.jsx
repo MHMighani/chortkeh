@@ -9,7 +9,7 @@ import DeleteBtn from "./deleteBtn";
 import { detailsTableColumns as columns } from "../utils/columns";
 import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
-
+import getCommaSepNum from "../utils/getCommaSepNum";
 const AssetDetails = (props) => {
   const { assetClass, assetSubClass } = props.location.state;
   const [assetData, setAssetData] = useState([]);
@@ -76,7 +76,7 @@ const AssetDetails = (props) => {
       <Card>
         <Card.Header>
           <span>{assetData.length && assetData[0].label}</span>
-          <span>{marketPrice}</span>
+          <span>{getCommaSepNum(marketPrice)}</span>
         </Card.Header>
         <Card.Body>
           <Table data={getProcessedData(assetData)} columns={columns} />
