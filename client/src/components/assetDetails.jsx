@@ -71,12 +71,14 @@ const AssetDetails = (props) => {
   }
 
   return (
-    <div>
+    <div className="asset-detail">
       {modalBody}
       <Card>
-        <Card.Header>
-          <span>{assetData.length && assetData[0].label}</span>
-          <span>{getCommaSepNum(marketPrice)}</span>
+        <Card.Header className="asset-detail__header">
+          <span className="label">
+            {assetData.length && assetData[0].label}
+          </span>
+          <span className="value">{getCommaSepNum(marketPrice)}</span>
         </Card.Header>
         <Card.Body>
           <Table data={getProcessedData(assetData)} columns={columns} />

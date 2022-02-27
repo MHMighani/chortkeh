@@ -43,3 +43,9 @@ $primary-color: lightblue;
     transition: transform ease-in-out 0.2s;
   }
 }
+
+.asset-detail__header {
+  .label {
+    margin-left: 10px;
+  }
+}
