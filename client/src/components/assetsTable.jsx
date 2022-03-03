@@ -31,7 +31,7 @@ function AssetsTable(props) {
   }, [prices, assetsData, onDeleteAsset]);
 
   return (
-    <TableContainer value={overallValue} title={title}>
+    <TableContainer valueInfo={overallValue} title={title}>
       <Table data={procData} columns={columns} />
     </TableContainer>
   );

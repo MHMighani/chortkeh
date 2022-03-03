@@ -15,6 +15,7 @@ import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import CashTable from "./cashTable";
+import getDataWithChange from "../utils/getDataWithChange";
 import History from "./history";
 
 const Assets = () => {
@@ -44,6 +45,7 @@ const Assets = () => {
   useEffect(() => {
     async function fetchHistoryApi() {
       const { data } = await getHistoryRecord();
+
       setHistoryRecord(data);
     }
 
@@ -117,15 +119,18 @@ const Assets = () => {
 
   // render asset's table based on their asset class
   function renderAssetTables() {
+    const lastRecordChange = getDataWithChange(historyRecord, ["id"]).pop();
+
     return mappedAssets.map((assets) => {
       const table = tables[assets.assetClass];
       const title = titles[assets.assetClass];
 
       const props = {
         assetsData: assets.data,
-        overallValue: assets.overallValue,
+        overallValue: lastRecordChange[assets.assetClass],
         onDeleteAsset: handleDelMsgDisplay,
         key: assets.assetClass,
+
         title,
       };
 
