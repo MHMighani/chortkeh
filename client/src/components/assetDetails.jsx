@@ -10,6 +10,7 @@ import { detailsTableColumns as columns } from "../utils/columns";
 import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import getCommaSepNum from "../utils/getCommaSepNum";
+
 const AssetDetails = (props) => {
   const { assetClass, assetSubClass } = props.location.state;
   const [assetData, setAssetData] = useState([]);
@@ -42,7 +43,7 @@ const AssetDetails = (props) => {
   }, [assetSubClass, assetClass]);
 
   function getStringDate(date) {
-    return date.reverse().join("/");
+    return date.join("-");
   }
 
   function getProcessedData(data) {
