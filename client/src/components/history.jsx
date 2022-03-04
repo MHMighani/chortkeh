@@ -3,7 +3,7 @@ import { historyTableColumns } from "../utils/columns";
 import getPercentChange from "../utils/getPercentChange";
 import Table from "./table";
 import TableContainer from "./tableContainer";
-import getStyledValue from "../utils/getStyledValue";
+import StyledValue from "./styledValue";
 
 import _ from "lodash";
 
@@ -19,7 +19,9 @@ const History = ({ data }) => {
       for (let key in item) {
         const percentChange = getPercentChange(prevItem[key], item[key]);
         if (!percentChange) continue;
-        newItem[key] = getStyledValue(item[key], percentChange);
+        newItem[key] = (
+          <StyledValue value={item[key]} percentChange={percentChange} />
+        );
       }
 
       return newItem;
