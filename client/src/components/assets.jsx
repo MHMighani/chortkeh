@@ -17,6 +17,7 @@ import mapPricesToAssets from "../utils/mapPricesToAssets";
 import CashTable from "./cashTable";
 import getDataWithChange from "../utils/getDataWithChange";
 import History from "./history";
+import OverallChart from "./overallChart";
 
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
@@ -159,6 +160,7 @@ const Assets = () => {
 
       {renderAssetTables()}
       <History data={historyRecord} />
+      <OverallChart data={historyRecord} />
     </div>
   );
 };
