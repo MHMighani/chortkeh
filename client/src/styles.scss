@@ -16,12 +16,16 @@ $primary-color: lightblue;
     width: 100%;
     height: 40px;
     border-radius: 10px;
+
+    .value-info {
+      margin-right: 10px;
+    }
   }
 
   .table-info {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    width: 170px;
   }
 
   .table-container__head.active .toggle-btn {
@@ -47,5 +51,11 @@ $primary-color: lightblue;
 .asset-detail__header {
   .label {
     margin-left: 10px;
+  }
+}
+
+.styled-value {
+  span {
+    margin-left: 5px;
   }
 }
