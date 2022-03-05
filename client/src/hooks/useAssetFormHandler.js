@@ -25,7 +25,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
       name,
       onChange: handleChange,
       value: formState[name],
-      error: errors[name],
+      error: isSubmited ? errors[name] : "",
     };
   }
 
