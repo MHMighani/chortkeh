@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import getStyledValue from "../utils/getStyledValue";
+import StyledValue from "./styledValue";
 
 const TableContainer = ({ children, title, valueInfo }) => {
   const headEl = useRef(null);
@@ -27,13 +27,13 @@ const TableContainer = ({ children, title, valueInfo }) => {
         <div className="table-info">
           <span className="title">{title}</span>
           {valueInfo && (
-            <span className="value">
-              {getStyledValue(
-                valueInfo.value,
-                valueInfo.percentChange,
-                valueInfo.change
-              )}
-            </span>
+            <div className="value-info">
+              <StyledValue
+                value={valueInfo.value}
+                percentChange={valueInfo.percentChange}
+                change={valueInfo.change}
+              />
+            </div>
           )}
         </div>
         <span className="toggle-btn ">
