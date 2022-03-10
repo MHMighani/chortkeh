@@ -25,7 +25,7 @@ function CashTable({ assetsData, onDeleteAsset, overallValue }) {
   }, [assetsData, onDeleteAsset]);
 
   return (
-    <TableContainer title="نقدی" value={overallValue}>
+    <TableContainer title="نقدی" valueInfo={overallValue}>
       <Table data={procData} columns={columns} />
     </TableContainer>
   );
