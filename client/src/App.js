@@ -9,7 +9,6 @@ import CashForm from "./components/cashForm";
 import AssetDetails from "./components/assetDetails";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./styles.scss";
 
 function App() {
   return (
