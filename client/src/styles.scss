@@ -1,5 +1,16 @@
 $primary-color: lightblue;
 
+@font-face {
+  font-family: "B-Nazanin";
+  src: local("B-Nazanin"), url(./fonts/b-nazanin-regular.ttf) format("truetype");
+}
+
+body {
+  font-family: B-nazanin;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
 .table-container {
   width: 60%;
   margin: 0 auto;
