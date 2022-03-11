@@ -78,7 +78,7 @@ const GoldCurrencyForm = (props) => {
   }, [editState, marketPrices]);
 
   return (
-    <div className="addAsset container">
+    <div className="add-form">
       <form className="form-group" onSubmit={handleSubmit}>
         <SelectForm
           onChange={selectorHandler}
@@ -109,12 +109,11 @@ const GoldCurrencyForm = (props) => {
           readOnly={true}
           value={formState.marketPrice * formState.amount || 0}
         />
-        <div className="form-group">
-          <PurchaseDate
-            value={formState.purchaseDate}
-            onChange={handleDateChange}
-          />
-        </div>
+
+        <PurchaseDate
+          value={formState.purchaseDate}
+          onChange={handleDateChange}
+        />
 
         <SubmitBtn editState={editState} />
       </form>

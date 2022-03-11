@@ -85,7 +85,7 @@ const StockForm = (props) => {
   }, [editState, options]);
 
   return (
-    <div className="addStock container">
+    <div className="add-form">
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="form-group">
           <SelectForm
@@ -125,12 +125,12 @@ const StockForm = (props) => {
             name="totalPurchaseValue"
             readOnly={true}
           />
-          <div className="form-group">
-            <PurchaseDate
-              value={formState.purchaseDate}
-              onChange={handleDateChange}
-            />
-          </div>
+
+          <PurchaseDate
+            value={formState.purchaseDate}
+            onChange={handleDateChange}
+          />
+
           <SubmitBtn editState={editState} />
         </div>
       </form>
