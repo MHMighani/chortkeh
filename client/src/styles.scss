@@ -59,3 +59,30 @@ $primary-color: lightblue;
     margin-left: 5px;
   }
 }
+
+.add-form {
+  margin: 5rem auto;
+  padding: 0 2rem;
+  max-width: 700px;
+  height: 100vh;
+  justify-content: center;
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  label {
+    margin-bottom: 3px;
+  }
+
+  .purchase-date {
+    label {
+      margin-left: 2rem;
+    }
+  }
+
+  .btn.submit {
+    width: 100%;
+    padding: 10px;
+  }
+}

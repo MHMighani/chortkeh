@@ -33,7 +33,7 @@ const CashForm = (props) => {
   }, [editState]);
 
   return (
-    <div className="addAsset container">
+    <div className="add-form">
       <form className="form-group" onSubmit={handleSubmit}>
         <Input
           label="نام منبع نقدی"
