@@ -1,10 +1,16 @@
 import React from "react";
 
-const Input = ({ label, name, error, type = "number", ...rest }) => {
+const Input = ({ label, name, error, id, type = "number", ...rest }) => {
   return (
     <div className="form-group">
-      {label && <label htmlFor={name}>{label}</label>}
-      <input className="form-control" type={type} name={name} {...rest} />
+      {label && <label htmlFor={id}>{label}</label>}
+      <input
+        className="form-control"
+        id={id}
+        type={type}
+        name={name}
+        {...rest}
+      />
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );

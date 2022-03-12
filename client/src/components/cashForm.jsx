@@ -38,9 +38,14 @@ const CashForm = (props) => {
         <Input
           label="نام منبع نقدی"
           type="text"
+          id="cashFormDepositNameInput"
           {...getFormElementProps("name")}
         />
-        <Input label="موجودی" {...getFormElementProps("amount")} />
+        <Input
+          id="cashFormAmountInput"
+          label="موجودی"
+          {...getFormElementProps("amount")}
+        />
         <SubmitBtn editState={editState} />
       </form>
     </div>

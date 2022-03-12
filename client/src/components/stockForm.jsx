@@ -89,7 +89,8 @@ const StockForm = (props) => {
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="form-group">
           <SelectForm
-            placeholder="نام نماد را وارد کنید"
+            id="stockSelector"
+            label="انتخاب سهم"
             options={options}
             value={selectedOption}
             onChange={setSelectedOption}
@@ -97,28 +98,33 @@ const StockForm = (props) => {
             error={errors["name"]}
           />
           <Input
+            id="stockFormLastTradePriceInput"
             label="قیمت آخرین معامله"
             value={formState.lastTradePrice}
             min="0"
             readOnly={true}
           />
           <Input
+            id="stockFormLastPriceInput"
             label="قیمت پایانی"
             value={formState.lastPrice}
             min="0"
             readOnly={true}
           />
           <Input
+            id="stockFormAmountInput"
             label="مقدار سهام خریداری شده"
             min="0"
             {...getFormElementProps("amount")}
           />
           <Input
+            id="stockFormPurchasePriceInput"
             label="قیمت خرید سهم"
             min="0"
             {...getFormElementProps("purchasePrice")}
           />
           <Input
+            id="stockFormTotalValue"
             label="ارزش کل سهام خریداری شده"
             value={formState.purchasePrice * formState.amount}
             min="0"
