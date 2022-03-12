@@ -78,32 +78,40 @@ const GoldCurrencyForm = (props) => {
   }, [editState, marketPrices]);
 
   return (
-    <div className="add-form">
+    <div className="gold-form add-form">
       <form className="form-group" onSubmit={handleSubmit}>
         <SelectForm
+          label="نوع ارز یا سکه"
           onChange={selectorHandler}
           options={options}
-          placeholder="نوع دارایی را مشخص کنید"
           error={errors["id"]}
           value={selectedOption}
           isDisabled={editState}
         />
 
         <Input
+          id="goldFormPurchasePriceInput"
           label="قیمت خرید"
           min="0"
           {...getFormElementProps("purchasePrice")}
         />
 
         <Input
+          id="goldFormMarketPriceInput"
           label="قیمت روز"
           readOnly={true}
           {...getFormElementProps("marketPrice")}
         />
 
-        <Input label="مقدار" min="0" {...getFormElementProps("amount")} />
+        <Input
+          id="goldFormAmountInput"
+          label="مقدار"
+          min="0"
+          {...getFormElementProps("amount")}
+        />
 
         <Input
+          id="goldFormTotalValueInput"
           label="ارزش کل"
           name="totalValue"
           readOnly={true}
