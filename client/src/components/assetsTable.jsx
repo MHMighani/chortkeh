@@ -6,7 +6,8 @@ import Table from "./table";
 import TableContainer from "./tableContainer";
 
 function AssetsTable(props) {
-  const { assetsData, onDeleteAsset, prices, overallValue, title } = props;
+  const { assetsData, addLink, onDeleteAsset, prices, overallValue, title } =
+    props;
   const [procData, setProcData] = useState(assetsData);
 
   // mapping buttons
@@ -31,7 +32,7 @@ function AssetsTable(props) {
   }, [prices, assetsData, onDeleteAsset]);
 
   return (
-    <TableContainer valueInfo={overallValue} title={title}>
+    <TableContainer addLink={addLink} valueInfo={overallValue} title={title}>
       <Table data={procData} columns={columns} />
     </TableContainer>
   );

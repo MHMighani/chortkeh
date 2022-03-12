@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
 import StyledValue from "./styledValue";
 
-const TableContainer = ({ children, title, valueInfo }) => {
+const TableContainer = ({ children, title, addLink, valueInfo }) => {
   const headEl = useRef(null);
   const contentEl = useRef(null);
 
@@ -36,9 +37,16 @@ const TableContainer = ({ children, title, valueInfo }) => {
             </div>
           )}
         </div>
-        <span className="toggle-btn ">
-          <FontAwesomeIcon icon={faChevronDown} />
-        </span>
+        <div className="buttons">
+          {addLink && (
+            <Link to={addLink} className="add-btn">
+              <FontAwesomeIcon icon={faPlus} />
+            </Link>
+          )}
+          <span className="toggle-btn ">
+            <FontAwesomeIcon icon={faChevronDown} />
+          </span>
+        </div>
       </div>
       <div className="table" ref={contentEl}>
         {children}
