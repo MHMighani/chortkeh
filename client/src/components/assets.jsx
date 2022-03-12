@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Link } from "react-router-dom";
 import {
   getAssets,
   deleteAssetBySubClass,
@@ -131,6 +130,7 @@ const Assets = () => {
         overallValue: lastRecordChange[assets.assetClass],
         onDeleteAsset: handleDelMsgDisplay,
         key: assets.assetClass,
+        addLink: `/add/${assets.assetClass}`,
 
         title,
       };
@@ -154,10 +154,6 @@ const Assets = () => {
   return (
     <div className="assets">
       {modalBody}
-      <Link to="add" className="btn btn-primary">
-        افزودن
-      </Link>
-
       {renderAssetTables()}
       <History data={historyRecord} />
       <OverallChart data={historyRecord} />

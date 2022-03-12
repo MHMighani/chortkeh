@@ -33,6 +33,11 @@ body {
     }
   }
 
+  .buttons {
+    display: flex;
+    width: 80px;
+  }
+
   .table-info {
     display: flex;
     flex-wrap: wrap;

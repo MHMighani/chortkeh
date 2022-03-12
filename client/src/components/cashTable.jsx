@@ -6,7 +6,7 @@ import Table from "./table";
 
 import TableContainer from "./tableContainer";
 
-function CashTable({ assetsData, onDeleteAsset, overallValue }) {
+function CashTable({ assetsData, onDeleteAsset, overallValue, addLink }) {
   const [procData, setProcData] = useState(assetsData);
 
   // calculating overall-value for each asset
@@ -25,7 +25,7 @@ function CashTable({ assetsData, onDeleteAsset, overallValue }) {
   }, [assetsData, onDeleteAsset]);
 
   return (
-    <TableContainer title="نقدی" valueInfo={overallValue}>
+    <TableContainer title="نقدی" valueInfo={overallValue} addLink={addLink}>
       <Table data={procData} columns={columns} />
     </TableContainer>
   );
