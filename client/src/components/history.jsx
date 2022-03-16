@@ -1,6 +1,5 @@
 import React from "react";
 import { historyTableColumns } from "../utils/columns";
-import getPercentChange from "../utils/getPercentChange";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
@@ -10,23 +9,20 @@ import _ from "lodash";
 
 const History = ({ data }) => {
   const sortedData = _.sortBy(data, "id");
-  function getProcessedData(data) {
-    return data.map((item, index, arr) => {
-      const newItem = { ...item };
-      // first item
-      if (index === 0) return item;
 
-      const prevItem = arr[index - 1];
-
-      for (let key in item) {
-        const percentChange = getPercentChange(prevItem[key], item[key]);
-        if (!percentChange) continue;
-        newItem[key] = (
-          <StyledValue value={item[key]} percentChange={percentChange} />
+  function getStyledData(dataWithChanges) {
+    return dataWithChanges.map(({ ...historyRow }, index) => {
+      if (index === 0) return historyRow;
+      for (let key in historyRow) {
+        if (key === "id") continue;
+        historyRow[key] = (
+          <StyledValue
+            value={historyRow[key].value}
+            percentChange={historyRow[key].percentChange}
+          />
         );
       }
-
-      return newItem;
+      return historyRow;
     });
   }
 
@@ -37,7 +33,7 @@ const History = ({ data }) => {
     <TableContainer title="سابقه ارزش ها" valueInfo={lastChangeData?.overall}>
       <Table
         columns={historyTableColumns}
-        data={getProcessedData(sortedData).reverse()}
+        data={getStyledData(dataWithChanges).reverse()}
       />
     </TableContainer>
   );
