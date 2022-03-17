@@ -107,6 +107,7 @@ const Assets = () => {
 
     return mappedAssets.map((assets) => {
       const props = {
+        marketPrices: prices[assets.assetClass],
         assets,
         overallValue: lastRecordChange[assets.assetClass],
         onDeleteAsset: handleDelMsgDisplay,

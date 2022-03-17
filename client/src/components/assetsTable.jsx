@@ -1,15 +1,13 @@
 import React from "react";
 import allColumns from "../utils/columns";
-import { DeleteBtn } from "./buttons";
-import { EyeBtn } from "./buttons";
-import { EditBtn } from "./buttons";
+import { DeleteBtn, EyeBtn, EditBtn } from "./buttons";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 
-function AssetsTable(props) {
-  const { assets, onDeleteAsset, overallValue } = props;
-
+function AssetsTable({ assets, marketPrices, onDeleteAsset, overallValue }) {
   const { assetClass, data } = assets;
+
+  const priceKey = assetClass === "stock" ? "lastTradePrice" : "price";
 
   const titles = {
     goldCurrency: "طلا و ارز",
@@ -31,11 +29,14 @@ function AssetsTable(props) {
         <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
       );
     } else {
+      const price = marketPrices.find((p) => p.id === item.assetSubClass);
+
       item["detailBtn"] = (
         <EyeBtn
           requiredInfo={{
             assetSubClass: item.assetSubClass,
             assetClass: item.assetClass,
+            marketPrice: price[priceKey],
           }}
         />
       );

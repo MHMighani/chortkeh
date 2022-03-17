@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { getAssetsBySubClass } from "../services/assetsServices";
-import { getPriceBySubClass } from "../services/pricesServices";
 import getPercentChange from "../utils/getPercentChange";
 import { Card } from "react-bootstrap";
 import Table from "./table";
-import { EditBtn } from "./buttons";
-import { DeleteBtn } from "./buttons";
+import { EditBtn, DeleteBtn } from "./buttons";
 import { detailsTableColumns as columns } from "../utils/columns";
 import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import getCommaSepNum from "../utils/getCommaSepNum";
 
 const AssetDetails = (props) => {
-  const { assetClass, assetSubClass } = props.location.state;
+  const { assetSubClass, marketPrice } = props.location.state;
   const [assetData, setAssetData] = useState([]);
-  const [marketPrice, setMarketPrice] = useState(0);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
   function handleConfirm(item) {
@@ -30,17 +27,6 @@ const AssetDetails = (props) => {
     }
     fetchData();
   }, [assetSubClass]);
-
-  // getting market price
-  useEffect(() => {
-    async function fetchData() {
-      const { data } = await getPriceBySubClass(assetClass, assetSubClass);
-      const priceKey = assetClass === "stock" ? "lastTradePrice" : "price";
-      setMarketPrice(data[priceKey]);
-    }
-
-    fetchData();
-  }, [assetSubClass, assetClass]);
 
   function getStringDate(date) {
     return date.join("-");
