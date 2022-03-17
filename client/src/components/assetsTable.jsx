@@ -1,22 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { assetsTableColumns as columns } from "../utils/columns";
+import React from "react";
+import allColumns from "../utils/columns";
 import DeleteBtn from "./deleteBtn";
 import EyeBtn from "./eyeBtn";
+import EditBtn from "./editBtn";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 
 function AssetsTable(props) {
-  const { assetsData, addLink, onDeleteAsset, prices, overallValue, title } =
-    props;
-  const [procData, setProcData] = useState(assetsData);
+  const { assets, onDeleteAsset, overallValue } = props;
+
+  const { assetClass, data } = assets;
+
+  const titles = {
+    goldCurrency: "طلا و ارز",
+    goldcurrency: "طلا و ارز",
+    stock: "بورس",
+    cash: "نقدی",
+  };
+
+  const title = titles[assetClass];
+
+  const columns = allColumns[assetClass];
 
   // mapping buttons
-  useEffect(() => {
-    let procData = assetsData.map((item) => {
-      item["deleteBtn"] = (
-        <DeleteBtn deleteMethod={() => onDeleteAsset(item)} />
-      );
+  const mappedData = data.map(({ ...item }) => {
+    item["deleteBtn"] = <DeleteBtn deleteMethod={() => onDeleteAsset(item)} />;
 
+    if (assetClass === "cash") {
+      item["editBtn"] = (
+        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+      );
+    } else {
       item["detailBtn"] = (
         <EyeBtn
           requiredInfo={{
@@ -25,15 +39,18 @@ function AssetsTable(props) {
           }}
         />
       );
+    }
 
-      return item;
-    });
-    setProcData(procData);
-  }, [prices, assetsData, onDeleteAsset]);
+    return item;
+  });
 
   return (
-    <TableContainer addLink={addLink} valueInfo={overallValue} title={title}>
-      <Table data={procData} columns={columns} />
+    <TableContainer
+      addLink={`/add/${assetClass}`}
+      valueInfo={overallValue}
+      title={title}
+    >
+      <Table data={mappedData} columns={columns} />
     </TableContainer>
   );
 }

@@ -13,7 +13,6 @@ import { getPrices } from "../services/pricesServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
-import CashTable from "./cashTable";
 import getDataWithChange from "../utils/getDataWithChange";
 import History from "./history";
 import OverallChart from "./overallChart";
@@ -25,21 +24,6 @@ const Assets = () => {
   const [historyRecord, setHistoryRecord] = useState([]);
 
   const [mappedAssets, setMappedAssets] = useState([]);
-
-  // TODO: fix 'goldcurrency', 'goldCurrency'. one of them is enough
-  const tables = {
-    goldcurrency: AssetsTable,
-    goldCurrency: AssetsTable,
-    stock: AssetsTable,
-    cash: CashTable,
-  };
-
-  const titles = {
-    goldCurrency: "طلا و ارز",
-    goldcurrency: "طلا و ارز",
-    stock: "بورس",
-    cash: "نقدی",
-  };
 
   // gets all history
   useEffect(() => {
@@ -117,25 +101,19 @@ const Assets = () => {
     setMappedAssets(getMappedAssets());
   }, [prices, assetsData]);
 
-  // render asset's table based on their asset class
+  // render asset table
   function renderAssetTables() {
     const lastRecordChange = getDataWithChange(historyRecord, ["id"]).pop();
 
     return mappedAssets.map((assets) => {
-      const table = tables[assets.assetClass];
-      const title = titles[assets.assetClass];
-
       const props = {
-        assetsData: assets.data,
+        assets,
         overallValue: lastRecordChange[assets.assetClass],
         onDeleteAsset: handleDelMsgDisplay,
         key: assets.assetClass,
-        addLink: `/add/${assets.assetClass}`,
-
-        title,
       };
 
-      return React.createElement(table, props);
+      return React.createElement(AssetsTable, props);
     });
   }
 
