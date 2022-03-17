@@ -3,7 +3,7 @@ import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import useMarketPrices from "../hooks/useMarketPrices";
-import SubmitBtn from "./submitBtn";
+import { SubmitBtn } from "./buttons";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import PurchaseDate from "./purchaseDate";
 
