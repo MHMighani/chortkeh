@@ -53,3 +53,14 @@ export const historyTableColumns = [
   { name: "cash", label: "نقدی" },
   { name: "overall", label: "ارزش کل" },
 ];
+
+const columns = {
+  cash: cashTableColumns,
+  history: historyTableColumns,
+  details: detailsTableColumns,
+  goldCurrency: assetsTableColumns,
+  goldcurrency: assetsTableColumns,
+  stock: assetsTableColumns,
+};
+
+export default columns;
