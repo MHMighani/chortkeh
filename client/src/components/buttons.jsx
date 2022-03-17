@@ -17,12 +17,12 @@ export const SubmitBtn = ({ editState }) => {
 };
 
 export const EyeBtn = ({ requiredInfo }) => {
-  const { assetSubClass, assetClass } = requiredInfo;
+  const { assetSubClass, assetClass, marketPrice } = requiredInfo;
   return (
     <Link
       to={{
         pathname: `assets/details/`,
-        state: { assetSubClass, assetClass },
+        state: { assetSubClass, assetClass, marketPrice },
       }}
       className="btn btn-success"
     >
