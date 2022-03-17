@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Input from "./input";
-import SubmitBtn from "./submitBtn";
+import { SubmitBtn } from "./buttons";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import { getAsset } from "../services/assetsServices";
 

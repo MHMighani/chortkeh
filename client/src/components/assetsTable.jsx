@@ -1,8 +1,8 @@
 import React from "react";
 import allColumns from "../utils/columns";
-import DeleteBtn from "./deleteBtn";
-import EyeBtn from "./eyeBtn";
-import EditBtn from "./editBtn";
+import { DeleteBtn } from "./buttons";
+import { EyeBtn } from "./buttons";
+import { EditBtn } from "./buttons";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 

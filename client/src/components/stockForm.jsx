@@ -4,7 +4,7 @@ import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import useMarketPrices from "../hooks/useMarketPrices";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
-import SubmitBtn from "./submitBtn";
+import { SubmitBtn } from "./buttons";
 import getMarketPriceData from "../utils/getMarketPrice";
 import PurchaseDate from "./purchaseDate";
 
