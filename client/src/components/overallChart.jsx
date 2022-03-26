@@ -20,26 +20,34 @@ const OverallChart = ({ data }) => {
   });
 
   return (
-    <LineChart
-      style={{ margin: "0 auto" }}
-      width={730}
-      height={250}
-      data={chartData}
-      margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
-    >
-      <Legend />
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis style={{ fontSize: "14px" }} dataKey="name" />
-      <YAxis
-        style={{ fontSize: "14px" }}
-        tickFormatter={(value) => getCommaSepNum(value)}
-        domain={["dataMin- 10000000", "dataMax + 10000000"]}
-        dataKey="overall"
-      />
-      <Tooltip formatter={(value) => getCommaSepNum(value)} />
+    <div className="chartWrapper">
+      <LineChart
+        className="chart"
+        style={{ margin: "0 auto" }}
+        width={730}
+        height={250}
+        data={chartData}
+        margin={{ top: 5, right: 30, left: 30, bottom: 5 }}
+      >
+        <Legend />
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis style={{ fontSize: "14px" }} dataKey="name" />
+        <YAxis
+          style={{ fontSize: "14px" }}
+          tickFormatter={(value) => getCommaSepNum(value)}
+          domain={["dataMin- 10000000", "dataMax + 10000000"]}
+          dataKey="overall"
+        />
+        <Tooltip formatter={(value) => getCommaSepNum(value)} />
 
-      <Line type="monotone" dataKey="overall" name="ارزش کل" stroke="#8884d8" />
-    </LineChart>
+        <Line
+          type="monotone"
+          dataKey="overall"
+          name="ارزش کل"
+          stroke="#8884d8"
+        />
+      </LineChart>
+    </div>
   );
 };
 
