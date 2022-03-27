@@ -30,12 +30,14 @@ const History = ({ data }) => {
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
 
   return (
-    <TableContainer title="سابقه ارزش ها" valueInfo={lastChangeData?.overall}>
-      <Table
-        columns={historyTableColumns}
-        data={getStyledData(dataWithChanges).reverse()}
-      />
-    </TableContainer>
+    <div className="history-info">
+      <TableContainer title="ارزش کل" valueInfo={lastChangeData?.overall}>
+        <Table
+          columns={historyTableColumns}
+          data={getStyledData(dataWithChanges).reverse()}
+        />
+      </TableContainer>
+    </div>
   );
 };
 
