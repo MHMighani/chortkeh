@@ -42,7 +42,6 @@ const useAssetFormHandler = (initialState = {}, props) => {
         : formState.label;
 
     const value = {
-      // id: formState.id,
       label,
       amount: Number(formState.amount),
       purchaseDate: formState.purchaseDate,
