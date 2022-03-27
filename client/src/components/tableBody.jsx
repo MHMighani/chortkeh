@@ -22,7 +22,7 @@ function TableBody(props) {
           <tr key={row.id}>
             {columns.map((column) => {
               return (
-                <td key={column.name}>
+                <td key={column.name} data-th={column.label}>
                   {getCellContent(column, row, rowIndex)}
                 </td>
               );

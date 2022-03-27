@@ -1,5 +1,7 @@
 $primary-color: lightblue;
 
+$table-breakpoint: 480px;
+
 @font-face {
   font-family: "B-Nazanin";
   src: local("B-Nazanin"), url(./fonts/b-nazanin-regular.ttf) format("truetype");
@@ -12,7 +14,8 @@ body {
 }
 
 .table-container {
-  width: 60%;
+  width: 90%;
+  max-width: 1000px;
   margin: 0 auto;
 
   .table-container__head {
@@ -28,6 +31,8 @@ body {
     height: 40px;
     border-radius: 10px;
 
+    font-size: 1rem;
+
     .value-info {
       margin-right: 10px;
     }
@@ -35,6 +40,8 @@ body {
 
   .buttons {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 80px;
   }
 
@@ -51,7 +58,7 @@ body {
   .table {
     width: 100%;
     max-height: 0;
-    overflow: hidden;
+    overflow-y: hidden;
     transition: max-height 0.2s ease-out;
   }
 
@@ -62,6 +69,12 @@ body {
     left: 0;
     font-size: 16px;
     transition: transform ease-in-out 0.2s;
+  }
+}
+
+.history-info {
+  .styled-value {
+    display: inline-block;
   }
 }
 
@@ -107,4 +120,62 @@ body {
 //chart
 .chartWrapper {
   overflow-x: auto;
+}
+
+// responsive table
+.table {
+  overflow-x: auto;
+  th,
+  td {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+
+    &:first-child {
+      background-color: aqua;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid grey;
+    }
+
+    &:before {
+      content: attr(data-th) ": ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+  }
+}
+
+@media (min-width: $table-breakpoint) {
+  .table-container {
+    .table-container__head {
+      font-size: 1.2rem;
+    }
+  }
+  .table {
+    th,
+    td {
+      display: table-cell;
+      text-align: center;
+    }
+
+    td {
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:before {
+        display: none;
+      }
+    }
+  }
 }
