@@ -1,16 +1,33 @@
 import React from "react";
 
-const Input = ({ label, name, error, id, type = "number", ...rest }) => {
+import NumberFormat from "react-number-format";
+
+const Input = ({
+  label,
+  name,
+  error,
+  id,
+  type = "number",
+  onChange = () => {},
+  ...rest
+}) => {
+  const mutualProps = { id, className: "form-control", name, ...rest };
+
   return (
     <div className="form-group">
       {label && <label htmlFor={id}>{label}</label>}
-      <input
-        className="form-control"
-        id={id}
-        type={type}
-        name={name}
-        {...rest}
-      />
+      {type === "number" ? (
+        <NumberFormat
+          thousandSeparator={true}
+          isNumericString={true}
+          onValueChange={(values) =>
+            onChange({ target: { name, value: values.floatValue } })
+          }
+          {...mutualProps}
+        />
+      ) : (
+        <input type={type} onChange={onChange} {...mutualProps} />
+      )}
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
