@@ -13,6 +13,12 @@ body {
   font-size: 1.2rem;
 }
 
+.btn{
+  svg{
+    vertical-align: sub;
+  }
+}
+
 .table-container {
   width: 90%;
   max-width: 1000px;
@@ -43,6 +49,10 @@ body {
     justify-content: center;
     align-items: center;
     width: 80px;
+
+    a,span,svg{
+      vertical-align: sub;
+    }
   }
 
   .table-info {
@@ -88,6 +98,10 @@ body {
   span {
     margin-left: 5px;
   }
+
+  span,svg{
+    vertical-align: sub;
+  }
 }
 
 .add-form {
@@ -129,6 +143,7 @@ body {
   td {
     text-align: right;
     white-space: nowrap;
+    vertical-align: sub;
   }
 
   th {

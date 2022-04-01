@@ -25,7 +25,7 @@ function StyledValue({ value, percentChange, change = "" }) {
       {percentChange !== 0 && (
         <span className="percent">({percentChange})</span>
       )}
-      {change && <span className="change">{getCommaSepNum(change)}</span>}
+      {change !== 0 && <span className="change">{getCommaSepNum(change)}</span>}
     </div>
   );
 }
