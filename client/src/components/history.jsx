@@ -3,6 +3,7 @@ import { historyTableColumns } from "../utils/columns";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
+import TimeFrame from "./timeFrame";
 import getDataWithChange from "../utils/getDataWithChange";
 
 import moment from "moment-jalali";
@@ -17,9 +18,7 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-function getFilteredDateByTimeFrame(data, timeFrame) {
-  // undefined dataset
-  if (!data.length) return data;
+function getFilteredDateByTimeFrame(data = [], timeFrame) {
   const dateFormat = "jYYYY-jMM-jDD";
 
   const dataByTimeFrame = [data[0]];
@@ -42,8 +41,6 @@ const History = ({ data }) => {
   const [timeFrame, setTimeFrame] = useState(1);
   const sortedData = _.sortBy(data, "id").reverse();
 
-  const timeFramedData = getFilteredDateByTimeFrame([...sortedData], timeFrame);
-
   function getStyledData(dataWithChanges) {
     return dataWithChanges.map(({ ...historyRow }, index) => {
       if (index === 0) return historyRow;
@@ -60,25 +57,17 @@ const History = ({ data }) => {
     });
   }
 
+  const timeFramedData =
+    timeFrame > 1
+      ? getFilteredDateByTimeFrame([...sortedData], timeFrame)
+      : [...sortedData].reverse();
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
 
   return (
     <div className="history-info">
       <TableContainer title="ارزش کل" valueInfo={lastChangeData?.overall}>
-        <div className="timeframe">
-          <label htmlFor="timeframe__select">بازه زمانی</label>
-          <select
-            name="timeframe__select"
-            onChange={(e) => setTimeFrame(e.target.value)}
-            id="timeframe__select"
-          >
-            <option value="1">روزانه</option>
-            <option value="7">هفتگی</option>
-            <option value="30">ماهانه</option>
-            <option value="365">سالانه</option>
-          </select>
-        </div>
+        <TimeFrame onTimeFrameChange={setTimeFrame} />
         <Table
           columns={historyTableColumns}
           data={getStyledData(dataWithChanges).reverse()}
