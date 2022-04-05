@@ -84,7 +84,8 @@ body {
 
 .history-info {
   .styled-value {
-    display: inline-block;
+    display: flex;
+    justify-content: flex-start;
   }
 }
 
@@ -152,6 +153,10 @@ body {
 
   td {
     display: block;
+
+    &.row-number{
+      width: 50px;
+    }
 
     &:first-child {
       background-color: aqua;
