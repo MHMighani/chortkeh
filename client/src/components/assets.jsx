@@ -15,7 +15,7 @@ import AssetsTable from "./assetsTable";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import getDataWithChange from "../utils/getDataWithChange";
 import History from "./history";
-import OverallChart from "./overallChart";
+import Charts from "./charts";
 
 const Assets = () => {
   const [assetsData, setAssetsData] = useState([]);
@@ -135,7 +135,7 @@ const Assets = () => {
       {modalBody}
       {renderAssetTables()}
       <History data={historyRecord} />
-      <OverallChart data={historyRecord} />
+      <Charts historyRecord={historyRecord} assetsData={mappedAssets} />
     </div>
   );
 };
