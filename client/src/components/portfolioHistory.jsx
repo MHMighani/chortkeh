@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import _ from "lodash";
+import React, { useState, useEffect } from "react";
 import { historyTableColumns } from "../utils/columns";
+import { saveOverallHistory } from "../services/historyService";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
 import TimeFrame from "./timeFrame";
 import getDataWithChange from "../utils/getDataWithChange";
-
-import moment from "moment-jalali";
-
-import _ from "lodash";
+import getFilteredDateByTimeFrame from "../utils/getFilteredDataByTimeFrame";
 
 /*
 The ideal version of this  app will record values every day
@@ -18,28 +17,33 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-function getFilteredDateByTimeFrame(data = [], timeFrame) {
-  const dateFormat = "jYYYY-jMM-jDD";
-
-  const dataByTimeFrame = [data[0]];
-  let round = 1;
-  let start = moment(data[0].id, dateFormat);
-
-  for (let record of data) {
-    const diff = moment(record.id, dateFormat).diff(start, "days");
-
-    if (diff + round * timeFrame < 0) {
-      dataByTimeFrame.unshift(record);
-      round += 1;
-    }
-  }
-
-  return dataByTimeFrame;
-}
-
-const History = ({ data }) => {
+const PortfolioHistory = ({ data, mappedAssets }) => {
   const [timeFrame, setTimeFrame] = useState(1);
   const sortedData = _.sortBy(data, "id").reverse();
+
+  // checks if data is ready to save in history record
+  function checkMappedValidation(mappedAssets) {
+    const isDataFetchComplete =
+      mappedAssets.length && !mappedAssets.some((item) => !item.data.length);
+
+    if (isDataFetchComplete) return true;
+  }
+
+  // saves overallValues in history
+  useEffect(() => {
+    if (checkMappedValidation(mappedAssets)) {
+      const normalizedOverall = mappedAssets.reduce(
+        (prev, current) => {
+          prev[current.assetClass] = current.overallValue;
+          prev.overall += current.overallValue;
+          return prev;
+        },
+        { overall: 0 }
+      );
+
+      saveOverallHistory(normalizedOverall);
+    }
+  }, [mappedAssets]);
 
   function getStyledData(dataWithChanges) {
     return dataWithChanges.map(({ ...historyRow }, index) => {
@@ -77,4 +81,4 @@ const History = ({ data }) => {
   );
 };
 
-export default History;
+export default PortfolioHistory;
