@@ -22,7 +22,11 @@ function TableBody(props) {
           <tr key={row.id}>
             {columns.map((column) => {
               return (
-                <td key={column.name} data-th={column.label}>
+                <td
+                  key={column.name}
+                  data-th={column.label}
+                  className={column.name === "rowNum" ? "row-number" : ""}
+                >
                   {getCellContent(column, row, rowIndex)}
                 </td>
               );

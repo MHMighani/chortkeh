@@ -14,7 +14,7 @@ const QuoteChart = ({ data }) => {
 
   return (
     <div className="chartWrapper">
-      <PieChart width={1000} height={1000}>
+      <PieChart width={500} height={500}>
         <Pie
           data={pieChartData}
           dataKey="value"
