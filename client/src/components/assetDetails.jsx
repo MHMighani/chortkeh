@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { getAssetsBySubClass } from "../services/assetsServices";
+import { useContext } from "react";
 import getPercentChange from "../utils/getPercentChange";
 import { Card } from "react-bootstrap";
 import Table from "./table";
@@ -9,24 +8,22 @@ import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import getCommaSepNum from "../utils/getCommaSepNum";
 
+import { AssetsContext } from "../context/assetsContext";
+
 const AssetDetails = (props) => {
   const { assetSubClass, marketPrice } = props.location.state;
-  const [assetData, setAssetData] = useState([]);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
+
+  const [assetsData, dispatchAssetsData] = useContext(AssetsContext);
+
+  const assetData = assetsData.filter(
+    (asset) => asset.assetSubClass === assetSubClass
+  );
 
   function handleConfirm(item) {
     deleteAsset(item.id);
-    setAssetData(assetData.filter((asset) => asset.id !== item.id));
+    dispatchAssetsData({ type: "delete_by_subclass", payload: item.id });
   }
-
-  // getting assets
-  useEffect(() => {
-    async function fetchData() {
-      const { data } = await getAssetsBySubClass(assetSubClass);
-      setAssetData(data);
-    }
-    fetchData();
-  }, [assetSubClass]);
 
   function getStringDate(date) {
     return date.join("-");
