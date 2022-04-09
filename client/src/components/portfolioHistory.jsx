@@ -7,6 +7,7 @@ import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
 import TimeFrame from "./timeFrame";
 import getDataWithChange from "../utils/getDataWithChange";
+import getNormalizedOverallValue from "../utils/getNormalizedOverallValue";
 import getFilteredDateByTimeFrame from "../utils/getFilteredDataByTimeFrame";
 
 /*
@@ -17,7 +18,7 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-const PortfolioHistory = ({ data, mappedAssets }) => {
+const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
   const [timeFrame, setTimeFrame] = useState(1);
   const sortedData = _.sortBy(data, "id").reverse();
 
@@ -31,18 +32,21 @@ const PortfolioHistory = ({ data, mappedAssets }) => {
 
   // saves overallValues in history
   useEffect(() => {
-    if (checkMappedValidation(mappedAssets)) {
-      const normalizedOverall = mappedAssets.reduce(
-        (prev, current) => {
-          prev[current.assetClass] = current.overallValue;
-          prev.overall += current.overallValue;
-          return prev;
-        },
-        { overall: 0 }
-      );
+    if (!checkMappedValidation(mappedAssets)) return;
+    let newData = [...data];
+    const normalizedOverall = getNormalizedOverallValue(mappedAssets);
+    let isNewRecord = true;
 
-      saveOverallHistory(normalizedOverall);
+    // today's history was recorded before
+    if (sortedData[0].id === normalizedOverall.id) {
+      isNewRecord = false;
+      newData[newData.length - 1] = { ...normalizedOverall };
+    } else {
+      newData = [...newData, normalizedOverall];
     }
+
+    saveOverallHistory(normalizedOverall, isNewRecord);
+    setHistoryRecord(newData);
   }, [mappedAssets]);
 
   function getStyledData(dataWithChanges) {
