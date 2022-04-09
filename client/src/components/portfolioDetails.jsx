@@ -93,7 +93,11 @@ const PortfolioDetails = () => {
         historyRecord={historyRecord}
         prices={prices}
       />
-      <PortfolioHistory data={historyRecord} mappedAssets={mappedAssets} />
+      <PortfolioHistory
+        setHistoryRecord={setHistoryRecord}
+        data={historyRecord}
+        mappedAssets={mappedAssets}
+      />
       <Charts historyRecord={historyRecord} assetsData={mappedAssets} />
     </div>
   );
