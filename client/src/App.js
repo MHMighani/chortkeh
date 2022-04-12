@@ -6,6 +6,7 @@ import StockForm from "./components/stockForm";
 import CashForm from "./components/cashForm";
 import AssetDetails from "./components/assetDetails";
 import PortfolioDetails from "./components/portfolioDetails";
+import Portfolio from "./components/Portfolio";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <NavbarT />
       <Switch>
+        <Route exact path="/" component={Portfolio} />
         <Route path="/portfolio-details" component={PortfolioDetails} />
         <Route path="/assets/details/" component={AssetDetails} />
         <Route exact path="/add/goldcurrency/" component={GoldCurrencyForm} />
