@@ -24,6 +24,7 @@ const Portfolio = () => {
       <div className="portfolio__quota-bar">
         {Object.entries(quotaStatus).map(([assetClass, quota]) => (
           <span
+            key={assetClass}
             className={`quota ${assetClass}`}
             style={{
               width: `${quota}%`,
