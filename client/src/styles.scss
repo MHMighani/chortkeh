@@ -87,6 +87,13 @@ body {
     display: flex;
     justify-content: flex-start;
   }
+  .filter-bar{
+    display: flex;
+
+    .filter{
+      margin-left:25px;
+    }
+  }
 }
 
 .asset-detail__header {

@@ -5,10 +5,13 @@ import { saveOverallHistory } from "../services/historyService";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
-import TimeFrame from "./timeFrame";
+import TimeFrameSelect from "./timeFrameSelect";
 import getDataWithChange from "../utils/getDataWithChange";
+import ResultsNumSelect from "./ResultsNumSelect";
+import Pagination from "./pagination";
 import getNormalizedOverallValue from "../utils/getNormalizedOverallValue";
 import getFilteredDateByTimeFrame from "../utils/getFilteredDataByTimeFrame";
+import getPaginatedData from "../utils/getPaginatedData";
 
 /*
 The ideal version of this  app will record values every day
@@ -20,6 +23,8 @@ nearest prices to the start and end of the time frame
 
 const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
   const [timeFrame, setTimeFrame] = useState(1);
+  const [resultsNum, setResultsNum] = useState(10);
+  const [currentPage, setCurrenctPage] = useState(1);
   const sortedData = _.sortBy(data, "id").reverse();
 
   // checks if data is ready to save in history record
@@ -49,6 +54,7 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
     setHistoryRecord(newData);
   }, [mappedAssets]);
 
+  // returns styled data for table cell
   function getStyledData(dataWithChanges) {
     return dataWithChanges.map(({ ...historyRow }, index) => {
       if (index === 0) return historyRow;
@@ -71,14 +77,21 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
       : [...sortedData].reverse();
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
+  const styledData = getStyledData(dataWithChanges).reverse();
+  const paginatedData = getPaginatedData(styledData, currentPage, resultsNum);
 
   return (
     <div className="history-info">
       <TableContainer title="ارزش کل" valueInfo={lastChangeData?.overall}>
-        <TimeFrame onTimeFrameChange={setTimeFrame} />
-        <Table
-          columns={historyTableColumns}
-          data={getStyledData(dataWithChanges).reverse()}
+        <div className="filter-bar">
+          <TimeFrameSelect onTimeFrameChange={setTimeFrame} />
+          <ResultsNumSelect onResultsNumChange={setResultsNum} />
+        </div>
+        <Table columns={historyTableColumns} data={paginatedData} />
+        <Pagination
+          num={Math.ceil(timeFramedData.length / resultsNum)}
+          onPageChange={setCurrenctPage}
+          active={currentPage}
         />
       </TableContainer>
     </div>
