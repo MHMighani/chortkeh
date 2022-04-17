@@ -1,7 +1,7 @@
 import React from "react";
-const TimeFrame = ({ onTimeFrameChange }) => {
+const TimeFrameSelect = ({ onTimeFrameChange }) => {
   return (
-    <div className="timeframe">
+    <div className="timeframe-filter filter">
       <label htmlFor="timeframe__select">بازه زمانی</label>
       <select
         name="timeframe__select"
@@ -17,4 +17,4 @@ const TimeFrame = ({ onTimeFrameChange }) => {
   );
 };
 
-export default TimeFrame;
+export default TimeFrameSelect;
