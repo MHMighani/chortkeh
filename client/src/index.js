@@ -1,17 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import AssetsContextProvider from "./context/assetsContext";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.rtl.css";
 import "./fonts/b-nazanin-regular.ttf";
 import "./styles.scss";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <AssetsContextProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
+  </AssetsContextProvider>,
   document.getElementById("root")
 );
 
