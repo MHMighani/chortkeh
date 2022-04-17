@@ -36,3 +36,4 @@ typings/
 
 
 server/db.json
+.vscode/settings.json

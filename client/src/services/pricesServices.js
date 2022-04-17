@@ -16,3 +16,11 @@ export function getStockPrice(stockId) {
 
   return data;
 }
+
+export function getAllPrices() {
+  const promises = ["stock", "goldCurrency"].map((assetClass) =>
+    getPrices(assetClass)
+  );
+
+  return Promise.all(promises);
+}
