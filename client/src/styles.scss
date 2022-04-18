@@ -70,6 +70,14 @@ body {
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 0.2s ease-out;
+    
+    td.operations{
+      width:200px;
+      
+      button{
+        margin:0 20px;
+      }
+    }
   }
 
   .toggle-btn {

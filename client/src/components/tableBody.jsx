@@ -25,7 +25,9 @@ function TableBody(props) {
                 <td
                   key={column.name}
                   data-th={column.label}
-                  className={column.name === "rowNum" ? "row-number" : ""}
+                  className={
+                    column.name === "rowNum" ? "row-number" : column.name
+                  }
                 >
                   {getCellContent(column, row, rowIndex)}
                 </td>
