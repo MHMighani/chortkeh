@@ -1,7 +1,6 @@
 const rowNum = { name: "rowNum", label: "ردیف" };
 const amountCol = { name: "amount", label: "مقدار" };
-const editBtnCol = { name: "editBtn" };
-const deleteBtnCol = { name: "deleteBtn" };
+const operationsCol = { name: "operations" };
 const averagePurchasePriceCol = {
   name: "purchasePrice",
   label: "میانگین قیمت خرید",
@@ -11,16 +10,9 @@ const changePercentCol = { name: "changePercent", label: "درصد سود یا �
 const purchaseDateCol = { name: "purchaseDate", label: "تاریخ خرید" };
 const priceCol = { name: "price", label: "ارزش روز" };
 const overallValueCol = { name: "overallValue", label: "ارزش کل" };
-const detailBtnCol = { name: "detailBtn" };
 const nameCol = { name: "label", label: "نام دارایی" };
 
-export const cashTableColumns = [
-  rowNum,
-  nameCol,
-  amountCol,
-  editBtnCol,
-  deleteBtnCol,
-];
+export const cashTableColumns = [rowNum, nameCol, amountCol, operationsCol];
 
 export const assetsTableColumns = [
   rowNum,
@@ -30,8 +22,7 @@ export const assetsTableColumns = [
   priceCol,
   changePercentCol,
   overallValueCol,
-  detailBtnCol,
-  deleteBtnCol,
+  operationsCol,
 ];
 
 export const detailsTableColumns = [
@@ -41,8 +32,7 @@ export const detailsTableColumns = [
   changePercentCol,
   purchaseDateCol,
   overallValueCol,
-  editBtnCol,
-  deleteBtnCol,
+  operationsCol,
 ];
 
 export const historyTableColumns = [
