@@ -1,4 +1,4 @@
-import QuotaChart from "./quoteChart";
+import QuotaChart from "./quotaChart";
 import OverallChart from "./overallChart";
 
 const Charts = ({ historyRecord, assetsData }) => {
