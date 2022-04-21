@@ -1,6 +1,7 @@
 $primary-color: lightblue;
 $table-breakpoint: 480px;
 $portfolio-bar-height: 50px;
+$large-screen-breakpoint: 1200px;
 
 @font-face {
   font-family: "B-Nazanin";
@@ -148,8 +149,15 @@ body {
 }
 
 //chart
+.charts{
+  
+  display: flex;
+  flex-flow: column wrap;
+  
+}
 .chartWrapper {
   overflow-x: auto;
+  margin:auto 0;
 }
 
 .recharts-wrapper{
@@ -227,8 +235,6 @@ body {
 }
 
 
-
-
 // responsive table
 .table {
   overflow-x: auto;
@@ -289,5 +295,12 @@ body {
         display: none;
       }
     }
+  }
+}
+
+@media (min-width: $large-screen-breakpoint) {
+  .charts{
+    flex-direction: row;
+    justify-content: center;
   }
 }
