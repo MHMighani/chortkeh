@@ -24,7 +24,7 @@ const OverallChart = ({ data }) => {
       <LineChart
         className="chart"
         style={{ margin: "0 auto" }}
-        width={730}
+        width={500}
         height={250}
         data={LineChartData}
         margin={{ top: 5, right: 30, left: 30, bottom: 5 }}

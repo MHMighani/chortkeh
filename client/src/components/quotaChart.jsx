@@ -46,10 +46,10 @@ class QuotaChart extends React.PureComponent {
             dataKey="value"
             nameKey="assetClass"
             cx="50%"
-            cy={250}
+            cy={200}
             label={renderCustomizedLabel}
             labelLine={false}
-            outerRadius={200}
+            outerRadius={150}
             fill="#8884d8"
           >
             {pieChartData.map((entry, index) => (
