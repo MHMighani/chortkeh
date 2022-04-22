@@ -74,7 +74,7 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
       : [...sortedData].reverse();
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
-  const styledData = getStyledData(dataWithChanges).reverse();
+  // const styledData = getStyledData(dataWithChanges).reverse();
 
   return (
     <div className="history-info">
@@ -85,8 +85,10 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
         </div>
         <Table
           columns={historyTableColumns}
-          data={styledData}
+          data={dataWithChanges}
           pageSize={pageSize}
+          styleFunction={getStyledData}
+          extraSortField={["value"]}
         />
       </TableContainer>
     </div>
