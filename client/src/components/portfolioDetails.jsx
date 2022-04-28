@@ -1,30 +1,31 @@
 import _ from "lodash";
 import PortfolioHistory from "./portfolioHistory";
 import AssetsDataTables from "./assetsDataTables";
-import { getPrices } from "../services/pricesServices";
-import {
-  getAssets,
-  deleteAsset,
-  deleteAssetBySubClass,
-} from "../services/assetsServices";
-import { getHistoryRecord } from "../services/historyService";
+import { deleteAsset, deleteAssetBySubClass } from "../services/assetsServices";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import { useState, useEffect } from "react";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
+
+import { connect } from "react-redux";
+import { fetchPrices, fetchAssets, fetchHistoryRecord } from "../actions";
+
 import Charts from "./charts";
 
-const PortfolioDetails = () => {
-  const [assetsData, setAssetsData] = useState([]);
-  const [prices, setPrices] = useState({});
-  const [historyRecord, setHistoryRecord] = useState([]);
+const PortfolioDetails = (props) => {
   const [mappedAssets, setMappedAssets] = useState([]);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
+  useEffect(() => {
+    props.fetchAssets();
+    props.fetchPrices();
+    props.fetchHistoryRecord();
+  }, []);
+
   function handleConfirm(toDeleteAsset) {
-    const newAssetsData = assetsData.filter(
+    const newAssetsData = props.assets.filter(
       (asset) => asset.id !== toDeleteAsset.id
     );
-    setAssetsData(newAssetsData);
+    // setAssetsData(newAssetsData);
     if (toDeleteAsset.assetClass === "cash") {
       deleteAsset(toDeleteAsset.id);
     } else {
@@ -32,75 +33,64 @@ const PortfolioDetails = () => {
     }
   }
 
-  // gets all history
-  useEffect(() => {
-    async function fetchHistoryApi() {
-      const { data } = await getHistoryRecord();
-
-      setHistoryRecord(data);
-    }
-
-    fetchHistoryApi();
-  }, []);
-
-  // gets updated market prices
-  useEffect(() => {
-    async function fetchApi() {
-      let goldCurrencyPricesResponse = await getPrices("goldcurrency");
-      let stockPricesResponse = await getPrices("stock");
-
-      setPrices({
-        goldCurrency: [...goldCurrencyPricesResponse.data],
-        stock: [...stockPricesResponse.data],
-      });
-    }
-    fetchApi();
-  }, []);
-
-  // gets assets information
-  useEffect(() => {
-    async function fetchApi() {
-      let { data } = await getAssets();
-
-      setAssetsData(data);
-    }
-
-    fetchApi();
-  }, []);
-
   // sets mappedAssets
   useEffect(() => {
     function getMappedAssets() {
-      const data = _.groupBy(assetsData, "assetClass");
+      const data = _.groupBy(props.assets, "assetClass");
 
       return Object.values(data).map((assets) => {
         const assetClass = assets[0].assetClass;
 
-        const [mappedAssets, overallValue] = mapPricesToAssets(prices, assets);
+        const [mappedAssets, overallValue] = mapPricesToAssets(
+          props.prices,
+          assets
+        );
 
         return { assetClass, data: mappedAssets, overallValue };
       });
     }
-    setMappedAssets(getMappedAssets());
-  }, [prices, assetsData]);
+    if (Object.keys(props.prices).length && props.assets.length) {
+      setMappedAssets(getMappedAssets());
+    }
+  }, [props.prices, props.assets]);
 
-  return (
-    <div className="portfolio-details">
-      {modalBody}
-      <AssetsDataTables
-        mappedAssets={mappedAssets}
-        handleDelMsgDisplay={handleDelMsgDisplay}
-        historyRecord={historyRecord}
-        prices={prices}
-      />
-      <PortfolioHistory
-        setHistoryRecord={setHistoryRecord}
-        data={historyRecord}
-        mappedAssets={mappedAssets}
-      />
-      <Charts historyRecord={historyRecord} assetsData={mappedAssets} />
-    </div>
-  );
+  if (
+    Object.values(props.prices).length &&
+    props.assets.length &&
+    props.historyRecord.length
+  ) {
+    return (
+      <div className="portfolio-details">
+        {modalBody}
+        <AssetsDataTables
+          mappedAssets={mappedAssets}
+          handleDelMsgDisplay={handleDelMsgDisplay}
+          historyRecord={props.historyRecord}
+          prices={props.prices}
+        />
+        <PortfolioHistory
+          setHistoryRecord={() => {}}
+          data={props.historyRecord}
+          mappedAssets={mappedAssets}
+        />
+        <Charts historyRecord={props.historyRecord} assetsData={mappedAssets} />
+      </div>
+    );
+  } else {
+    return null;
+  }
 };
 
-export default PortfolioDetails;
+const mapStateToProps = (state) => {
+  return {
+    assets: state.assets,
+    prices: state.prices,
+    historyRecord: state.historyRecord,
+  };
+};
+
+export default connect(mapStateToProps, {
+  fetchPrices,
+  fetchAssets,
+  fetchHistoryRecord,
+})(PortfolioDetails);
