@@ -1,13 +1,17 @@
 import _ from "lodash";
 import PortfolioHistory from "./portfolioHistory";
 import AssetsDataTables from "./assetsDataTables";
-import { deleteAsset, deleteAssetBySubClass } from "../services/assetsServices";
 import mapPricesToAssets from "../utils/mapPricesToAssets";
 import { useState, useEffect } from "react";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
 import { connect } from "react-redux";
-import { fetchPrices, fetchAssets, fetchHistoryRecord } from "../actions";
+import {
+  fetchPrices,
+  fetchAssets,
+  fetchHistoryRecord,
+  deleteAsset,
+} from "../actions";
 
 import Charts from "./charts";
 
@@ -22,15 +26,7 @@ const PortfolioDetails = (props) => {
   }, []);
 
   function handleConfirm(toDeleteAsset) {
-    const newAssetsData = props.assets.filter(
-      (asset) => asset.id !== toDeleteAsset.id
-    );
-    // setAssetsData(newAssetsData);
-    if (toDeleteAsset.assetClass === "cash") {
-      deleteAsset(toDeleteAsset.id);
-    } else {
-      deleteAssetBySubClass(toDeleteAsset.assetSubClass);
-    }
+    props.deleteAsset(toDeleteAsset);
   }
 
   // sets mappedAssets
@@ -49,9 +45,8 @@ const PortfolioDetails = (props) => {
         return { assetClass, data: mappedAssets, overallValue };
       });
     }
-    if (Object.keys(props.prices).length && props.assets.length) {
-      setMappedAssets(getMappedAssets());
-    }
+
+    setMappedAssets(getMappedAssets());
   }, [props.prices, props.assets]);
 
   if (
@@ -68,11 +63,7 @@ const PortfolioDetails = (props) => {
           historyRecord={props.historyRecord}
           prices={props.prices}
         />
-        <PortfolioHistory
-          setHistoryRecord={() => {}}
-          data={props.historyRecord}
-          mappedAssets={mappedAssets}
-        />
+        <PortfolioHistory mappedAssets={mappedAssets} />
         <Charts historyRecord={props.historyRecord} assetsData={mappedAssets} />
       </div>
     );
@@ -93,4 +84,5 @@ export default connect(mapStateToProps, {
   fetchPrices,
   fetchAssets,
   fetchHistoryRecord,
+  deleteAsset,
 })(PortfolioDetails);

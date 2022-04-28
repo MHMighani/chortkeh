@@ -1,6 +1,7 @@
 import { getAssets } from "../services/assetsServices";
 import { getPrices } from "../services/pricesServices";
 import { getHistoryRecord } from "../services/historyService";
+import { deleteAsset as deleteAssetApi } from "../services/assetsServices";
 
 export const fetchAssets = () => async (dispatch) => {
   const response = await getAssets();
@@ -24,4 +25,21 @@ export const fetchHistoryRecord = () => async (dispatch) => {
     type: "FETCH_HISTORY",
     payload: historyRecord,
   });
+};
+
+export const deleteAsset = (toDeleteAsset) => async (dispatch) => {
+  dispatch({
+    type: "DELETE_ASSET_BY_SUBCLASS",
+    payload: toDeleteAsset,
+  });
+
+  await deleteAssetApi(toDeleteAsset.id);
+};
+
+export const addAsset = (asset) => async (dispatch) => {
+  dispatch({ type: "ADD_ASSET", payload: asset });
+};
+
+export const updateHistoryRecord = (newHistoryRecord) => async (dispatch) => {
+  dispatch({ type: "UPDATE_HISTORY", payload: newHistoryRecord });
 };
