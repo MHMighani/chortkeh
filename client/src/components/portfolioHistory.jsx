@@ -2,6 +2,8 @@ import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { historyTableColumns } from "../utils/columns";
 import { saveOverallHistory } from "../services/historyService";
+import { connect } from "react-redux";
+import { updateHistoryRecord } from "../actions";
 import Table from "./table";
 import TableContainer from "./tableContainer";
 import StyledValue from "./styledValue";
@@ -19,10 +21,14 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
+const PortfolioHistory = ({
+  mappedAssets,
+  updateHistoryRecord,
+  historyRecord,
+}) => {
   const [timeFrame, setTimeFrame] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const sortedData = _.sortBy(data, "id").reverse();
+  const sortedData = _.sortBy(historyRecord, "id").reverse();
 
   // checks if data is ready to save in history record
   function checkMappedValidation(mappedAssets) {
@@ -35,7 +41,7 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
   // saves overallValues in history
   useEffect(() => {
     if (!checkMappedValidation(mappedAssets)) return;
-    let newData = [...data];
+    let newData = [...historyRecord];
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
     let isNewRecord = true;
 
@@ -48,7 +54,7 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
     }
 
     saveOverallHistory(normalizedOverall, isNewRecord);
-    setHistoryRecord(newData);
+    updateHistoryRecord(newData);
   }, [mappedAssets]);
 
   // returns styled data for table cell
@@ -95,4 +101,10 @@ const PortfolioHistory = ({ data, mappedAssets, setHistoryRecord }) => {
   );
 };
 
-export default PortfolioHistory;
+const mapStateToProps = (state) => {
+  return { historyRecord: state.historyRecord };
+};
+
+export default connect(mapStateToProps, { updateHistoryRecord })(
+  PortfolioHistory
+);
