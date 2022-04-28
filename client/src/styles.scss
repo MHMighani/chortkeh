@@ -57,9 +57,15 @@ body {
   }
 
   .table-info {
+    width:350px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+
+    .title{
+      width: 55px;
+      text-align: right;
+    }
   }
 
   .table-container__head.active .toggle-btn {
