@@ -3,16 +3,17 @@ import getPercentChange from "./getPercentChange";
 function getDataWithChange(data, constKeys = []) {
   return data.map((item, index, arr) => {
     const newItem = { ...item };
-    // first item
-    if (index === 0) return item;
 
     const prevItem = arr[index - 1];
 
     for (let key in item) {
+      // skiping date column
       if (constKeys.includes(key)) continue;
-      const percentChange = getPercentChange(prevItem[key], item[key]);
-      const change = Math.abs(prevItem[key] - item[key]);
 
+      // checks for first record that previous info is not provided for it
+      const percentChange =
+        index === 0 ? 0 : getPercentChange(prevItem[key], item[key]);
+      const change = index === 0 ? 0 : Math.abs(prevItem[key] - item[key]);
       newItem[key] = { percentChange, change, value: item[key] };
     }
 
