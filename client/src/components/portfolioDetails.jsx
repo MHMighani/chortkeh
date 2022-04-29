@@ -5,12 +5,12 @@ import mapPricesToAssets from "../utils/mapPricesToAssets";
 import { useState, useEffect } from "react";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchPrices,
   fetchAssets,
   fetchHistoryRecord,
-  deleteAsset,
+  deleteAssetBySubClass,
 } from "../actions";
 
 import Charts from "./charts";
@@ -19,52 +19,50 @@ const PortfolioDetails = (props) => {
   const [mappedAssets, setMappedAssets] = useState([]);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
+  const dispatch = useDispatch();
+  const assets = useSelector((state) => state.assets);
+  const prices = useSelector((state) => state.prices);
+  const historyRecord = useSelector((state) => state.historyRecord);
+
   useEffect(() => {
-    props.fetchAssets();
-    props.fetchPrices();
-    props.fetchHistoryRecord();
-  }, []);
+    dispatch(fetchAssets());
+    dispatch(fetchPrices());
+    dispatch(fetchHistoryRecord());
+  }, [dispatch]);
 
   function handleConfirm(toDeleteAsset) {
-    props.deleteAsset(toDeleteAsset);
+    dispatch(deleteAssetBySubClass(toDeleteAsset));
   }
 
   // sets mappedAssets
   useEffect(() => {
     function getMappedAssets() {
-      const data = _.groupBy(props.assets, "assetClass");
+      const data = _.groupBy(assets, "assetClass");
 
       return Object.values(data).map((assets) => {
         const assetClass = assets[0].assetClass;
 
-        const [mappedAssets, overallValue] = mapPricesToAssets(
-          props.prices,
-          assets
-        );
+        const [mappedAssets, overallValue] = mapPricesToAssets(prices, assets);
 
         return { assetClass, data: mappedAssets, overallValue };
       });
     }
 
     setMappedAssets(getMappedAssets());
-  }, [props.prices, props.assets]);
+  }, [prices, assets]);
 
-  if (
-    Object.values(props.prices).length &&
-    props.assets.length &&
-    props.historyRecord.length
-  ) {
+  if (Object.values(prices).length && assets.length && historyRecord.length) {
     return (
       <div className="portfolio-details">
         {modalBody}
         <AssetsDataTables
           mappedAssets={mappedAssets}
           handleDelMsgDisplay={handleDelMsgDisplay}
-          historyRecord={props.historyRecord}
-          prices={props.prices}
+          historyRecord={historyRecord}
+          prices={prices}
         />
         <PortfolioHistory mappedAssets={mappedAssets} />
-        <Charts historyRecord={props.historyRecord} assetsData={mappedAssets} />
+        <Charts historyRecord={historyRecord} assetsData={mappedAssets} />
       </div>
     );
   } else {
@@ -72,17 +70,4 @@ const PortfolioDetails = (props) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    assets: state.assets,
-    prices: state.prices,
-    historyRecord: state.historyRecord,
-  };
-};
-
-export default connect(mapStateToProps, {
-  fetchPrices,
-  fetchAssets,
-  fetchHistoryRecord,
-  deleteAsset,
-})(PortfolioDetails);
+export default PortfolioDetails;

@@ -1,34 +1,32 @@
-import { useContext } from "react";
 import getPercentChange from "../utils/getPercentChange";
 import { Card } from "react-bootstrap";
 import Table from "./table";
 import { EditBtn, DeleteBtn } from "./buttons";
 import { detailsTableColumns as columns } from "../utils/columns";
-import { deleteAsset } from "../services/assetsServices";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 import getCommaSepNum from "../utils/getCommaSepNum";
-
-import { AssetsContext } from "../context/assetsContext";
+import { deleteAssetById } from "../actions";
+import { useSelector, useDispatch } from "react-redux";
 
 const AssetDetails = (props) => {
   const { assetSubClass, marketPrice } = props.location.state;
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
-  const [assetsData, dispatchAssetsData] = useContext(AssetsContext);
+  const dispatch = useDispatch();
 
-  const assetData = assetsData.filter(
-    (asset) => asset.assetSubClass === assetSubClass
+  const assetData = useSelector((state) =>
+    state.assets.filter((asset) => asset.assetSubClass === assetSubClass)
   );
 
   function handleConfirm(item) {
-    deleteAsset(item.id);
-    dispatchAssetsData({ type: "delete_by_subclass", payload: item.id });
+    dispatch(deleteAssetById(item.id));
   }
 
   function getStringDate(date) {
     return date.join("-");
   }
 
+  //TODO: merge mapping in both assetsTable and detail table
   function getProcessedData(data) {
     return data.map((item) => {
       const date = { ...item.purchaseDate };
@@ -48,8 +46,7 @@ const AssetDetails = (props) => {
         overallValue,
         changePercent,
         purchaseDate,
-        deleteBtn,
-        editBtn,
+        operations: [deleteBtn, editBtn],
       };
     });
   }
