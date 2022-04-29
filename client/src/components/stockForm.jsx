@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import Input from "./input";
 import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
-import useMarketPrices from "../hooks/useMarketPrices";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import { SubmitBtn } from "./buttons";
 import getMarketPriceData from "../utils/getMarketPrice";
 import PurchaseDate from "./purchaseDate";
+
+import { useSelector } from "react-redux";
 
 const StockForm = (props) => {
   const [selectedOption, setSelectedOption] = useState({
@@ -32,7 +33,7 @@ const StockForm = (props) => {
     getFormElementProps,
     handleDateChange,
   } = useAssetFormHandler(initialState, props);
-  const marketPrices = useMarketPrices("stock");
+  const marketPrices = useSelector((state) => state.prices.stock);
 
   function mapPricesToOptions(prices) {
     const options = prices.map((option) => {

@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { addAsset, editAsset } from "../services/assetsServices";
+import { editAsset } from "../services/assetsServices";
 import notifications from "../utils/notifications";
 import useFormErrorHandler from "./useFormErrorHandler";
 import { utils } from "react-modern-calendar-datepicker";
+import { useDispatch } from "react-redux";
+import { addAsset } from "../actions";
 
 const useAssetFormHandler = (initialState = {}, props) => {
   const [isSubmited, setIsSubmited] = useState(false);
   const todayPersianDate = utils("fa").getToday();
   const id = props.location.state?.id || "";
+
+  const dispatch = useDispatch();
+
   // initializing
   const [formState, setFormState] = useState({
     ...initialState,
@@ -55,7 +60,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
         await editAsset(formState.assetId, value);
         notifications.successfulEditionNotify();
       } else {
-        await addAsset(value);
+        dispatch(addAsset(value));
         notifications.successfulAdditionNotify();
       }
     } catch (error) {

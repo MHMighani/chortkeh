@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import AssetsContextProvider from "./context/assetsContext";
 import reducers from "./reducers";
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
@@ -16,11 +15,9 @@ const store = configureStore({ reducer: reducers, middleware: [thunk] });
 
 ReactDOM.render(
   <Provider store={store}>
-    <AssetsContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AssetsContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

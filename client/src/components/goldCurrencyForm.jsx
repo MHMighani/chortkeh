@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
-import useMarketPrices from "../hooks/useMarketPrices";
 import { SubmitBtn } from "./buttons";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import PurchaseDate from "./purchaseDate";
+import { useSelector } from "react-redux";
 
 const GoldCurrencyForm = (props) => {
   const initialState = {
@@ -27,7 +27,8 @@ const GoldCurrencyForm = (props) => {
     handleDateChange,
   } = useAssetFormHandler(initialState, props);
 
-  const marketPrices = useMarketPrices("goldCurrency");
+  const marketPrices = useSelector((state) => state.prices.goldCurrency);
+
   const [selectedOption, setSelectedOption] = useState({
     value: "",
     label: "",
@@ -45,7 +46,7 @@ const GoldCurrencyForm = (props) => {
   // filling form by updated info
   useEffect(() => {
     function getMarketPrice(id) {
-      if (marketPrices.length) {
+      if (marketPrices.length && selectedOption.value) {
         const { price: marketPrice } = marketPrices.find(
           (price) => price.id === id
         );

@@ -8,6 +8,17 @@ const assets = (state = [], action) => {
       return state.filter(
         (asset) => asset.assetSubClass !== action.payload.assetSubClass
       );
+    case "DELETE_ASSET_BY_ID":
+      return state.filter((asset) => asset.id !== action.payload);
+    case "EDIT_ASSET":
+      //TODO: better solution?
+      return state.map((asset) => {
+        if (asset.id === action.payload.assetId) {
+          return action.payload.newValue;
+        }
+        return state;
+      });
+
     case "ADD_ASSET":
       return [...state, action.payload];
     default:
