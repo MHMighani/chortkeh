@@ -60,7 +60,6 @@ const PortfolioHistory = ({
   // returns styled data for table cell
   function getStyledData(dataWithChanges) {
     return dataWithChanges.map(({ ...historyRow }, index) => {
-      if (index === 0) return historyRow;
       for (let key in historyRow) {
         if (key === "id") continue;
         historyRow[key] = (
