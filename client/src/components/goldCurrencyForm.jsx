@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import { SubmitBtn } from "./buttons";
@@ -28,6 +27,9 @@ const GoldCurrencyForm = (props) => {
   } = useAssetFormHandler(initialState, props);
 
   const marketPrices = useSelector((state) => state.prices.goldCurrency);
+  const asset = useSelector((state) =>
+    state.assets.find((asset) => asset.id === formState.id)
+  );
 
   const [selectedOption, setSelectedOption] = useState({
     value: "",
@@ -68,13 +70,12 @@ const GoldCurrencyForm = (props) => {
 
   // set edited asset data when in edit mode
   useEffect(() => {
-    async function setAssetData(id) {
-      const { data } = await getAsset(id);
-      setFormState({ ...formState, ...data });
-      setSelectedOption({ label: data.label, value: data.assetSubClass });
+    function setAssetData(asset) {
+      setFormState({ ...formState, ...asset });
+      setSelectedOption({ label: asset.label, value: asset.assetSubClass });
     }
-    if (editState) {
-      setAssetData(formState.id);
+    if (editState && asset && !formState.label) {
+      setAssetData(asset);
     }
   }, [editState, marketPrices]);
 

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "./input";
 import { SubmitBtn } from "./buttons";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
-import { getAsset } from "../services/assetsServices";
+import { useSelector } from "react-redux";
 
 const CashForm = (props) => {
   const initialState = {
@@ -19,18 +19,18 @@ const CashForm = (props) => {
     getFormElementProps,
   } = useAssetFormHandler(initialState, props);
 
+  const asset = useSelector((state) =>
+    state.assets.find((asset) => asset.id === formState.id)
+  );
+  if (editState && asset && !formState.name) {
+    setAssetData(asset);
+  }
   // set edited asset data when in edit mode
-  useEffect(() => {
-    async function setAssetData(id) {
-      const { data } = await getAsset(id);
-      const assetId = formState.id;
+  function setAssetData(asset) {
+    const assetId = formState.id;
 
-      setFormState({ ...formState, name: data.label, assetId, ...data });
-    }
-    if (editState) {
-      setAssetData(formState.id);
-    }
-  }, [editState]);
+    setFormState({ ...formState, name: asset.label, assetId, ...asset });
+  }
 
   return (
     <div className="add-form">
