@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Input from "./input";
-import { getAsset } from "../services/assetsServices";
 import SelectForm from "./selectForm";
 import useAssetFormHandler from "../hooks/useAssetFormHandler";
 import { SubmitBtn } from "./buttons";
@@ -33,6 +32,7 @@ const StockForm = (props) => {
     getFormElementProps,
     handleDateChange,
   } = useAssetFormHandler(initialState, props);
+
   const marketPrices = useSelector((state) => state.prices.stock);
 
   function mapPricesToOptions(prices) {
@@ -68,20 +68,23 @@ const StockForm = (props) => {
     }
   }, [selectedOption, marketPrices]);
 
+  const asset = useSelector((state) =>
+    state.assets.find((asset) => asset.id === formState.id)
+  );
   // set edited asset data when in edit mode
   useEffect(() => {
+    console.log(formState.id);
     async function setAssetData(id) {
-      const { data } = await getAsset(id);
       const assetId = id;
-      setFormState({ ...formState, assetId, ...data });
+      setFormState({ ...formState, assetId, ...asset });
 
       const option = options.length
-        ? options.find((opt) => opt.value === data.assetSubClass)
+        ? options.find((opt) => opt.value === asset.assetSubClass)
         : "";
       setSelectedOption(option);
     }
-    if (editState) {
-      setAssetData(formState.id);
+    if (editState && asset) {
+      setAssetData(asset.id);
     }
   }, [editState, options]);
 
