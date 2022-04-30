@@ -10,12 +10,13 @@ import {
   fetchPrices,
   fetchAssets,
   fetchHistoryRecord,
+  deleteAssetById,
   deleteAssetBySubClass,
 } from "../actions";
 
 import Charts from "./charts";
 
-const PortfolioDetails = (props) => {
+const PortfolioDetails = () => {
   const [mappedAssets, setMappedAssets] = useState([]);
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
@@ -31,7 +32,11 @@ const PortfolioDetails = (props) => {
   }, [dispatch]);
 
   function handleConfirm(toDeleteAsset) {
-    dispatch(deleteAssetBySubClass(toDeleteAsset));
+    if (toDeleteAsset.assetClass === "cash") {
+      dispatch(deleteAssetById(toDeleteAsset.id));
+    } else {
+      dispatch(deleteAssetBySubClass(toDeleteAsset));
+    }
   }
 
   // sets mappedAssets

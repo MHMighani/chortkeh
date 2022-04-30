@@ -42,7 +42,7 @@ export const deleteAssetBySubClass = (toDeleteAsset) => async (dispatch) => {
 };
 
 export const deleteAssetById = (id) => async (dispatch) => {
-  dispatch({ type: "DELTE_ASSET_BY_ID", payload: id });
+  dispatch({ type: "DELETE_ASSET_BY_ID", payload: id });
   await deleteAsset(id);
 };
 
