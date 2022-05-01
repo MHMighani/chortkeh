@@ -1,7 +1,7 @@
 import _ from "lodash";
 import PortfolioHistory from "./portfolioHistory";
 import AssetsDataTables from "./assetsDataTables";
-import mapPricesToAssets from "../utils/mapPricesToAssets";
+import getMappedAssets from "../utils/getMappedAssets";
 import { useState, useEffect } from "react";
 import useDeleteMsgModal from "../hooks/useDeleteMessage";
 
@@ -41,19 +41,11 @@ const PortfolioDetails = () => {
 
   // sets mappedAssets
   useEffect(() => {
-    function getMappedAssets() {
-      const data = _.groupBy(assets, "assetClass");
+    const mappedAssets = getMappedAssets(assets, prices);
 
-      return Object.values(data).map((assets) => {
-        const assetClass = assets[0].assetClass;
-
-        const [mappedAssets, overallValue] = mapPricesToAssets(prices, assets);
-
-        return { assetClass, data: mappedAssets, overallValue };
-      });
+    if (Object.values(prices).length && assets.length) {
+      setMappedAssets(mappedAssets);
     }
-
-    setMappedAssets(getMappedAssets());
   }, [prices, assets]);
 
   if (Object.values(prices).length && assets.length && historyRecord.length) {
