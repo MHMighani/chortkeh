@@ -1,4 +1,3 @@
-import _ from "lodash";
 import PortfolioHistory from "./portfolioHistory";
 import AssetsDataTables from "./assetsDataTables";
 import getMappedAssets from "../utils/getMappedAssets";
