@@ -53,8 +53,9 @@ function AssetsTable({ assets, marketPrices, onDeleteAsset, overallValue }) {
       addLink={`/add/${assetClass}`}
       valueInfo={overallValue}
       title={title}
+      empty={!mappedData.length ? true : false}
     >
-      <Table data={mappedData} columns={columns} />
+      {mappedData.length && <Table data={mappedData} columns={columns} />}
     </TableContainer>
   );
 }

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
 import StyledValue from "./styledValue";
 
-const TableContainer = ({ children, title, addLink, valueInfo }) => {
+const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
   const headEl = useRef(null);
   const contentEl = useRef(null);
 
@@ -19,15 +19,15 @@ const TableContainer = ({ children, title, addLink, valueInfo }) => {
   }
 
   return (
-    <div className="table-container">
+    <div className={`table-container ${empty ? "empty" : ""}`}>
       <div
         ref={headEl}
         className="table-container__head"
-        onClick={containerHeadClickHandler}
+        onClick={!empty && containerHeadClickHandler}
       >
         <div className="table-info">
           <span className="title">{title}</span>
-          {valueInfo && (
+          {!empty && valueInfo && (
             <div className="value-info">
               <StyledValue
                 value={valueInfo.value}
