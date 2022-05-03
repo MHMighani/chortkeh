@@ -10,14 +10,17 @@ import "bootstrap/dist/css/bootstrap.rtl.css";
 import "./fonts/b-nazanin-regular.ttf";
 import "./styles.scss";
 import { Provider } from "react-redux";
+import { ThemeContextProvider } from "./context/themeContext";
 
 const store = configureStore({ reducer: reducers, middleware: [thunk] });
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeContextProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -31,6 +31,7 @@
     "redux": "^4.2.0",
     "redux-thunk": "^2.4.1",
     "sass": "^1.49.9",
+    "use-local-storage": "^2.3.6",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
