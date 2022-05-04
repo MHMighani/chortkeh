@@ -7,7 +7,7 @@ import ThemeContext from "../context/themeContext";
 const Navbar = () => {
   const themeContext = useContext(ThemeContext);
   return (
-    <BootNavbar bg="light" expand="lg">
+    <BootNavbar expand="lg">
       <Container>
         <Link to="/" style={{ textDecoration: "none" }}>
           <BootNavbar.Brand>چرتکه</BootNavbar.Brand>
