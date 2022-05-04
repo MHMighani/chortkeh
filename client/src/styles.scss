@@ -1,9 +1,26 @@
-$primary-color: lightblue;
 $table-breakpoint: 480px;
 $portfolio-bar-height: 50px;
 $large-screen-breakpoint: 1200px;
 $empty-container-head-color:#d8d8d8;
 $empty-container-add-btn-color:#074b83;
+
+
+html{
+  --background-color: white;
+  --text-color:black;
+  --navbar-bg-color:#0077b6;
+  --primary-color:lightblue;
+  --table-bg-color:white;
+}
+
+// dark mode 
+html[theme="dark"]{
+  --background-color: #121212;
+  --text-color:#0abca9;
+  --navbar-bg-color:#1e1f26;
+  --primary-color:#6c757d;
+  --table-bg-color:#2c303a;
+}
 
 @font-face {
   font-family: "B-Nazanin";
@@ -14,12 +31,23 @@ body {
   font-family: B-nazanin;
   font-weight: 500;
   font-size: 1.2rem;
+  background-color: var(--background-color);
+  color:var(--text-color)
+}
+
+select{
+  color: var(--text-color);
 }
 
 .btn{
   svg{
     vertical-align: sub;
   }
+}
+
+.navbar{
+  background-color: var(--navbar-bg-color);
+  
 }
 
 .table-container {
@@ -31,7 +59,7 @@ body {
   .table-container__head {
     display: flex;
     position: relative;
-    background: $primary-color;
+    background: var(--primary-color);
     justify-content: space-between;
     padding: 0.2rem 1rem;
     align-items: center;
@@ -78,6 +106,10 @@ body {
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 0.2s ease-out;
+    color: var(--text-color);
+    background-color: var(--table-bg-color);
+    border-radius: 10px;
+    
     
     td.operations{
       width:200px;
@@ -86,8 +118,12 @@ body {
         margin:0 20px;
       }
     }
-  }
 
+  }
+  
+  .add-btn{
+    color:var(--text-color);
+  }
   .toggle-btn {
     position: absolute;
     cursor: pointer;
@@ -152,7 +188,6 @@ body {
   max-width: 700px;
   height: 100vh;
   justify-content: center;
-
   .form-group {
     margin-bottom: 10px;
   }
@@ -178,11 +213,12 @@ body {
   
   display: flex;
   flex-flow: column wrap;
-  
 }
 .chartWrapper {
   overflow-x: auto;
   margin:auto 0;
+  background-color: var(--table-bg-color);
+  
 }
 
 .recharts-wrapper{
@@ -246,6 +282,10 @@ body {
   }
 }
 
+.portfolio-details{
+  margin-top: 40px;
+}
+
 .portfolio__operations{
   margin-top: 30px;
   .link{
@@ -282,7 +322,7 @@ body {
     }
 
     &:first-child {
-      background-color: aqua;
+      background-color: var(--primary-color);
     }
 
     &:last-child {
