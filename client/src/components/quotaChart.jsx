@@ -46,7 +46,7 @@ class QuotaChart extends React.PureComponent {
             dataKey="value"
             nameKey="assetClass"
             cx="50%"
-            cy={200}
+            cy="50%"
             label={renderCustomizedLabel}
             labelLine={false}
             outerRadius={150}
@@ -62,7 +62,7 @@ class QuotaChart extends React.PureComponent {
             )}
             width={400}
             wrapperStyle={{
-              top: 0,
+              top: 15,
               right: 20,
               backgroundColor: "#f5f5f5",
               border: "1px solid #d5d5d5",
