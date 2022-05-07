@@ -1,5 +1,4 @@
 import getPercentChange from "../utils/getPercentChange";
-import { Card } from "react-bootstrap";
 import Table from "./table";
 import { EditBtn, DeleteBtn } from "./buttons";
 import { detailsTableColumns as columns } from "../utils/columns";
@@ -52,19 +51,19 @@ const AssetDetails = (props) => {
   }
 
   return (
-    <div className="asset-detail">
+    <div>
       {modalBody}
-      <Card>
-        <Card.Header className="asset-detail__header">
+      <div className="asset-detail">
+        <div className="asset-detail__header">
           <span className="label">
             {assetData.length && assetData[0].label}
           </span>
           <span className="value">{getCommaSepNum(marketPrice)}</span>
-        </Card.Header>
-        <Card.Body>
+        </div>
+        <div className="asset-detail__body">
           <Table data={getProcessedData(assetData)} columns={columns} />
-        </Card.Body>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };

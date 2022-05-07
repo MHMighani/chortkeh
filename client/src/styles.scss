@@ -1,7 +1,6 @@
 $table-breakpoint: 480px;
 $portfolio-bar-height: 50px;
 $large-screen-breakpoint: 1200px;
-$empty-container-head-color:#d8d8d8;
 $empty-container-add-btn-color:#074b83;
 
 
@@ -11,6 +10,7 @@ html{
   --navbar-bg-color:#0077b6;
   --primary-color:lightblue;
   --table-bg-color:white;
+  --empty-container-head-color:#d8d8d8;
 }
 
 // dark mode 
@@ -18,8 +18,9 @@ html[theme="dark"]{
   --background-color: #121212;
   --text-color:#0abca9;
   --navbar-bg-color:#1e1f26;
-  --primary-color:#6c757d;
+  --primary-color:#282a35;
   --table-bg-color:#2c303a;
+  --empty-container-head-color:#2d2d2d;
 }
 
 @font-face {
@@ -47,8 +48,16 @@ select{
 
 .navbar{
   background-color: var(--navbar-bg-color);
-  
+  .navbar-brand{
+    color: var(--text-color);
+  }
 }
+
+.table{
+  color: var(--text-color);
+  background-color: var(--table-bg-color);
+}
+
 
 .table-container {
   width: 90%;
@@ -94,6 +103,7 @@ select{
     .title{
       width: 55px;
       text-align: right;
+      color: var(--text-color);
     }
   }
 
@@ -106,10 +116,8 @@ select{
     max-height: 0;
     overflow-y: hidden;
     transition: max-height 0.2s ease-out;
-    color: var(--text-color);
-    background-color: var(--table-bg-color);
     border-radius: 10px;
-    
+    margin-top: 10px;
     
     td.operations{
       width:200px;
@@ -139,7 +147,7 @@ select{
   
 
   .table-container__head{
-    background-color: $empty-container-head-color;
+    background-color: var(--empty-container-head-color);
   }
 
   .toggle-btn{
@@ -166,11 +174,29 @@ select{
   }
 }
 
-.asset-detail__header {
-  .label {
-    margin-left: 10px;
+.asset-detail{
+  max-width: 1000px;
+  margin: 20px auto;
+  border-radius: 10px;
+  color: var(--text-color);
+
+  .asset-detail__header {
+      padding: 10px;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      background-color: var(--primary-color); 
+      color: var(--text-color);
+    .label {
+      margin-left: 10px;
+    }
+  }
+  
+  .asset-detail__body{
+    background-color: var(--table-bg-color);
+    color: var(--text-color);
   }
 }
+
 
 .styled-value {
   span {
@@ -184,10 +210,11 @@ select{
 
 .add-form {
   margin: 5rem auto;
-  padding: 0 2rem;
+  padding: 2.5rem;
   max-width: 700px;
-  height: 100vh;
   justify-content: center;
+  background-color: var(--primary-color);
+  border-radius: 10px;
   .form-group {
     margin-bottom: 10px;
   }
@@ -208,16 +235,46 @@ select{
   }
 }
 
+//toggle switch
+.toggle-switch{
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: white;
+  border-radius: 30px;
+  cursor:pointer;
+  
+  
+  &:after{
+    content:'';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 10px;
+    left:0;
+    top: 0;
+    bottom: 0;
+    transition: .4s; 
+  }
+  
+  &.active:after{
+    transform: translate(100%);
+  }
+}
+
 //chart
 .charts{
-  
   display: flex;
   flex-flow: column wrap;
+  max-width: 1000px;
+  margin:0 auto;
+  background-color: var(--primary-color);
+  border-radius: 10px;
 }
 .chartWrapper {
   overflow-x: auto;
   margin:auto 0;
-  background-color: var(--table-bg-color);
   
 }
 
@@ -299,6 +356,10 @@ select{
   
 }
 
+//modal
+.modal-content{
+  background-color: var(--primary-color);
+}
 
 // responsive table
 .table {
