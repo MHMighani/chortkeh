@@ -63,7 +63,10 @@ class QuotaChart extends React.PureComponent {
             width={400}
             wrapperStyle={{
               top: 15,
-              right: 20,
+              left: 0,
+              right: 0,
+              marginLeft: "auto",
+              marginRight: "auto",
               backgroundColor: "#f5f5f5",
               border: "1px solid #d5d5d5",
               borderRadius: 3,

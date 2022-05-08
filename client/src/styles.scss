@@ -267,10 +267,12 @@ select{
 .charts{
   display: flex;
   flex-flow: column wrap;
-  max-width: 1000px;
+  width: 90%;
+  justify-content: center;
   margin:0 auto;
   background-color: var(--primary-color);
   border-radius: 10px;
+  overflow-x: scroll;
 }
 .chartWrapper {
   overflow-x: auto;
@@ -428,5 +430,7 @@ select{
   .charts{
     flex-direction: row;
     justify-content: center;
+    max-width: 1000px;
+    overflow: auto;
   }
 }
