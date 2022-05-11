@@ -3,7 +3,14 @@ $portfolio-bar-height: 50px;
 $large-screen-breakpoint: 1200px;
 $empty-container-add-btn-color:#074b83;
 
+// reset
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
+// Light mode
 html{
   --background-color: white;
   --text-color:black;
@@ -13,7 +20,7 @@ html{
   --empty-container-head-color:#d8d8d8;
 }
 
-// dark mode 
+// Dark mode 
 html[theme="dark"]{
   --background-color: #121212;
   --text-color:#0abca9;
@@ -23,22 +30,35 @@ html[theme="dark"]{
   --empty-container-head-color:#2d2d2d;
 }
 
+// Fonts
 @font-face {
   font-family: "B-Nazanin";
   src: local("B-Nazanin"), url(./fonts/b-nazanin-regular.ttf) format("truetype");
 }
 
+// General
 body {
   font-family: B-nazanin;
   font-weight: 500;
   font-size: 1.2rem;
   background-color: var(--background-color);
-  color:var(--text-color)
+  color:var(--text-color);
+
+  transition: background-color .15s linear;
+}
+
+a{
+  text-decoration: none;
 }
 
 select{
   color: var(--text-color);
 }
+
+option{
+  background-color: var(--primary-color);
+}
+
 
 .btn{
   svg{
@@ -58,58 +78,31 @@ select{
   background-color: var(--table-bg-color);
 }
 
-
+// Table container
 .table-container {
   width: 90%;
   max-width: 1000px;
   margin: 0 auto;
   cursor: pointer;
-  
-  .table-container__head {
-    display: flex;
-    position: relative;
-    background: var(--primary-color);
-    justify-content: space-between;
-    padding: 0.2rem 1rem;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 40px;
+
+  &.empty{
+    cursor:default;
+
+  .table-container__head{
+    background-color: var(--empty-container-head-color);
+  }
+
+  .toggle-btn{
+    display: none;
+  }
+
+  .add-btn{
+    color:$empty-container-add-btn-color;
     
-    border-radius: 10px;
-    font-size: 1rem;
-
-    .value-info {
-      margin-right: 10px;
-    }    
   }
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-
-    a,span,svg{
-      vertical-align: sub;
-    }
   }
 
-  .table-info {
-    width:350px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
 
-    .title{
-      width: 55px;
-      text-align: right;
-      color: var(--text-color);
-    }
-  }
-
-  .table-container__head.active .toggle-btn {
-    transform: rotate(180deg);
-  }
 
   .table {
     width: 100%;
@@ -120,13 +113,11 @@ select{
     margin-top: 10px;
     
     td.operations{
-      width:200px;
       
       button{
         margin:0 20px;
       }
     }
-
   }
   
   .add-btn{
@@ -142,21 +133,52 @@ select{
   }
 }
 
-.table-container.empty{
-  cursor:default;
+.table-container__head {
+  display: flex;
+  position: relative;
+  background: var(--primary-color);
+  justify-content: space-between;
+  padding: 0.2rem 1rem;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 40px;
   
+  border-radius: 10px;
+  font-size: .95rem;
 
-  .table-container__head{
-    background-color: var(--empty-container-head-color);
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+
+    a,span,svg{
+      vertical-align: sub;
+    }
   }
 
-  .toggle-btn{
-    display: none;
+  .value-info {
+    margin-right: 10px;
   }
+  
+  &.active{
+    .toggle-btn{
+      transform: rotate(180deg);
+    }
+  }
+}
 
-  .add-btn{
-    color:$empty-container-add-btn-color;
-    
+.container__head-info {
+  width:350px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .title{
+    white-space: nowrap;
+    text-align: right;
+    color: var(--text-color);
   }
 }
 
@@ -196,7 +218,6 @@ select{
     color: var(--text-color);
   }
 }
-
 
 .styled-value {
   span {
@@ -266,13 +287,14 @@ select{
 //chart
 .charts{
   display: flex;
+  padding: 40px 0;
   flex-flow: column wrap;
   width: 90%;
   justify-content: center;
   margin:0 auto;
   background-color: var(--primary-color);
   border-radius: 10px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .chartWrapper {
   overflow-x: auto;
@@ -343,6 +365,7 @@ select{
 
 .portfolio-details{
   margin-top: 40px;
+  
 }
 
 .portfolio__operations{
@@ -358,14 +381,36 @@ select{
   
 }
 
+//footer
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: var(--primary-color);
+  text-align: center;
+}
+
+.footer-text{
+  margin:0;
+}
+
+
 //modal
 .modal-content{
   background-color: var(--primary-color);
 }
 
 // responsive table
+.table-wrapper{
+  border:none !important;
+}
 .table {
   overflow-x: auto;
+  
   th,
   td {
     text-align: right;

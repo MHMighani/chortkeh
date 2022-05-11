@@ -40,16 +40,16 @@ class QuotaChart extends React.PureComponent {
     const COLORS = { goldCurrency: "gold", cash: "silver", stock: "green" };
     return (
       <div className="chartWrapper">
-        <PieChart width={500} height={500}>
+        <PieChart width={500} height={350}>
           <Pie
             data={pieChartData}
             dataKey="value"
             nameKey="assetClass"
             cx="50%"
-            cy="50%"
+            cy="65%"
             label={renderCustomizedLabel}
             labelLine={false}
-            outerRadius={150}
+            outerRadius={120}
             fill="#8884d8"
           >
             {pieChartData.map((entry, index) => (
