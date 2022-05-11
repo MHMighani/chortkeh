@@ -25,7 +25,7 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
         className="table-container__head"
         onClick={!empty && containerHeadClickHandler}
       >
-        <div className="table-info">
+        <div className="container__head-info">
           <span className="title">{title}</span>
           {!empty && valueInfo && (
             <div className="value-info">
