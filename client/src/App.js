@@ -7,6 +7,7 @@ import CashForm from "./components/cashForm";
 import AssetDetails from "./components/assetDetails";
 import PortfolioDetails from "./components/portfolioDetails";
 import Portfolio from "./components/Portfolio";
+import Footer from "./footer";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,7 +23,7 @@ function App() {
         <Route exact path="/add/stock" component={StockForm} />
         <Route exact path="/add/cash" component={CashForm} />
       </Switch>
-
+      <Footer />
       <ToastContainer />
     </div>
   );
