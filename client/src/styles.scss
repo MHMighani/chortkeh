@@ -296,10 +296,15 @@ option{
   border-radius: 10px;
   overflow-x: auto;
 }
+
+.chart-empty-message{
+  margin: 0 auto;
+  text-align: center;
+}
+
 .chartWrapper {
   overflow-x: auto;
-  margin:auto 0;
-  
+  margin:auto 0; 
 }
 
 .recharts-wrapper{
@@ -392,6 +397,7 @@ option{
   height: 50px;
   background-color: var(--primary-color);
   text-align: center;
+  z-index: 999;
 }
 
 .footer-text{

@@ -8,9 +8,9 @@ const AssetsDataTables = ({
   prices,
   historyRecord,
 }) => {
-  const lastRecordChange = getDataWithChange(historyRecord, ["id"]).slice(
-    -1
-  )[0];
+  const lastRecordChange =
+    historyRecord.length &&
+    getDataWithChange(historyRecord, ["id"]).slice(-1)[0];
 
   const groupedByAssetClass = _.groupBy(mappedAssets, "assetClass");
   const assetClasses = ["goldCurrency", "stock", "cash"];
@@ -29,7 +29,7 @@ const AssetsDataTables = ({
           <AssetsTable
             marketPrices={prices[assets.assetClass]}
             assets={assets}
-            overallValue={lastRecordChange[assets.assetClass]}
+            overallValue={lastRecordChange}
             onDeleteAsset={handleDelMsgDisplay}
             key={assets.assetClass}
           />
