@@ -8,7 +8,8 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
   const headEl = useRef(null);
   const contentEl = useRef(null);
 
-  function containerHeadClickHandler(e) {
+  function containerHeadClickHandler() {
+    if (empty) return;
     headEl.current.classList.toggle("active");
     const content = contentEl.current;
     if (content.style.maxHeight) {
@@ -23,11 +24,11 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
       <div
         ref={headEl}
         className="table-container__head"
-        onClick={!empty && containerHeadClickHandler}
+        onClick={containerHeadClickHandler}
       >
         <div className="container__head-info">
           <span className="title">{title}</span>
-          {!empty && valueInfo && (
+          {!empty && (
             <div className="value-info">
               <StyledValue
                 value={valueInfo.value}

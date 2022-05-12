@@ -22,18 +22,27 @@ function AssetsTable({ assets, marketPrices, onDeleteAsset, overallValue }) {
 
   // mapping buttons
   const mappedData = data.map(({ ...item }) => {
-    let deleteBtn = <DeleteBtn deleteMethod={() => onDeleteAsset(item)} />;
+    let deleteBtn = (
+      <DeleteBtn
+        key={`${item.assetSubClass}-deleteBtn`}
+        deleteMethod={() => onDeleteAsset(item)}
+      />
+    );
     let buttons = [deleteBtn];
 
     if (assetClass === "cash") {
       buttons.push(
-        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+        <EditBtn
+          key={`${item.assetSubClass}-editBtn`}
+          assetData={{ id: item.id, assetClass: item.assetClass }}
+        />
       );
     } else {
       const price = marketPrices.find((p) => p.id === item.assetSubClass);
 
       buttons.push(
         <EyeBtn
+          key={`${item.assetSubClass}-eyeBtn`}
           requiredInfo={{
             assetSubClass: item.assetSubClass,
             assetClass: item.assetClass,
@@ -51,7 +60,7 @@ function AssetsTable({ assets, marketPrices, onDeleteAsset, overallValue }) {
   return (
     <TableContainer
       addLink={`/add/${assetClass}`}
-      valueInfo={overallValue}
+      valueInfo={overallValue[assetClass]}
       title={title}
       empty={!mappedData.length ? true : false}
     >

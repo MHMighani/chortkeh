@@ -34,10 +34,16 @@ const AssetDetails = (props) => {
       const changePercent = getPercentChange(item.purchasePrice, marketPrice);
       const purchaseDate = getStringDate(Object.values(date));
       const deleteBtn = (
-        <DeleteBtn deleteMethod={() => handleDelMsgDisplay(item)} />
+        <DeleteBtn
+          key={`${item.id}-deleteKey`}
+          deleteMethod={() => handleDelMsgDisplay(item)}
+        />
       );
       const editBtn = (
-        <EditBtn assetData={{ id: item.id, assetClass: item.assetClass }} />
+        <EditBtn
+          key={`${item.id}-editKey`}
+          assetData={{ id: item.id, assetClass: item.assetClass }}
+        />
       );
 
       return {

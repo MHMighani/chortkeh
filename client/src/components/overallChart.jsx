@@ -54,7 +54,11 @@ const OverallChart = ({ data }) => {
             marginLeft: "1rem",
           };
           return (
-            <span style={style} onClick={() => handleClick(dataKey)}>
+            <span
+              key={dataKey}
+              style={style}
+              onClick={() => handleClick(dataKey)}
+            >
               {label}
             </span>
           );
@@ -87,6 +91,7 @@ const OverallChart = ({ data }) => {
           const { label, color } = info[category];
           return (
             <Line
+              key={category}
               type="monotone"
               dataKey={category}
               name={label}

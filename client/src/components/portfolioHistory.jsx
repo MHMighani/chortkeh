@@ -46,7 +46,7 @@ const PortfolioHistory = ({
     let isNewRecord = true;
 
     // today's history was recorded before
-    if (sortedData[0].id === normalizedOverall.id) {
+    if (sortedData[0]?.id === normalizedOverall.id) {
       isNewRecord = false;
       newData[newData.length - 1] = { ...normalizedOverall };
     } else {
@@ -83,7 +83,11 @@ const PortfolioHistory = ({
 
   return (
     <div className="history-info">
-      <TableContainer title="ارزش کل" valueInfo={lastChangeData?.overall}>
+      <TableContainer
+        title="ارزش کل"
+        empty={!historyRecord.length ? true : false}
+        valueInfo={lastChangeData?.overall}
+      >
         <div className="filter-bar">
           <TimeFrameSelect onTimeFrameChange={setTimeFrame} />
           <ResultsNumSelect onResultsNumChange={setPageSize} />

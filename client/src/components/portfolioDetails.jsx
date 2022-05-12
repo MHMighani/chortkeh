@@ -42,12 +42,12 @@ const PortfolioDetails = () => {
   useEffect(() => {
     const mappedAssets = getMappedAssets(assets, prices);
 
-    if (Object.values(prices).length && assets.length) {
+    if (Object.values(prices).length) {
       setMappedAssets(mappedAssets);
     }
   }, [prices, assets]);
 
-  if (Object.values(prices).length && assets.length && historyRecord.length) {
+  if (Object.values(prices).length) {
     return (
       <div className="portfolio-details">
         {modalBody}
