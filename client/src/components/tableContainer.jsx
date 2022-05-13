@@ -31,9 +31,9 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
           {!empty && (
             <div className="value-info">
               <StyledValue
-                value={valueInfo.value}
-                percentChange={valueInfo.percentChange}
-                change={valueInfo.change}
+                value={valueInfo?.value}
+                percentChange={valueInfo?.percentChange}
+                change={valueInfo?.change}
               />
             </div>
           )}

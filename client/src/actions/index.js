@@ -40,7 +40,7 @@ export const deleteAssetBySubClass = (toDeleteAsset) => async (dispatch) => {
     payload: toDeleteAsset,
   });
 
-  await deleteAssetBySubClassApi(toDeleteAsset.id);
+  await deleteAssetBySubClassApi(toDeleteAsset.assetSubClass);
 };
 
 export const deleteAssetById = (id) => async (dispatch) => {
