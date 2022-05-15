@@ -55,7 +55,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
     } else {
       newData = [...newData, normalizedOverall];
     }
-    saveOverallHistory(normalizedOverall, isNewRecord);
+    // saveOverallHistory(normalizedOverall, isNewRecord);
     dispatch(updateHistoryRecord(newData));
   }, [mappedAssets]);
 
