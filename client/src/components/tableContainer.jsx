@@ -49,9 +49,11 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
           </span>
         </div>
       </div>
-      <div className="table" ref={contentEl}>
-        {children}
-      </div>
+      {!empty && (
+        <div className="table" ref={contentEl}>
+          {children}
+        </div>
+      )}
     </div>
   );
 };

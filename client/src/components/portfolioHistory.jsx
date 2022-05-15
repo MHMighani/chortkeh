@@ -2,7 +2,6 @@ import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { historyTableColumns } from "../utils/columns";
 import { saveOverallHistory } from "../services/historyService";
-import { connect } from "react-redux";
 import { updateHistoryRecord } from "../actions";
 import Table from "./table";
 import TableContainer from "./tableContainer";
@@ -12,6 +11,7 @@ import getDataWithChange from "../utils/getDataWithChange";
 import ResultsNumSelect from "./ResultsNumSelect";
 import getNormalizedOverallValue from "../utils/getNormalizedOverallValue";
 import getFilteredDateByTimeFrame from "../utils/getFilteredDataByTimeFrame";
+import { useSelector, useDispatch } from "react-redux";
 
 /*
 The ideal version of this  app will record values every day
@@ -21,26 +21,29 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-const PortfolioHistory = ({
-  mappedAssets,
-  updateHistoryRecord,
-  historyRecord,
-}) => {
+const PortfolioHistory = ({ mappedAssets }) => {
   const [timeFrame, setTimeFrame] = useState(1);
+  const historyRecord = useSelector((state) => state.historyRecord);
   const [pageSize, setPageSize] = useState(10);
   const sortedData = _.sortBy(historyRecord, "id").reverse();
 
+  const dispatch = useDispatch();
+
   // checks if data is ready to save in history record
   function checkMappedValidation(mappedAssets) {
-    const isDataFetchComplete =
-      mappedAssets.length && !mappedAssets.some((item) => !item.data.length);
+    const isDataFetchComplete = !mappedAssets?.some(
+      (item) => !item.data.length
+    );
 
     if (isDataFetchComplete) return true;
   }
 
   // saves overallValues in history
   useEffect(() => {
-    if (!checkMappedValidation(mappedAssets)) return;
+    if (!checkMappedValidation(mappedAssets)) {
+      return;
+    }
+
     let newData = [...historyRecord];
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
     let isNewRecord = true;
@@ -52,9 +55,8 @@ const PortfolioHistory = ({
     } else {
       newData = [...newData, normalizedOverall];
     }
-
     saveOverallHistory(normalizedOverall, isNewRecord);
-    updateHistoryRecord(newData);
+    dispatch(updateHistoryRecord(newData));
   }, [mappedAssets]);
 
   // returns styled data for table cell
@@ -104,10 +106,4 @@ const PortfolioHistory = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return { historyRecord: state.historyRecord };
-};
-
-export default connect(mapStateToProps, { updateHistoryRecord })(
-  PortfolioHistory
-);
+export default PortfolioHistory;
