@@ -110,7 +110,6 @@ option{
     overflow-y: hidden;
     transition: max-height 0.2s ease-out;
     border-radius: 10px;
-    margin-top: 10px;
     
     td.operations{
       
@@ -454,6 +453,7 @@ option{
 
 @media (min-width: $table-breakpoint) {
   .table-container {
+    margin-bottom: 14px;
     .table-container__head {
       font-size: 1.2rem;
     }
