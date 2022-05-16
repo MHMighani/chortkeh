@@ -35,5 +35,5 @@ typings/
 .yarn-integrity
 
 
-server/db.json
+server/dbTest.json 
 .vscode/settings.json
