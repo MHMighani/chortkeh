@@ -20,13 +20,19 @@ const Input = ({
         <NumberFormat
           thousandSeparator={true}
           isNumericString={true}
+          autoComplete="off"
           onValueChange={(values) =>
             onChange({ target: { name, value: values.floatValue } })
           }
           {...mutualProps}
         />
       ) : (
-        <input type={type} onChange={onChange} {...mutualProps} />
+        <input
+          type={type}
+          autoComplete="off"
+          onChange={onChange}
+          {...mutualProps}
+        />
       )}
       {error && <div className="alert alert-danger">{error}</div>}
     </div>

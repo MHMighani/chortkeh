@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SelectForm from "./selectForm";
 import Input from "./input";
 import { SubmitBtn } from "./buttons";
@@ -43,41 +43,32 @@ const GoldCurrencyForm = (props) => {
 
   const selectorHandler = (opt) => {
     setSelectedOption(opt);
+    const marketPrice = getMarketPrice(opt);
+    setFormState((formState) => ({
+      ...formState,
+      label: selectedOption.label,
+      id: opt.value,
+      assetId: formState.id,
+      marketPrice,
+      purchasePrice: marketPrice,
+    }));
   };
 
-  // filling form by updated info
-  useEffect(() => {
-    function getMarketPrice(id) {
-      if (marketPrices.length && selectedOption.value) {
-        const { price: marketPrice } = marketPrices.find(
-          (price) => price.id === id
-        );
+  function getMarketPrice(selectedOption) {
+    if (marketPrices.length && selectedOption.value) {
+      const { price: marketPrice } = marketPrices.find(
+        (price) => price.id === selectedOption.value
+      );
 
-        let assetId = formState.id;
-        setFormState({
-          ...formState,
-          label: selectedOption.label,
-          id,
-          assetId,
-          marketPrice,
-          purchasePrice: marketPrice,
-        });
-      }
+      return marketPrice;
     }
-
-    getMarketPrice(selectedOption.value);
-  }, [selectedOption]);
+  }
 
   // set edited asset data when in edit mode
-  useEffect(() => {
-    function setAssetData(asset) {
-      setFormState({ ...formState, ...asset });
-      setSelectedOption({ label: asset.label, value: asset.assetSubClass });
-    }
-    if (editState && asset && !formState.label) {
-      setAssetData(asset);
-    }
-  }, [editState, marketPrices]);
+  if (editState && asset && !formState.label) {
+    setFormState({ ...formState, ...asset });
+    setSelectedOption({ label: asset.label, value: asset.assetSubClass });
+  }
 
   return (
     <div className="gold-form add-form">
