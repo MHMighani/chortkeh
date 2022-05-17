@@ -5,7 +5,7 @@ const Pagination = ({ num, active, onPageChange }) => {
   for (let i = 1; i <= num; i++) {
     items.push(
       <BootPagination.Item
-        onClick={(e) => onPageChange(+e.target.text)}
+        onClick={(e) => i !== active && onPageChange(+e.target.text)}
         key={i}
         active={i === active}
       >
