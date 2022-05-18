@@ -48,6 +48,10 @@ const PortfolioHistory = ({ mappedAssets }) => {
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
     let isNewRecord = true;
 
+    // checks if there is change in history
+    if (JSON.stringify(sortedData[0]) === JSON.stringify(normalizedOverall))
+      return;
+
     // today's history was recorded before
     if (sortedData[0]?.id === normalizedOverall.id) {
       isNewRecord = false;
@@ -57,7 +61,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
     }
     // saveOverallHistory(normalizedOverall, isNewRecord);
     dispatch(updateHistoryRecord(newData));
-  }, [mappedAssets]);
+  }, [mappedAssets, historyRecord, dispatch, sortedData]);
 
   // returns styled data for table cell
   function getStyledData(dataWithChanges) {

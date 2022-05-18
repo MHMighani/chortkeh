@@ -52,41 +52,31 @@ const StockForm = (props) => {
     setOptions(options);
   }, [marketPrices]);
 
-  // filling form by changing selected option
-  useEffect(() => {
-    if (marketPrices.length && selectedOption.value) {
-      const data = getMarketPriceData(marketPrices, selectedOption.value);
+  function changeSelectedOption(opt) {
+    setSelectedOption(opt);
 
-      setFormState({
-        ...formState,
-        id: data.id,
-        name: data.name,
-        lastTradePrice: data.lastTradePrice,
-        lastPrice: data.lastPrice,
-        purchasePrice: data.lastTradePrice,
-      });
-    }
-  }, [selectedOption, marketPrices]);
+    const data = getMarketPriceData(marketPrices, opt.value);
+    setFormState({
+      ...formState,
+      id: data.id,
+      name: data.name,
+      lastTradePrice: data.lastTradePrice,
+      lastPrice: data.lastPrice,
+      purchasePrice: data.lastTradePrice,
+    });
+  }
 
   const asset = useSelector((state) =>
     state.assets.find((asset) => asset.id === formState.id)
   );
   // set edited asset data when in edit mode
-  useEffect(() => {
-    console.log(formState.id);
-    async function setAssetData(id) {
-      const assetId = id;
-      setFormState({ ...formState, assetId, ...asset });
-
-      const option = options.length
-        ? options.find((opt) => opt.value === asset.assetSubClass)
-        : "";
-      setSelectedOption(option);
-    }
-    if (editState && asset) {
-      setAssetData(asset.id);
-    }
-  }, [editState, options]);
+  if (editState && asset && options.length && !formState.assetId) {
+    setFormState({ ...formState, assetId: asset.id, ...asset });
+    const option = options.length
+      ? options.find((opt) => opt.value === asset.assetSubClass)
+      : "";
+    setSelectedOption(option);
+  }
 
   return (
     <div className="add-form">
@@ -97,7 +87,7 @@ const StockForm = (props) => {
             label="انتخاب سهم"
             options={options}
             value={selectedOption}
-            onChange={setSelectedOption}
+            onChange={changeSelectedOption}
             isDisabled={editState}
             error={errors["name"]}
           />
