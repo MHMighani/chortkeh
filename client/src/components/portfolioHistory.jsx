@@ -1,7 +1,6 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { historyTableColumns } from "../utils/columns";
-import { saveOverallHistory } from "../services/historyService";
 import { updateHistoryRecord } from "../actions";
 import Table from "./table";
 import TableContainer from "./tableContainer";
@@ -46,7 +45,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
 
     let newData = [...historyRecord];
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
-    let isNewRecord = true;
+    // let isNewRecord = true;
 
     // checks if there is change in history
     if (JSON.stringify(sortedData[0]) === JSON.stringify(normalizedOverall))
@@ -54,7 +53,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
 
     // today's history was recorded before
     if (sortedData[0]?.id === normalizedOverall.id) {
-      isNewRecord = false;
+      // isNewRecord = false;
       newData[newData.length - 1] = { ...normalizedOverall };
     } else {
       newData = [...newData, normalizedOverall];
