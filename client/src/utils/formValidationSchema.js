@@ -10,7 +10,7 @@ const noneZeroRequiredSchema = Joi.number().min(1).required().messages({
 });
 
 const goldCurrencySchema = Joi.object({
-  id: Joi.string().required().messages({
+  assetSubClass: Joi.string().required().messages({
     "any.required": requiredErrorMsg,
     "string.empty": requiredErrorMsg,
   }),

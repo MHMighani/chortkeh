@@ -17,7 +17,7 @@ const assets = (state = [], action) => {
         if (asset.id === action.payload.assetId) {
           return action.payload.newValue;
         }
-        return state;
+        return asset;
       });
 
     case actions.ADD_ASSET:

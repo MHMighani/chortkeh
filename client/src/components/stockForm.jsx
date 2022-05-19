@@ -56,9 +56,10 @@ const StockForm = (props) => {
     setSelectedOption(opt);
 
     const data = getMarketPriceData(marketPrices, opt.value);
+
     setFormState({
       ...formState,
-      id: data.id,
+      assetSubClass: data.id,
       name: data.name,
       lastTradePrice: data.lastTradePrice,
       lastPrice: data.lastPrice,
