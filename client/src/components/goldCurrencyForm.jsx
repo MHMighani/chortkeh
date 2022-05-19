@@ -47,8 +47,7 @@ const GoldCurrencyForm = (props) => {
     setFormState((formState) => ({
       ...formState,
       label: opt.label,
-      id: opt.value,
-      assetId: formState.id,
+      assetSubClass: opt.value,
       marketPrice,
       purchasePrice: marketPrice,
     }));
@@ -84,7 +83,7 @@ const GoldCurrencyForm = (props) => {
           label="نوع ارز یا سکه"
           onChange={selectorHandler}
           options={options}
-          error={errors["id"]}
+          error={errors["assetSubClass"]}
           value={selectedOption}
           isDisabled={editState}
         />
