@@ -56,9 +56,10 @@ const StockForm = (props) => {
     setSelectedOption(opt);
 
     const data = getMarketPriceData(marketPrices, opt.value);
+
     setFormState({
       ...formState,
-      id: data.id,
+      assetSubClass: data.id,
       name: data.name,
       lastTradePrice: data.lastTradePrice,
       lastPrice: data.lastPrice,
@@ -71,7 +72,18 @@ const StockForm = (props) => {
   );
   // set edited asset data when in edit mode
   if (editState && asset && options.length && !formState.assetId) {
-    setFormState({ ...formState, assetId: asset.id, ...asset });
+    const marketPrice = getMarketPriceData(marketPrices, asset.assetSubClass);
+
+    setFormState({
+      ...formState,
+      ...asset,
+      name: marketPrice.name,
+      id: asset.assetSubClass,
+      assetId: asset.id,
+      lastPrice: marketPrice.lastPrice,
+      lastTradePrice: marketPrice.lastTradePrice,
+    });
+
     const option = options.length
       ? options.find((opt) => opt.value === asset.assetSubClass)
       : "";

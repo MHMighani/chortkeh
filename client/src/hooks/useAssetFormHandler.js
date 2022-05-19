@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { editAsset } from "../services/assetsServices";
+// import { editAsset } from "../services/assetsServices";
+import { editAsset } from "../actions";
 import notifications from "../utils/notifications";
 import useFormErrorHandler from "./useFormErrorHandler";
 import { utils } from "react-modern-calendar-datepicker";
@@ -34,9 +35,12 @@ const useAssetFormHandler = (initialState = {}, props) => {
     };
   }
 
+  console.log(formState);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmited(true);
+
     if (errors) {
       return;
     }
@@ -47,17 +51,19 @@ const useAssetFormHandler = (initialState = {}, props) => {
         : formState.label;
 
     const value = {
+      id: id ? id : Date.now(),
       label,
       amount: Number(formState.amount),
       purchaseDate: formState.purchaseDate,
       assetClass: formState.assetClass,
-      assetSubClass: formState.id,
+      assetSubClass: formState.assetSubClass,
       purchasePrice: Number(formState.purchasePrice),
     };
 
     try {
       if (editState) {
         await editAsset(formState.assetId, value);
+        dispatch(editAsset(formState.assetId, value));
         notifications.successfulEditionNotify();
       } else {
         dispatch(addAsset(value));
