@@ -43,10 +43,10 @@ const GoldCurrencyForm = (props) => {
 
   const selectorHandler = (opt) => {
     setSelectedOption(opt);
-    const marketPrice = getMarketPrice(opt);
+    const marketPrice = getMarketPrice(opt.value);
     setFormState((formState) => ({
       ...formState,
-      label: selectedOption.label,
+      label: opt.label,
       id: opt.value,
       assetId: formState.id,
       marketPrice,
@@ -54,10 +54,10 @@ const GoldCurrencyForm = (props) => {
     }));
   };
 
-  function getMarketPrice(selectedOption) {
-    if (marketPrices.length && selectedOption.value) {
+  function getMarketPrice(assetSubClass) {
+    if (marketPrices.length && assetSubClass) {
       const { price: marketPrice } = marketPrices.find(
-        (price) => price.id === selectedOption.value
+        (price) => price.id === assetSubClass
       );
 
       return marketPrice;
@@ -66,7 +66,14 @@ const GoldCurrencyForm = (props) => {
 
   // set edited asset data when in edit mode
   if (editState && asset && !formState.label) {
-    setFormState({ ...formState, ...asset });
+    const marketPrice = getMarketPrice(asset.assetSubClass);
+    setFormState({
+      ...formState,
+      ...asset,
+      assetId: asset.id,
+      id: asset.assetSubClass,
+      marketPrice,
+    });
     setSelectedOption({ label: asset.label, value: asset.assetSubClass });
   }
 

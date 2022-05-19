@@ -37,6 +37,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmited(true);
+    console.log(formState);
     if (errors) {
       return;
     }
@@ -51,7 +52,10 @@ const useAssetFormHandler = (initialState = {}, props) => {
       amount: Number(formState.amount),
       purchaseDate: formState.purchaseDate,
       assetClass: formState.assetClass,
-      assetSubClass: formState.id,
+      assetSubClass:
+        formState.assetClass === "stock"
+          ? formState.assetSubClass
+          : formState.id,
       purchasePrice: Number(formState.purchasePrice),
     };
 

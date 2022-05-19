@@ -71,7 +71,18 @@ const StockForm = (props) => {
   );
   // set edited asset data when in edit mode
   if (editState && asset && options.length && !formState.assetId) {
-    setFormState({ ...formState, assetId: asset.id, ...asset });
+    const marketPrice = getMarketPriceData(marketPrices, asset.assetSubClass);
+
+    setFormState({
+      ...formState,
+      ...asset,
+      name: marketPrice.name,
+      id: asset.assetSubClass,
+      assetId: asset.id,
+      lastPrice: marketPrice.lastPrice,
+      lastTradePrice: marketPrice.lastTradePrice,
+    });
+
     const option = options.length
       ? options.find((opt) => opt.value === asset.assetSubClass)
       : "";
