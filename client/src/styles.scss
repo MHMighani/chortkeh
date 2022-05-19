@@ -99,25 +99,16 @@ option{
 
   .add-btn{
     color:$empty-container-add-btn-color;
-    
   }
   }
-
-
 
   .table {
     width: 100%;
     max-height: 0;
     overflow-y: auto;
     transition: max-height 0.2s ease-out;
-    border-radius: 10px;
+    border-radius: 10px;  
     
-    td.operations{
-      
-      button{
-        margin:0 20px;
-      }
-    }
   }
   
   .add-btn{
@@ -130,6 +121,13 @@ option{
     left: 0;
     font-size: 16px;
     transition: transform ease-in-out 0.2s;
+  }
+}
+
+td.operations{
+    
+  button{
+    margin:0 20px;
   }
 }
 
@@ -166,6 +164,7 @@ option{
     .toggle-btn{
       transform: rotate(180deg);
     }
+    
   }
 }
 
