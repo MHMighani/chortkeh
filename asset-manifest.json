@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/MHMighani/chortkeh/static/css/main.8a69adc0.chunk.css",
-    "main.js": "/MHMighani/chortkeh/static/js/main.41b642a6.chunk.js",
-    "main.js.map": "/MHMighani/chortkeh/static/js/main.41b642a6.chunk.js.map",
-    "runtime-main.js": "/MHMighani/chortkeh/static/js/runtime-main.927de9f7.js",
-    "runtime-main.js.map": "/MHMighani/chortkeh/static/js/runtime-main.927de9f7.js.map",
-    "static/css/2.6595e905.chunk.css": "/MHMighani/chortkeh/static/css/2.6595e905.chunk.css",
-    "static/js/2.e2a6a933.chunk.js": "/MHMighani/chortkeh/static/js/2.e2a6a933.chunk.js",
-    "static/js/2.e2a6a933.chunk.js.map": "/MHMighani/chortkeh/static/js/2.e2a6a933.chunk.js.map",
-    "index.html": "/MHMighani/chortkeh/index.html",
-    "static/css/2.6595e905.chunk.css.map": "/MHMighani/chortkeh/static/css/2.6595e905.chunk.css.map",
-    "static/css/main.8a69adc0.chunk.css.map": "/MHMighani/chortkeh/static/css/main.8a69adc0.chunk.css.map",
-    "static/js/2.e2a6a933.chunk.js.LICENSE.txt": "/MHMighani/chortkeh/static/js/2.e2a6a933.chunk.js.LICENSE.txt",
-    "static/media/styles.scss": "/MHMighani/chortkeh/static/media/b-nazanin-regular.d7478a9e.ttf"
+    "main.css": "/chortkeh-client/static/css/main.9a2dd6d1.chunk.css",
+    "main.js": "/chortkeh-client/static/js/main.cf762bd8.chunk.js",
+    "main.js.map": "/chortkeh-client/static/js/main.cf762bd8.chunk.js.map",
+    "runtime-main.js": "/chortkeh-client/static/js/runtime-main.13949e04.js",
+    "runtime-main.js.map": "/chortkeh-client/static/js/runtime-main.13949e04.js.map",
+    "static/css/2.6595e905.chunk.css": "/chortkeh-client/static/css/2.6595e905.chunk.css",
+    "static/js/2.5b47dbf7.chunk.js": "/chortkeh-client/static/js/2.5b47dbf7.chunk.js",
+    "static/js/2.5b47dbf7.chunk.js.map": "/chortkeh-client/static/js/2.5b47dbf7.chunk.js.map",
+    "index.html": "/chortkeh-client/index.html",
+    "static/css/2.6595e905.chunk.css.map": "/chortkeh-client/static/css/2.6595e905.chunk.css.map",
+    "static/css/main.9a2dd6d1.chunk.css.map": "/chortkeh-client/static/css/main.9a2dd6d1.chunk.css.map",
+    "static/js/2.5b47dbf7.chunk.js.LICENSE.txt": "/chortkeh-client/static/js/2.5b47dbf7.chunk.js.LICENSE.txt",
+    "static/media/styles.scss": "/chortkeh-client/static/media/b-nazanin-regular.d7478a9e.ttf"
   },
   "entrypoints": [
-    "static/js/runtime-main.927de9f7.js",
+    "static/js/runtime-main.13949e04.js",
     "static/css/2.6595e905.chunk.css",
-    "static/js/2.e2a6a933.chunk.js",
-    "static/css/main.8a69adc0.chunk.css",
-    "static/js/main.41b642a6.chunk.js"
+    "static/js/2.5b47dbf7.chunk.js",
+    "static/css/main.9a2dd6d1.chunk.css",
+    "static/js/main.cf762bd8.chunk.js"
   ]
 }
