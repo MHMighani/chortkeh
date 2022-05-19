@@ -1,6 +1,0 @@
-{   
-    "runningPort": 3001,
-    "databasePath":"dbTest.json",
-    "tse_watchlist_url": "http://www.tsetmc.com/tsev2/data/MarketWatchInit.aspx?h=0&r=0",
-    "goldCurrencyPriceSource": "https://www.tgju.org/"
-}
