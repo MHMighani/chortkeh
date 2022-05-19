@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { editAsset } from "../services/assetsServices";
 import { editAsset } from "../actions";
 import notifications from "../utils/notifications";
 import useFormErrorHandler from "./useFormErrorHandler";
@@ -34,8 +33,6 @@ const useAssetFormHandler = (initialState = {}, props) => {
       error: isSubmited ? errors[name] : "",
     };
   }
-
-  console.log(formState);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
