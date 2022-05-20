@@ -17,7 +17,7 @@ function App() {
       <NavbarT />
       <Switch>
         {/* <Route exact path="/" component={Portfolio} /> */}
-        <Route path="/portfolio-details" component={PortfolioDetails} />
+        <Route path="/chortkeh" component={PortfolioDetails} />
         <Route path="/assets/details/" component={AssetDetails} />
         <Route exact path="/add/goldcurrency/" component={GoldCurrencyForm} />
         <Route exact path="/add/stock" component={StockForm} />

@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <BootNavbar expand="lg">
       <Container>
-        <Link to="/portfolio-details" style={{ textDecoration: "none" }}>
+        <Link to="/chortkeh" style={{ textDecoration: "none" }}>
           <BootNavbar.Brand>چرتکه</BootNavbar.Brand>
         </Link>
         <DarkModeToggleBtn />
