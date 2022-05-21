@@ -33,7 +33,6 @@ const useAssetFormHandler = (initialState = {}, props) => {
       error: isSubmited ? errors[name] : "",
     };
   }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmited(true);
