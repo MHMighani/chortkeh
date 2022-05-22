@@ -60,7 +60,7 @@ class QuotaChart extends React.PureComponent {
             formatter={(value, entry, index) => (
               <span style={{ marginRight: "10px" }}>{value}</span>
             )}
-            width={400}
+            width={300}
             wrapperStyle={{
               top: 15,
               left: 0,

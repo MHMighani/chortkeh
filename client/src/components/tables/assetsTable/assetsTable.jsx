@@ -1,7 +1,7 @@
 import React from "react";
-import allColumns from "../utils/columns";
-import { DeleteBtn, EyeBtn, EditBtn } from "./buttons";
-import Table from "./table";
+import { columns as allColumns } from "../../../utils";
+import { DeleteBtn, EyeBtn, EditBtn } from "../../common/buttons";
+import Table from "../table/table";
 import TableContainer from "./tableContainer";
 
 function AssetsTable({ assets, marketPrices, onDeleteAsset, overallValue }) {

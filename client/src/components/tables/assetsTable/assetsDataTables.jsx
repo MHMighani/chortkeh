@@ -1,6 +1,6 @@
 import _ from "lodash";
 import AssetsTable from "./assetsTable";
-import getDataWithChange from "../utils/getDataWithChange";
+import { getDataWithChange } from "../../../utils";
 
 const AssetsDataTables = ({
   mappedAssets,

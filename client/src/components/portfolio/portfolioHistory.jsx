@@ -1,16 +1,18 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
-import { historyTableColumns } from "../utils/columns";
-import { saveOverallHistory } from "../services/historyService";
-import { updateHistoryRecord } from "../actions";
-import Table from "./table";
-import TableContainer from "./tableContainer";
-import StyledValue from "./styledValue";
-import TimeFrameSelect from "./timeFrameSelect";
-import getDataWithChange from "../utils/getDataWithChange";
-import ResultsNumSelect from "./ResultsNumSelect";
-import getNormalizedOverallValue from "../utils/getNormalizedOverallValue";
-import getFilteredDateByTimeFrame from "../utils/getFilteredDataByTimeFrame";
+import { saveOverallHistory } from "../../services/historyService";
+import { updateHistoryRecord } from "../../actions";
+import Table from "../tables/table/table";
+import TableContainer from "../tables/assetsTable/tableContainer";
+import TimeFrameSelect from "../common/timeFrameSelect";
+import ResultsNumSelect from "./resultsNumSelect";
+import {
+  getFilteredDateByTimeFrame,
+  getNormalizedOverallValue,
+  getDataWithChange,
+  getStyledData,
+  columns,
+} from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 
 /*
@@ -63,29 +65,12 @@ const PortfolioHistory = ({ mappedAssets }) => {
     dispatch(updateHistoryRecord(newData));
   }, [mappedAssets, historyRecord, dispatch, sortedData]);
 
-  // returns styled data for table cell
-  function getStyledData(dataWithChanges) {
-    return dataWithChanges.map(({ ...historyRow }, index) => {
-      for (let key in historyRow) {
-        if (key === "id") continue;
-        historyRow[key] = (
-          <StyledValue
-            value={historyRow[key].value}
-            percentChange={historyRow[key].percentChange}
-          />
-        );
-      }
-      return historyRow;
-    });
-  }
-
   const timeFramedData =
     timeFrame > 1
       ? getFilteredDateByTimeFrame([...sortedData], timeFrame)
       : [...sortedData].reverse();
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
-  // const styledData = getStyledData(dataWithChanges).reverse();
 
   return (
     <div className="history-info">
@@ -99,7 +84,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
           <ResultsNumSelect onResultsNumChange={setPageSize} />
         </div>
         <Table
-          columns={historyTableColumns}
+          columns={columns.history}
           data={dataWithChanges}
           pageSize={pageSize}
           styleFunction={getStyledData}

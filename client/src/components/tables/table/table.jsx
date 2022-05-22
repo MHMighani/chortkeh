@@ -3,8 +3,8 @@ import _ from "lodash";
 import TableBody from "./tableBody";
 import TableFoot from "./tableFoot";
 import TableHeader from "./tableHeader";
-import getPaginatedData from "../utils/getPaginatedData";
-import Pagination from "./pagination";
+import { getPaginatedData } from "../../../utils";
+import Pagination from "../../common/pagination";
 
 function Table({
   data,

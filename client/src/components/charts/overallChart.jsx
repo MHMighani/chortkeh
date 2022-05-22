@@ -8,8 +8,7 @@ import {
   Line,
 } from "recharts";
 import { useState } from "react";
-
-import getCommaSepNum from "../utils/getCommaSepNum";
+import { getCommaSepNum } from "../../utils";
 
 const OverallChart = ({ data }) => {
   const [activeCategories, setActiveCategories] = useState(["overall"]);

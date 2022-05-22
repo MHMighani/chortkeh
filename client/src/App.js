@@ -1,14 +1,13 @@
 import { Route, Switch } from "react-router-dom";
-import GoldCurrencyForm from "./components/goldCurrencyForm";
+import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
-import NavbarT from "./components/navbar";
-import StockForm from "./components/stockForm";
-import CashForm from "./components/cashForm";
-import AssetDetails from "./components/assetDetails";
-import PortfolioDetails from "./components/portfolioDetails";
+import NavbarT from "./components/layout/navbar";
+import StockForm from "./components/forms/stockForm";
+import CashForm from "./components/forms/cashForm";
+import AssetDetails from "./components/tables/assetsTable/assetDetails";
+import PortfolioDetails from "./components/portfolio/portfolioDetails";
 // import Portfolio from "./components/Portfolio";
-import Footer from "./footer";
-
+import Footer from "./components/layout/footer";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {

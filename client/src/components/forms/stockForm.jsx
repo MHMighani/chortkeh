@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Input from "./input";
 import SelectForm from "./selectForm";
-import useAssetFormHandler from "../hooks/useAssetFormHandler";
-import { SubmitBtn } from "./buttons";
-import getMarketPriceData from "../utils/getMarketPrice";
-import PurchaseDate from "./purchaseDate";
+import useAssetFormHandler from "../../hooks/useAssetFormHandler";
+import { SubmitBtn } from "../common/buttons";
+import { getMarketPriceData } from "../../utils";
+import PurchaseDate from "../common/purchaseDate";
 
 import { useSelector } from "react-redux";
 
