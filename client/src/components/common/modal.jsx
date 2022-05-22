@@ -8,11 +8,11 @@ function CustomModal({ title, show, body, handleConfirm, handleClose }) {
       </BootModal.Header>
 
       <BootModal.Footer>
-        <button className="btn btn-secondary" onClick={handleClose}>
-          انصراف
-        </button>
-        <button className="btn btn-primary" onClick={handleConfirm}>
+        <button className="btn btn-success" onClick={handleConfirm}>
           تایید
+        </button>
+        <button className="btn btn-danger" onClick={handleClose}>
+          انصراف
         </button>
       </BootModal.Footer>
     </BootModal>

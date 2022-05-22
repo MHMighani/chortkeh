@@ -1,10 +1,8 @@
-import getPercentChange from "../utils/getPercentChange";
-import Table from "./table";
-import { EditBtn, DeleteBtn } from "./buttons";
-import { detailsTableColumns as columns } from "../utils/columns";
-import useDeleteMsgModal from "../hooks/useDeleteMessage";
-import getCommaSepNum from "../utils/getCommaSepNum";
-import { deleteAssetById } from "../actions";
+import Table from "../table/table";
+import { EditBtn, DeleteBtn } from "../../common/buttons";
+import useDeleteMsgModal from "../../../hooks/useDeleteMessage";
+import { getCommaSepNum, columns, getPercentChange } from "../../../utils";
+import { deleteAssetById } from "../../../actions";
 import { useSelector, useDispatch } from "react-redux";
 
 const AssetDetails = (props) => {
@@ -67,7 +65,7 @@ const AssetDetails = (props) => {
           <span className="value">{getCommaSepNum(marketPrice)}</span>
         </div>
         <div className="asset-detail__body">
-          <Table data={getProcessedData(assetData)} columns={columns} />
+          <Table data={getProcessedData(assetData)} columns={columns.details} />
         </div>
       </div>
     </div>

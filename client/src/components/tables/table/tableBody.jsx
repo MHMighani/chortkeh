@@ -1,5 +1,5 @@
 import React from "react";
-import getCommaSepNum from "../utils/getCommaSepNum";
+import { getCommaSepNum } from "../../../utils";
 
 function getCellContent(column, row, rowIndex) {
   let cellContent = row[column.name];

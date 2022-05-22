@@ -4,7 +4,7 @@ import {
   faChevronDown,
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
-import getCommaSepNum from "../utils/getCommaSepNum";
+import getCommaSepNum from "../../utils/getCommaSepNum";
 
 function StyledValue({ value, percentChange, change = "" }) {
   const chevron =
@@ -22,7 +22,7 @@ function StyledValue({ value, percentChange, change = "" }) {
         <FontAwesomeIcon icon={chevron} />
       </span>
       <span className="value">{getCommaSepNum(value)}</span>
-      {percentChange !== 0 && (
+      {percentChange !== 0 && !isNaN(percentChange) && (
         <span className="percent">({percentChange})</span>
       )}
       {change !== 0 && <span className="change">{getCommaSepNum(change)}</span>}

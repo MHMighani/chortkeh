@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
-import StyledValue from "./styledValue";
+import StyledValue from "../../common/styledValue";
 
 const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
   const headEl = useRef(null);
@@ -26,7 +26,7 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
         className="table-container__head"
         onClick={containerHeadClickHandler}
       >
-        <div className="container__head-info">
+        <div className="container__head--info">
           <span className="title">{title}</span>
           {!empty && (
             <div className="value-info">

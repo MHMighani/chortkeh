@@ -2,7 +2,7 @@ $table-breakpoint: 480px;
 $portfolio-bar-height: 50px;
 $large-screen-breakpoint: 1200px;
 $empty-container-add-btn-color:#074b83;
-$footer-height: 50px;
+$footer-height: 35px;
 
 // reset
 *{
@@ -17,7 +17,7 @@ html{
   --text-color:black;
   --navbar-bg-color:#0077b6;
   --primary-color:lightblue;
-  --table-bg-color:white;
+  --secondary-color:white;
   --empty-container-head-color:#d8d8d8;
 }
 
@@ -27,7 +27,7 @@ html[theme="dark"]{
   --text-color:#0abca9;
   --navbar-bg-color:#1e1f26;
   --primary-color:#282a35;
-  --table-bg-color:#2c303a;
+  --secondary-color:#2c303a;
   --empty-container-head-color:#2d2d2d;
 }
 
@@ -67,6 +67,30 @@ option{
   }
 }
 
+
+
+//scrollbar
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .navbar{
   background-color: var(--navbar-bg-color);
   .navbar-brand{
@@ -76,7 +100,13 @@ option{
 
 .table{
   color: var(--text-color);
-  background-color: var(--table-bg-color);
+  background-color: var(--secondary-color);
+
+  td.operations{
+    button{
+      margin:0 20px;
+    }
+  }
 }
 
 // Table container
@@ -85,6 +115,7 @@ option{
   max-width: 1000px;
   margin: 0 auto;
   cursor: pointer;
+  margin-bottom: 14px;
 
   &.empty{
     cursor:default;
@@ -100,15 +131,14 @@ option{
   .add-btn{
     color:$empty-container-add-btn-color;
   }
-  }
+}
 
   .table {
     width: 100%;
     max-height: 0;
     overflow-y: auto;
     transition: max-height 0.2s ease-out;
-    border-radius: 10px;  
-    
+    border-radius: 10px;
   }
   
   .add-btn{
@@ -122,59 +152,56 @@ option{
     font-size: 16px;
     transition: transform ease-in-out 0.2s;
   }
-}
 
-td.operations{
-    
-  button{
-    margin:0 20px;
-  }
-}
-
-.table-container__head {
-  display: flex;
-  position: relative;
-  background: var(--primary-color);
-  justify-content: space-between;
-  padding: 0.2rem 1rem;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  height: 40px;
   
-  border-radius: 10px;
-  font-size: .95rem;
 
-  .buttons {
+  &__head {
     display: flex;
-    justify-content: center;
+    position: relative;
+    background: var(--primary-color);
+    justify-content: space-between;
+    padding: 0.2rem 1rem;
     align-items: center;
-    width: 80px;
-
-    a,span,svg{
-      vertical-align: sub;
-    }
-  }
-
-  .value-info {
-    margin-right: 10px;
-  }
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    
+    border-radius: 10px;
+    font-size: .95rem;
   
-  &.active{
-    .toggle-btn{
-      transform: rotate(180deg);
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+  
+      a,span,svg{
+        vertical-align: sub;
+      }
+    }
+  
+    .value-info {
+      margin-right: 10px;
+    }
+    
+    &.active{
+      .toggle-btn{
+        transform: rotate(180deg);
+      }
     }
     
   }
+
 }
 
-.container__head-info {
-  width:350px;
+.container__head--info {
+  // width:350px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 
   .title{
+    width: 50px;
     white-space: nowrap;
     text-align: right;
     color: var(--text-color);
@@ -201,7 +228,7 @@ td.operations{
   border-radius: 10px;
   color: var(--text-color);
 
-  .asset-detail__header {
+  &__header {
       padding: 10px;
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
@@ -212,8 +239,8 @@ td.operations{
     }
   }
   
-  .asset-detail__body{
-    background-color: var(--table-bg-color);
+  &__body{
+    background-color: var(--secondary-color);
     color: var(--text-color);
   }
 }
@@ -230,7 +257,8 @@ td.operations{
 
 .add-form {
   margin: 5rem auto;
-  padding: 2.5rem;
+  padding: 1.5rem;
+  width: 90%;
   max-width: 700px;
   justify-content: center;
   background-color: var(--primary-color);
@@ -453,7 +481,7 @@ td.operations{
 
 @media (min-width: $table-breakpoint) {
   .table-container {
-    margin-bottom: 14px;
+    
     .table-container__head {
       font-size: 1.2rem;
     }
@@ -483,5 +511,9 @@ td.operations{
     justify-content: center;
     max-width: 1000px;
     overflow: auto;
+  }
+
+  .add-form{
+    padding: 2.5rem; 
   }
 }
