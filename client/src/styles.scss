@@ -107,6 +107,9 @@ option{
       margin:0 20px;
     }
   }
+  *{
+    border-bottom-width:0 !important;
+  }
 }
 
 // Table container
@@ -188,7 +191,14 @@ option{
       .toggle-btn{
         transform: rotate(180deg);
       }
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
+    &.active+.table{
+      border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }  
+
   }
 
 }
@@ -222,10 +232,12 @@ option{
 }
 
 .asset-detail{
+  width: 90%;
   max-width: 1000px;
   margin: 20px auto;
   border-radius: 10px;
   color: var(--text-color);
+  overflow-x: scroll;
 
   &__header {
       padding: 10px;
