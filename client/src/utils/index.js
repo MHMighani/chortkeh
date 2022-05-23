@@ -6,6 +6,6 @@ export { default as getDataWithChange } from "./getDataWithChange";
 export { default as getPercentChange } from "./getPercentChange";
 export { default as getMarketPriceData } from "./getMarketPrice";
 export { default as getPaginatedData } from "./getPaginatedData";
-export { default as getStyledData } from "./getPaginatedData";
+export { default as getStyledData } from "./getStyledData";
 
 export { default as columns } from "./columns";

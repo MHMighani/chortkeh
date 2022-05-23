@@ -24,8 +24,9 @@ function Table({
     [sortCol.col, extraSortField].filter(Boolean).join("."),
     sortCol.dir
   );
+
   const styledData = styleFunction
-    ? styleFunction(sortedData).reverse()
+    ? styleFunction(sortedData, ["id"]).reverse()
     : sortedData;
 
   // if no pageSize is provided then pagination will be off
