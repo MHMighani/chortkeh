@@ -8,11 +8,13 @@ import AssetDetails from "./components/tables/assetsTable/assetDetails";
 import PortfolioDetails from "./components/portfolio/portfolioDetails";
 // import Portfolio from "./components/Portfolio";
 import Footer from "./components/layout/footer";
+import OpeningModal from "./components/common/openingModal";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <div className="App">
+      <OpeningModal />
       <NavbarT />
       <Switch>
         {/* <Route exact path="/" component={Portfolio} /> */}
