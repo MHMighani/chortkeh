@@ -1,5 +1,7 @@
-import prices from "../prices.json";
+import data from "../data.json";
 import * as actions from "./actionTypes";
+
+import fakeHistoryBuilder from "../utils/fakeHistoryBuilder";
 
 const assets = [];
 
@@ -8,8 +10,8 @@ export const fetchAssets = () => async (dispatch) => {
 };
 
 export const fetchPrices = () => async (dispatch) => {
-  const goldCurrency = prices.goldcurrency || [];
-  const stock = (await prices.stock) || [];
+  const goldCurrency = data.goldcurrency || [];
+  const stock = (await data.stock) || [];
 
   dispatch({
     type: actions.FETCH_PRICES,
@@ -18,9 +20,18 @@ export const fetchPrices = () => async (dispatch) => {
 };
 
 export const fetchHistoryRecord = () => async (dispatch) => {
+  const lastProvidedHistory = {
+    overall: 1000000000,
+    id: "1401-02-31",
+    cash: 300000000,
+    goldCurrency: 400000000,
+    stock: 300000000,
+  };
+  const fakeHistory = fakeHistoryBuilder(10, lastProvidedHistory);
+
   dispatch({
     type: actions.FETCH_HISTORY,
-    payload: [],
+    payload: fakeHistory,
   });
 };
 
