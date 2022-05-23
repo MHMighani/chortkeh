@@ -1,20 +1,13 @@
 import BootModal from "react-bootstrap/Modal";
 
-function CustomModal({ title, show, body, handleConfirm, handleClose }) {
+function CustomModal({ title, show, body, handleClose, footer }) {
   return (
     <BootModal show={show} onHide={handleClose}>
       <BootModal.Header closeButton>
         <BootModal.Title>{title}</BootModal.Title>
       </BootModal.Header>
-
-      <BootModal.Footer>
-        <button className="btn btn-success" onClick={handleConfirm}>
-          تایید
-        </button>
-        <button className="btn btn-danger" onClick={handleClose}>
-          انصراف
-        </button>
-      </BootModal.Footer>
+      <BootModal.Body>{body}</BootModal.Body>
+      {footer && <BootModal.Footer>{footer}</BootModal.Footer>}
     </BootModal>
   );
 }

@@ -23,12 +23,24 @@ const useDeleteMsgModal = (handleConfirm) => {
     handleDelMsgClose();
   };
 
+  const modalFooter = (
+    <>
+      <button className="btn btn-success" onClick={handleConfirm}>
+        تایید
+      </button>
+      <button className="btn btn-danger" onClick={handleDelMsgClose}>
+        انصراف
+      </button>
+    </>
+  );
+
   const modalBody = (
     <CustomModal
       title={title}
       handleClose={handleDelMsgClose}
       show={messageDisplay}
       handleConfirm={handleMessageConfirm}
+      footer={modalFooter}
     />
   );
 
