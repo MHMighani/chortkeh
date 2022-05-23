@@ -34,6 +34,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-
+server/goldCurrency2.js
 server/dbTest.json 
 .vscode/settings.json
