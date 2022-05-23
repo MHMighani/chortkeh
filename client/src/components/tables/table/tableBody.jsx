@@ -3,10 +3,13 @@ import { getCommaSepNum } from "../../../utils";
 
 function getCellContent(column, row, rowIndex) {
   let cellContent = row[column.name];
+
   if (column.name === "rowNum") {
     cellContent = rowIndex + 1;
   } else if (typeof +cellContent === "number" && !isNaN(+cellContent)) {
     cellContent = getCommaSepNum(row[column.name]);
+  } else if (cellContent === undefined) {
+    return 0;
   }
 
   return cellContent;

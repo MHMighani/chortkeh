@@ -1,8 +1,8 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
-import { saveOverallHistory } from "../../services/historyService";
 import { updateHistoryRecord } from "../../actions";
 import Table from "../tables/table/table";
+import { saveOverallHistory } from "../../services/historyService";
 import TableContainer from "../tables/assetsTable/tableContainer";
 import TimeFrameSelect from "../common/timeFrameSelect";
 import ResultsNumSelect from "./resultsNumSelect";

@@ -1,7 +1,7 @@
-import StyledValue from "./styledValue";
+import StyledValue from "../components/common/styledValue";
 
 // returns styled data for table cells
-export function getStyledData(dataWithChanges, nuetralCols = []) {
+export default function getStyledData(dataWithChanges, nuetralCols = []) {
   return dataWithChanges.map(({ ...row }) => {
     for (let key in row) {
       // check for columns with no change
