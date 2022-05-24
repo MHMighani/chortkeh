@@ -24,7 +24,7 @@ const Portfolio = () => {
     const initialAmounts = { goldCurrency: 0, stock: 0, cash: 0 };
 
     const amounts = assets.reduce((last, current) => {
-      const assetValue = current.amount * current?.purchasePrice || 1;
+      const assetValue = current.amount * (current?.purchasePrice || 1);
       last[current.assetClass] += assetValue;
       total += assetValue;
       return last;
@@ -55,7 +55,7 @@ const Portfolio = () => {
             key={assetClass}
             className={`quota ${assetClass}`}
             style={{
-              // display: quota ? "auto" : "none",
+              display: quota ? "initial" : "none",
               width: `${quota}%`,
               backgroundColor: `${colors[assetClass]}`,
             }}
