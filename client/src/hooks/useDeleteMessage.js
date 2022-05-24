@@ -25,7 +25,7 @@ const useDeleteMsgModal = (handleConfirm) => {
 
   const modalFooter = (
     <>
-      <button className="btn btn-success" onClick={handleConfirm}>
+      <button className="btn btn-success" onClick={handleMessageConfirm}>
         تایید
       </button>
       <button className="btn btn-danger" onClick={handleDelMsgClose}>

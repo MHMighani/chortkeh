@@ -6,7 +6,7 @@ function CustomModal({ title, show, body, handleClose, footer }) {
       <BootModal.Header closeButton>
         <BootModal.Title>{title}</BootModal.Title>
       </BootModal.Header>
-      <BootModal.Body>{body}</BootModal.Body>
+      {body && <BootModal.Body>{body}</BootModal.Body>}
       {footer && <BootModal.Footer>{footer}</BootModal.Footer>}
     </BootModal>
   );
