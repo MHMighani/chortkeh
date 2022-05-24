@@ -1,21 +1,49 @@
-// import { useContext } from "react";
-// import { AssetsContext } from "../context/assetsContext";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Portfolio = () => {
-  // const [assetsData, assetsDataDispatch] = useContext(AssetsContext);
+import { useSelector, useDispatch } from "react-redux";
+import { fetchPrices, fetchAssets, fetchHistoryRecord } from "../../actions";
 
-  const quotaStatus = {
-    goldCurrency: 50,
-    stock: 30,
-    cash: 20,
-  };
+const Portfolio = () => {
+  const [quotaStatus, setQuotaStatus] = useState({
+    goldCurrency: 0,
+    stock: 0,
+    cash: 0,
+  });
+  const assets = useSelector((state) => state.assets);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAssets());
+    dispatch(fetchPrices());
+    dispatch(fetchHistoryRecord());
+  }, [dispatch]);
+
+  useEffect(() => {
+    let total = 0;
+    const initialAmounts = { goldCurrency: 0, stock: 0, cash: 0 };
+
+    const amounts = assets.reduce((last, current) => {
+      const assetValue = current.amount * current?.purchasePrice || 1;
+      last[current.assetClass] += assetValue;
+      total += assetValue;
+      return last;
+    }, initialAmounts);
+
+    for (let assetClass in amounts) {
+      amounts[assetClass] /= total / 100;
+    }
+
+    setQuotaStatus({ ...amounts });
+  }, [assets]);
 
   const colors = {
     goldCurrency: "Gold",
     stock: "green",
     cash: "silver",
   };
+
+  console.log(quotaStatus);
 
   const labels = { goldCurrency: "طلا وارز", cash: "نقدی", stock: "سهام" };
 
@@ -27,6 +55,7 @@ const Portfolio = () => {
             key={assetClass}
             className={`quota ${assetClass}`}
             style={{
+              // display: quota ? "auto" : "none",
               width: `${quota}%`,
               backgroundColor: `${colors[assetClass]}`,
             }}
