@@ -358,6 +358,11 @@ option{
   border-radius: 20px;
   color:black;
 
+  .empty-note{
+    margin:0 auto;
+    color: whitesmoke;
+  }
+
   &__quota-bar {
     display: flex;
     direction: ltr;
@@ -410,15 +415,17 @@ option{
 
 .portfolio-details{
   margin-top: 40px;
-  
 }
 
 .portfolio__operations{
+  display: flex;
+  justify-content: center;
   margin-top: 30px;
+  
   .link{
-    padding:1rem;
+    padding:5px 10px;
     background-color: aqua;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     color:black;
