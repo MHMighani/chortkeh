@@ -16,7 +16,7 @@ const OverallChart = ({ data }) => {
   const info = {
     stock: { color: "#454B1B", label: "سهام", active: false },
     cash: { color: "#C0C0C0", label: "نقدی", active: false },
-    goldCurrency: { color: "#FFD700", label: "طلا و ارز", active: false },
+    goldCurrency: { color: "yellow", label: "طلا و ارز", active: false },
     overall: { color: "#8884d8", label: "ارزش کل", active: true },
   };
 
