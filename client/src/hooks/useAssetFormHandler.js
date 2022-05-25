@@ -11,7 +11,6 @@ const useAssetFormHandler = (initialState = {}, props) => {
   const [isSubmited, setIsSubmited] = useState(false);
   const todayPersianDate = utils("fa").getToday();
   const id = props.location.state?.id || "";
-
   const dispatch = useDispatch();
 
   // initializing
@@ -65,6 +64,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
         dispatch(addAsset(value));
         notifications.successfulAdditionNotify();
       }
+      props.history.push("/portfolio-details");
     } catch (error) {
       if (error.response.status === 500) {
         notifications.duplicateAssetError();
