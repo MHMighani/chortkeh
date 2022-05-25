@@ -67,6 +67,18 @@ option{
   }
 }
 
+// Toast messages
+.Toastify__toast{
+  color: white;
+  font-size: 1rem;
+  &--success{
+    background-color: #7DB46CFF;
+  }
+  &--info{
+    background-color: #54c7ec;
+
+  }
+}
 
 
 //scrollbar
@@ -107,8 +119,13 @@ option{
       margin:0 20px;
     }
   }
-  *{
+
+  td,tr,tbody{
     border-bottom-width:0 !important;
+    border-top:0 !important;
+  }
+  *{
+    border-color: var(--primary-color)
   }
 }
 
@@ -224,7 +241,7 @@ option{
   }
   .filter-bar{
     display: flex;
-
+    
     .filter{
       margin-left:25px;
     }

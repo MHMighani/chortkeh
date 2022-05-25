@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/add/cash" component={CashForm} />
       </Switch>
       <Footer />
-      <ToastContainer />
+      <ToastContainer position="top-center" hideProgressBar rtl icon={false} />
     </div>
   );
 }
