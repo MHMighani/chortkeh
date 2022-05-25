@@ -1,7 +1,8 @@
 import data from "../data.json";
 import * as actions from "./actionTypes";
-
 import fakeHistoryBuilder from "../utils/fakeHistoryBuilder";
+import getDateId from "../utils/getDateId";
+import dateOperation from "../utils/dateOperation";
 
 const assets = [];
 
@@ -22,12 +23,12 @@ export const fetchPrices = () => async (dispatch) => {
 export const fetchHistoryRecord = () => async (dispatch) => {
   const lastProvidedHistory = {
     overall: 1000000000,
-    id: "1401-02-31",
+    id: dateOperation(getDateId(), 1),
     cash: 300000000,
     goldCurrency: 400000000,
     stock: 300000000,
   };
-  const fakeHistory = fakeHistoryBuilder(10, lastProvidedHistory);
+  const fakeHistory = fakeHistoryBuilder(60, lastProvidedHistory);
 
   dispatch({
     type: actions.FETCH_HISTORY,

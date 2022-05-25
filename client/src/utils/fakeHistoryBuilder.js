@@ -2,7 +2,7 @@
 // You should provide last recent history data and it will
 // build previous fake history data based on it and by random efficiency
 
-import moment from "moment-jalali";
+import dateOperation from "./dateOperation";
 
 // returns array with x random numbers between 0 and 1
 function getRandomEfficiency(x) {
@@ -18,10 +18,6 @@ function getNewHistoryObject(lastHistoryObject, randomNumber) {
   return Math.round(
     lastHistoryObject - (lastHistoryObject * randomNumber) / 100
   );
-}
-
-function dateOperation(date, amount, format = "jYYYY-jMM-jDD") {
-  return moment(date, format).subtract(amount, "day").format(format);
 }
 
 function getNewHistoryData(previous) {
