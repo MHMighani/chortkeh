@@ -3,6 +3,7 @@ import * as actions from "./actionTypes";
 import fakeHistoryBuilder from "../utils/fakeHistoryBuilder";
 import getDateId from "../utils/getDateId";
 import dateOperation from "../utils/dateOperation";
+import { getTotalsByAssetClass } from "../utils";
 
 const assets = [];
 
@@ -20,19 +21,18 @@ export const fetchPrices = () => async (dispatch) => {
   });
 };
 
-export const fetchHistoryRecord = () => async (dispatch) => {
-  const lastProvidedHistory = {
-    overall: 1000000000,
-    id: dateOperation(getDateId(), 1),
-    cash: 300000000,
-    goldCurrency: 400000000,
-    stock: 300000000,
-  };
-  const fakeHistory = fakeHistoryBuilder(60, lastProvidedHistory);
+export const fetchHistoryRecord = () => async (dispatch, getState) => {
+  let totals = getTotalsByAssetClass(getState().assets);
+
+  totals["overall"] = totals["total"];
+  delete totals["total"];
+  totals = { ...totals, id: dateOperation(getDateId(), 1) };
+
+  const payload = totals.overall === 0 ? [] : fakeHistoryBuilder(60, totals);
 
   dispatch({
     type: actions.FETCH_HISTORY,
-    payload: fakeHistory,
+    payload,
   });
 };
 
