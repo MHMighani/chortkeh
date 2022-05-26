@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/chortkeh/static/css/main.d7a411d7.chunk.css",
-    "main.js": "/chortkeh/static/js/main.adecf1e4.chunk.js",
-    "main.js.map": "/chortkeh/static/js/main.adecf1e4.chunk.js.map",
+    "main.js": "/chortkeh/static/js/main.83c37502.chunk.js",
+    "main.js.map": "/chortkeh/static/js/main.83c37502.chunk.js.map",
     "runtime-main.js": "/chortkeh/static/js/runtime-main.94473d4e.js",
     "runtime-main.js.map": "/chortkeh/static/js/runtime-main.94473d4e.js.map",
     "static/css/2.6595e905.chunk.css": "/chortkeh/static/css/2.6595e905.chunk.css",
-    "static/js/2.9d6858bf.chunk.js": "/chortkeh/static/js/2.9d6858bf.chunk.js",
-    "static/js/2.9d6858bf.chunk.js.map": "/chortkeh/static/js/2.9d6858bf.chunk.js.map",
+    "static/js/2.93157502.chunk.js": "/chortkeh/static/js/2.93157502.chunk.js",
+    "static/js/2.93157502.chunk.js.map": "/chortkeh/static/js/2.93157502.chunk.js.map",
     "index.html": "/chortkeh/index.html",
     "static/css/2.6595e905.chunk.css.map": "/chortkeh/static/css/2.6595e905.chunk.css.map",
     "static/css/main.d7a411d7.chunk.css.map": "/chortkeh/static/css/main.d7a411d7.chunk.css.map",
-    "static/js/2.9d6858bf.chunk.js.LICENSE.txt": "/chortkeh/static/js/2.9d6858bf.chunk.js.LICENSE.txt",
+    "static/js/2.93157502.chunk.js.LICENSE.txt": "/chortkeh/static/js/2.93157502.chunk.js.LICENSE.txt",
     "static/media/styles.scss": "/chortkeh/static/media/b-nazanin-regular.d7478a9e.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.94473d4e.js",
     "static/css/2.6595e905.chunk.css",
-    "static/js/2.9d6858bf.chunk.js",
+    "static/js/2.93157502.chunk.js",
     "static/css/main.d7a411d7.chunk.css",
-    "static/js/main.adecf1e4.chunk.js"
+    "static/js/main.83c37502.chunk.js"
   ]
 }
