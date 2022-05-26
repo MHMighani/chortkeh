@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
 import NavbarT from "./components/layout/navbar";
@@ -17,6 +17,7 @@ function App() {
       <OpeningModal />
       <NavbarT />
       <Switch>
+        <Redirect from="/chortkeh" to="/" />
         <Route exact path="/" component={Portfolio} />
         <Route path="/portfolio-details" component={PortfolioDetails} />
         <Route path="/assets/details/" component={AssetDetails} />
