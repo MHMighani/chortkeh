@@ -2,6 +2,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { getTotalsByAssetClass, getQuotaStatus } from "../../utils";
 import { fetchPrices, fetchAssets, fetchHistoryRecord } from "../../actions";
 
 const Portfolio = () => {
@@ -20,22 +21,9 @@ const Portfolio = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const initialAmounts = { goldCurrency: 0, stock: 0, cash: 0 };
-
-    const amounts = assets.reduce((last, current) => {
-      const assetValue = current.amount * (current?.purchasePrice || 1);
-      last[current.assetClass] += assetValue;
-      return last;
-    }, initialAmounts);
-
-    const total = _.sum(Object.values(amounts));
-
-    for (let assetClass in amounts) {
-      const value = (amounts[assetClass] / total) * 100 || 0;
-      amounts[assetClass] = value;
-    }
-
-    setQuotaStatus({ ...amounts });
+    const totals = getTotalsByAssetClass(assets);
+    const quotaStatus = getQuotaStatus(totals);
+    setQuotaStatus({ ...quotaStatus });
   }, [assets]);
 
   const colors = {

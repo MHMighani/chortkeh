@@ -7,5 +7,7 @@ export { default as getPercentChange } from "./getPercentChange";
 export { default as getMarketPriceData } from "./getMarketPrice";
 export { default as getPaginatedData } from "./getPaginatedData";
 export { default as getStyledData } from "./getStyledData";
+export { default as getTotalsByAssetClass } from "./getTotalsByAssetClass";
+export { default as getQuotaStatus } from "./getQuotaStatus";
 
 export { default as columns } from "./columns";
