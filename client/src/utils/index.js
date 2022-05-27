@@ -9,5 +9,6 @@ export { default as getPaginatedData } from "./getPaginatedData";
 export { default as getStyledData } from "./getStyledData";
 export { default as getTotalsByAssetClass } from "./getTotalsByAssetClass";
 export { default as getQuotaStatus } from "./getQuotaStatus";
+export { default as getDateId } from "./getDateId";
 
 export { default as columns } from "./columns";

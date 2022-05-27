@@ -8,7 +8,7 @@ function getDateId(date = utils("fa").getToday()) {
     date[key] = String(date[key]).padStart(lengthOfNumbers[key], "0");
   }
 
-  return Object.values(date).join("-");
+  return `${date["year"]}-${date["month"]}-${date["day"]}`;
 }
 
 export default getDateId;
