@@ -4,7 +4,7 @@ import useDeleteMsgModal from "../../../hooks/useDeleteMessage";
 import { getCommaSepNum, columns, getPercentChange } from "../../../utils";
 import { deleteAssetById } from "../../../actions";
 import { useSelector, useDispatch } from "react-redux";
-
+import { getDateId } from "../../../utils/";
 const AssetDetails = (props) => {
   const { assetSubClass, marketPrice } = props.location.state;
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
@@ -19,10 +19,6 @@ const AssetDetails = (props) => {
     dispatch(deleteAssetById(item.id));
   }
 
-  function getStringDate(date) {
-    return date.join("-");
-  }
-
   //TODO: merge mapping in both assetsTable and detail table
   function getProcessedData(data) {
     return data.map((item) => {
@@ -30,7 +26,7 @@ const AssetDetails = (props) => {
 
       const overallValue = item.amount * marketPrice;
       const changePercent = getPercentChange(item.purchasePrice, marketPrice);
-      const purchaseDate = getStringDate(Object.values(date));
+      const purchaseDate = getDateId(date);
       const deleteBtn = (
         <DeleteBtn
           key={`${item.id}-deleteKey`}
