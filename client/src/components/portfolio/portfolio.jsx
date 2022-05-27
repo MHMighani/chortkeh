@@ -40,19 +40,21 @@ const Portfolio = () => {
         {_.sum(Object.values(quotaStatus)) === 0 ? (
           <h3 className="empty-note">این پورتفولیو خالی است</h3>
         ) : (
-          Object.entries(quotaStatus).map(([assetClass, quota]) => (
-            <span
-              key={assetClass}
-              className={`quota ${assetClass}`}
-              style={{
-                display: quota ? "initial" : "none",
-                width: `${quota}%`,
-                backgroundColor: `${colors[assetClass]}`,
-              }}
-            >
-              {labels[assetClass]}
-            </span>
-          ))
+          Object.entries(quotaStatus).map(
+            ([assetClass, quota]) =>
+              quota && (
+                <span
+                  key={assetClass}
+                  className={`quota ${assetClass}`}
+                  style={{
+                    width: `${quota}%`,
+                    backgroundColor: `${colors[assetClass]}`,
+                  }}
+                >
+                  {labels[assetClass]}
+                </span>
+              )
+          )
         )}
       </div>
       <div className="portfolio__operations">

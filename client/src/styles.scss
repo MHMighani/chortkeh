@@ -393,37 +393,35 @@ option{
   
         &:first-child{
           margin-left: 0;
+          &:before{
+            display:none;
+          }
         }
   
-        &:last-child:after{
-          display: none;
+        &:last-child{
+          &:after{
+            display:none;
+          }
         }
-  
-        &:first-child:before{
-          display:none;
+
+        &:before,&:after{
+          content: "";
+          position: absolute;
+          top: 0;
+          border-radius: 100%;
+          height: 100%;
+          width: $portfolio-bar-height;
+
         }
   
         &:after{
-        content: "";
-        position: absolute;
-        top: 0;
-        right: -$portfolio-bar-height/2;
-        border-radius: 100%;
-        height: 100%;
-        width: $portfolio-bar-height;
-        background-color: white;
+          right: -$portfolio-bar-height/2;
+          background-color: white;
         }
   
-        &:before{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -$portfolio-bar-height/2;
-        width: $portfolio-bar-height;
-        height: 100%;
-        border-radius: 100px;
-  
-        background-color: inherit;
+        &:before{          
+          left: -$portfolio-bar-height/2;
+          background-color: inherit;
         }
     }
   }
