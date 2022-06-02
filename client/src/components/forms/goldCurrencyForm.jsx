@@ -64,7 +64,7 @@ const GoldCurrencyForm = (props) => {
   }
 
   // set edited asset data when in edit mode
-  if (editState && asset && !formState.label) {
+  if (editState && asset && !formState.label && marketPrices.length) {
     const marketPrice = getMarketPrice(asset.assetSubClass);
     setFormState({
       ...formState,

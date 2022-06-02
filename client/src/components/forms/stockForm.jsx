@@ -71,7 +71,13 @@ const StockForm = (props) => {
     state.assets.find((asset) => asset.id === formState.id)
   );
   // set edited asset data when in edit mode
-  if (editState && asset && options.length && !formState.assetId) {
+  if (
+    editState &&
+    asset &&
+    options.length &&
+    !formState.assetId &&
+    marketPrices.length
+  ) {
     const marketPrice = getMarketPriceData(marketPrices, asset.assetSubClass);
 
     setFormState({

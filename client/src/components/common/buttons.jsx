@@ -35,8 +35,7 @@ export const EditBtn = ({ assetData }) => {
   const { id, assetClass } = assetData;
   return (
     <Link
-      replace={true}
-      to={{ pathname: `/add/${assetClass}`, state: { id } }}
+      to={{ pathname: `/add/${assetClass}/${id}` }}
       className="btn btn-success"
     >
       <FontAwesomeIcon icon={faEdit} />
