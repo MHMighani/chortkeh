@@ -58,3 +58,9 @@ export const editAsset = (assetId, newValue) => async (dispatch) => {
 export const updateHistoryRecord = (newHistoryRecord) => async (dispatch) => {
   dispatch({ type: actions.UPDATE_HISTORY, payload: newHistoryRecord });
 };
+
+export const fetchAll = () => async (dispatch) => {
+  dispatch(fetchAssets());
+  dispatch(fetchPrices());
+  dispatch(fetchHistoryRecord());
+};

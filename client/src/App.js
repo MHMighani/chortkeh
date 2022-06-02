@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch } from "react-router-dom";
+import { useEffect } from "react";
 import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
 import NavbarT from "./components/layout/navbar";
@@ -10,8 +11,16 @@ import Portfolio from "./components/portfolio/portfolio";
 import Footer from "./components/layout/footer";
 import OpeningModal from "./components/common/openingModal";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchAll } from "./actions";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAll());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <OpeningModal />
