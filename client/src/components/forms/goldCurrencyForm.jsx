@@ -26,7 +26,7 @@ const GoldCurrencyForm = (props) => {
     handleDateChange,
   } = useAssetFormHandler(initialState, props);
 
-  const marketPrices = useSelector((state) => state.prices.goldCurrency);
+  const marketPrices = useSelector((state) => state.prices.goldCurrency || []);
   const asset = useSelector((state) =>
     state.assets.find((asset) => asset.id === formState.id)
   );

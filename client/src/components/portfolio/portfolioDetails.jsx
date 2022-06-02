@@ -5,13 +5,7 @@ import { useState, useEffect } from "react";
 import useDeleteMsgModal from "../../hooks/useDeleteMessage";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchPrices,
-  fetchAssets,
-  fetchHistoryRecord,
-  deleteAssetById,
-  deleteAssetBySubClass,
-} from "../../actions";
+import { deleteAssetById, deleteAssetBySubClass } from "../../actions";
 
 import Charts from "../charts/charts";
 
@@ -23,12 +17,6 @@ const PortfolioDetails = () => {
   const assets = useSelector((state) => state.assets);
   const prices = useSelector((state) => state.prices);
   const historyRecord = useSelector((state) => state.historyRecord);
-
-  useEffect(() => {
-    dispatch(fetchAssets());
-    dispatch(fetchPrices());
-    dispatch(fetchHistoryRecord());
-  }, [dispatch]);
 
   function handleConfirm(toDeleteAsset) {
     if (toDeleteAsset.assetClass === "cash") {
