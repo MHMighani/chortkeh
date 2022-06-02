@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
@@ -9,8 +10,16 @@ import PortfolioDetails from "./components/portfolio/portfolioDetails";
 import Portfolio from "./components/portfolio/portfolio";
 import Footer from "./components/layout/footer";
 import "react-toastify/dist/ReactToastify.css";
+import { fetchAll } from "./actions";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAll());
+  }, [dispatch]);
+
   return (
     <div className="App">
       <NavbarT />

@@ -33,7 +33,7 @@ const StockForm = (props) => {
     handleDateChange,
   } = useAssetFormHandler(initialState, props);
 
-  const marketPrices = useSelector((state) => state.prices.stock);
+  const marketPrices = useSelector((state) => state.prices.stock || []);
 
   function mapPricesToOptions(prices) {
     const options = prices.map((option) => {
