@@ -36,4 +36,5 @@ typings/
 
 server/goldCurrency2.js
 server/dbTest.json 
+server/db.json
 .vscode/settings.json
