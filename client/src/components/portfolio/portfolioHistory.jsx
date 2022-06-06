@@ -66,7 +66,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
 
     let newData = [...historyRecord];
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
-    let isNewRecord = true;
+    // let isNewRecord = true;
 
     // checks if there is change in history
     if (JSON.stringify(sortedData[0]) === JSON.stringify(normalizedOverall))
@@ -74,12 +74,12 @@ const PortfolioHistory = ({ mappedAssets }) => {
 
     // today's history was recorded before
     if (sortedData[0]?.id === normalizedOverall.id) {
-      isNewRecord = false;
+      // isNewRecord = false;
       newData[newData.length - 1] = { ...normalizedOverall };
     } else {
       newData = [...newData, normalizedOverall];
     }
-    saveOverallHistory(normalizedOverall, isNewRecord);
+    // saveOverallHistory(normalizedOverall, isNewRecord);
     dispatch(updateHistoryRecord(newData));
   }, [mappedAssets, historyRecord, dispatch, sortedData]);
 

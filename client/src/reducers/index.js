@@ -4,7 +4,7 @@ import * as actions from "../actions/actionTypes";
 const assets = (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_ASSETS:
-      return action.payload;
+      return state;
     case actions.DELETE_ASSET_BY_SUBCLASS:
       return state.filter(
         (asset) => asset.assetSubClass !== action.payload.assetSubClass

@@ -1,23 +1,19 @@
-import {
-  getAssets,
-  addAsset as addAssetApi,
-  editAsset as editAssetApi,
-} from "../services/assetsServices";
-import { getPrices } from "../services/pricesServices";
-import { getHistoryRecord } from "../services/historyService";
-import { deleteAssetBySubClass as deleteAssetBySubClassApi } from "../services/assetsServices";
-import { deleteAsset } from "../services/assetsServices";
-
+import data from "../data.json";
 import * as actions from "./actionTypes";
+import fakeHistoryBuilder from "../utils/fakeHistoryBuilder";
+import getDateId from "../utils/getDateId";
+import dateOperation from "../utils/dateOperation";
+import { getTotalsByAssetClass } from "../utils";
+
+const assets = [];
 
 export const fetchAssets = () => async (dispatch) => {
-  const response = await getAssets();
-  dispatch({ type: actions.FETCH_ASSETS, payload: response.data });
+  dispatch({ type: actions.FETCH_ASSETS, payload: assets });
 };
 
 export const fetchPrices = () => async (dispatch) => {
-  const { data: goldCurrency } = await getPrices("goldcurrency");
-  const { data: stock } = await getPrices("stock");
+  const goldCurrency = data.goldcurrency || [];
+  const stock = (await data.stock) || [];
 
   dispatch({
     type: actions.FETCH_PRICES,
@@ -25,12 +21,18 @@ export const fetchPrices = () => async (dispatch) => {
   });
 };
 
-export const fetchHistoryRecord = () => async (dispatch) => {
-  const { data: historyRecord } = await getHistoryRecord();
+export const fetchHistoryRecord = () => async (dispatch, getState) => {
+  let totals = getTotalsByAssetClass(getState().assets);
+
+  totals["overall"] = totals["total"];
+  delete totals["total"];
+  totals = { ...totals, id: dateOperation(getDateId(), 1) };
+
+  const payload = totals.overall === 0 ? [] : fakeHistoryBuilder(60, totals);
 
   dispatch({
     type: actions.FETCH_HISTORY,
-    payload: historyRecord,
+    payload,
   });
 };
 
@@ -39,23 +41,18 @@ export const deleteAssetBySubClass = (toDeleteAsset) => async (dispatch) => {
     type: actions.DELETE_ASSET_BY_SUBCLASS,
     payload: toDeleteAsset,
   });
-
-  await deleteAssetBySubClassApi(toDeleteAsset.assetSubClass);
 };
 
 export const deleteAssetById = (id) => async (dispatch) => {
   dispatch({ type: actions.DELETE_ASSET_BY_ID, payload: id });
-  await deleteAsset(id);
 };
 
 export const addAsset = (asset) => async (dispatch) => {
-  dispatch({ type: actions.ADD_ASSET, payload: asset });
-  await addAssetApi(asset);
+  dispatch({ type: actions.ADD_ASSET, payload: { ...asset, id: Date.now() } });
 };
 
 export const editAsset = (assetId, newValue) => async (dispatch) => {
   dispatch({ type: actions.EDIT_ASSET, payload: { assetId, newValue } });
-  await editAssetApi(assetId, newValue);
 };
 
 export const updateHistoryRecord = (newHistoryRecord) => async (dispatch) => {

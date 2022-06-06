@@ -1,5 +1,5 @@
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
 import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
 import NavbarT from "./components/layout/navbar";
@@ -9,6 +9,7 @@ import AssetDetails from "./components/tables/assetsTable/assetDetails";
 import PortfolioDetails from "./components/portfolio/portfolioDetails";
 import Portfolio from "./components/portfolio/portfolio";
 import Footer from "./components/layout/footer";
+import OpeningModal from "./components/common/openingModal";
 import { fetchAll } from "./actions";
 import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,8 +23,10 @@ function App() {
 
   return (
     <div className="App">
+      <OpeningModal />
       <NavbarT />
       <Switch>
+        <Redirect from="/chortkeh" to="/" />
         <Route exact path="/" component={Portfolio} />
         <Route path="/portfolio-details" component={PortfolioDetails} />
         <Route path="/assets/details/" component={AssetDetails} />

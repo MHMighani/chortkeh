@@ -2,13 +2,7 @@
 // You should provide last recent history data and it will
 // build previous fake history data based on it and by random efficiency
 
-const editJsonFile = require("edit-json-file");
-const { databasePath } = require("./config.json");
-
-// enter last recent history here
-const providedLastHistory = {};
-
-const allHistoryData = [providedLastHistory];
+import dateOperation from "./dateOperation";
 
 // returns array with x random numbers between 0 and 1
 function getRandomEfficiency(x) {
@@ -31,12 +25,21 @@ function getNewHistoryData(previous) {
   const newHistory = { ...previous };
   let randomCounter = 0;
   let newOverall = 0;
+
   for (let key in previous) {
-    if (["id", "overall"].includes(key)) continue;
-    newHistory[key] = getNewHistoryObject(
-      newHistory[key],
-      randoms[randomCounter]
-    );
+    if (key === "overall") {
+      continue;
+    } else if (key === "id") {
+      newHistory[key] = dateOperation(newHistory[key], 1);
+
+      continue;
+    } else {
+      newHistory[key] = getNewHistoryObject(
+        newHistory[key],
+        randoms[randomCounter]
+      );
+    }
+
     newOverall += newHistory[key];
     randomCounter += 1;
   }
@@ -46,18 +49,20 @@ function getNewHistoryData(previous) {
   return newHistory;
 }
 
-const historyLength = 30;
+function fakeHistoryBuilder(historyLength, lastProvidedHistory) {
+  let i = 0;
 
-let i = 0;
+  const allHistoryData = [{ ...lastProvidedHistory }];
 
-let lastHistory = providedLastHistory;
+  let lastHistory = lastProvidedHistory;
 
-while (i < historyLength) {
-  lastHistory = getNewHistoryData(lastHistory);
-  allHistoryData.push(lastHistory);
-  i += 1;
+  while (i < historyLength) {
+    lastHistory = getNewHistoryData(lastHistory);
+    allHistoryData.push(lastHistory);
+    i += 1;
+  }
+
+  return allHistoryData;
 }
 
-let file = editJsonFile(databasePath);
-file.set("history", allHistoryData);
-file.save();
+export default fakeHistoryBuilder;
