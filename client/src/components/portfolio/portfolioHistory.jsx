@@ -4,8 +4,8 @@ import { updateHistoryRecord } from "../../actions";
 import Table from "../tables/table/table";
 import { saveOverallHistory } from "../../services/historyService";
 import TableContainer from "../tables/assetsTable/tableContainer";
-import TimeFrameSelect from "../common/timeFrameSelect";
-import ResultsNumSelect from "./resultsNumSelect";
+import FilterBar from "./filterBar/filterBar";
+import { getDateId } from "../../utils";
 import {
   getFilteredDateByTimeFrame,
   getNormalizedOverallValue,
@@ -23,28 +23,46 @@ so it calculates the productivity and profit/loss by the
 nearest prices to the start and end of the time frame 
  */
 
-const PortfolioHistory = ({ mappedAssets }) => {
-  const [timeFrame, setTimeFrame] = useState(1);
-  const historyRecord = useSelector((state) => state.historyRecord);
-  const [pageSize, setPageSize] = useState(10);
-  const sortedData = _.sortBy(historyRecord, "id").reverse();
+// checks if data is ready to save in history record
+function checkMappedValidation(mappedAssets) {
+  const isDataFetchComplete = !mappedAssets?.some((item) => !item.data.length);
 
-  const dispatch = useDispatch();
+  if (isDataFetchComplete) return true;
+}
 
-  // checks if data is ready to save in history record
-  function checkMappedValidation(mappedAssets) {
-    const isDataFetchComplete = !mappedAssets?.some(
-      (item) => !item.data.length
-    );
-
-    if (isDataFetchComplete) return true;
+function getTimeFramedData(timeFrame, data) {
+  const newData = [...data].reverse();
+  if (!timeFrame.range) {
+    return timeFrame.period > 1
+      ? getFilteredDateByTimeFrame([...data], timeFrame.period)
+      : newData;
   }
+
+  if (timeFrame.from !== "" && timeFrame.to !== "") {
+    return newData.filter(
+      (item) =>
+        item.id > getDateId(timeFrame.from) && item.id < getDateId(timeFrame.to)
+    );
+  }
+  return newData;
+}
+
+const PortfolioHistory = ({ mappedAssets }) => {
+  // const [timeFrame, setTimeFrame] = useState(1);
+  const [timeFrame, setTimeFrame] = useState({
+    range: false,
+    from: "",
+    to: "",
+    period: 1,
+  });
+  const [pageSize, setPageSize] = useState(10);
+  const historyRecord = useSelector((state) => state.historyRecord);
+  const sortedData = _.sortBy(historyRecord, "id").reverse();
+  const dispatch = useDispatch();
 
   // saves overallValues in history
   useEffect(() => {
-    if (!checkMappedValidation(mappedAssets)) {
-      return;
-    }
+    if (!checkMappedValidation(mappedAssets)) return;
 
     let newData = [...historyRecord];
     const normalizedOverall = getNormalizedOverallValue(mappedAssets);
@@ -65,10 +83,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
     dispatch(updateHistoryRecord(newData));
   }, [mappedAssets, historyRecord, dispatch, sortedData]);
 
-  const timeFramedData =
-    timeFrame > 1
-      ? getFilteredDateByTimeFrame([...sortedData], timeFrame)
-      : [...sortedData].reverse();
+  const timeFramedData = getTimeFramedData(timeFrame, sortedData);
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
   const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
 
@@ -79,10 +94,11 @@ const PortfolioHistory = ({ mappedAssets }) => {
         empty={!historyRecord.length ? true : false}
         valueInfo={lastChangeData?.overall}
       >
-        <div className="filter-bar">
-          <TimeFrameSelect onTimeFrameChange={setTimeFrame} />
-          <ResultsNumSelect onResultsNumChange={setPageSize} />
-        </div>
+        <FilterBar
+          timeFrameHandler={setTimeFrame}
+          pageSizeHandler={setPageSize}
+          timeFrame={timeFrame}
+        />
         <Table
           columns={columns.history}
           data={dataWithChanges}
