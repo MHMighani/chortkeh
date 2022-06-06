@@ -1,7 +1,7 @@
 import { utils } from "react-modern-calendar-datepicker";
 
 // returns date id by persian format
-function getDateId(date = utils("fa").getToday()) {
+function getDateId({ ...date } = utils("fa").getToday()) {
   //adding zero to the beggining for consistency in dates
   const lengthOfNumbers = { year: 4, month: 2, day: 2 };
   for (let key in date) {

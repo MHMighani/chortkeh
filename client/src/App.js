@@ -10,9 +10,9 @@ import PortfolioDetails from "./components/portfolio/portfolioDetails";
 import Portfolio from "./components/portfolio/portfolio";
 import Footer from "./components/layout/footer";
 import OpeningModal from "./components/common/openingModal";
-import "react-toastify/dist/ReactToastify.css";
 import { fetchAll } from "./actions";
 import { useDispatch } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,9 +30,9 @@ function App() {
         <Route exact path="/" component={Portfolio} />
         <Route path="/portfolio-details" component={PortfolioDetails} />
         <Route path="/assets/details/" component={AssetDetails} />
-        <Route exact path="/add/goldcurrency/" component={GoldCurrencyForm} />
-        <Route exact path="/add/stock" component={StockForm} />
-        <Route exact path="/add/cash" component={CashForm} />
+        <Route path="/add/goldcurrency/:id?" component={GoldCurrencyForm} />
+        <Route path="/add/stock/:id?" component={StockForm} />
+        <Route exact path="/add/cash/:id?" component={CashForm} />
       </Switch>
       <Footer />
       <ToastContainer position="top-center" hideProgressBar rtl icon={false} />

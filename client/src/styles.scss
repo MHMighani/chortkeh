@@ -124,9 +124,6 @@ option{
     border-bottom-width:0 !important;
     border-top:0 !important;
   }
-  *{
-    border-color: var(--primary-color)
-  }
 }
 
 // Table container
@@ -239,13 +236,18 @@ option{
     display: flex;
     justify-content: flex-start;
   }
-  .filter-bar{
-    display: flex;
-    
-    .filter{
-      margin-left:25px;
-    }
+}
+
+.filter-bar{
+  display: flex;
+  
+  .filter{
+    margin-left:25px;
   }
+}
+
+.date-range{
+  display: flex;
 }
 
 .asset-detail{

@@ -6,6 +6,7 @@ const PurchaseDate = ({
   onChange,
   label = "تاریخ خرید",
   name = "purchaseDate",
+  placeholder = "تاریخ خرید دارایی را انتخاب کنید",
 }) => {
   return (
     <div className="form-group purchase-date">
@@ -13,7 +14,7 @@ const PurchaseDate = ({
       <DatePicker
         value={value}
         onChange={onChange}
-        inputPlaceholder="تاریخ خرید دارایی را انتخاب کنید"
+        inputPlaceholder={placeholder}
         locale="fa"
         name="purchaseDate"
         shouldHighlightWeekends

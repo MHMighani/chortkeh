@@ -5,11 +5,13 @@ import useFormErrorHandler from "./useFormErrorHandler";
 import { utils } from "react-modern-calendar-datepicker";
 import { useDispatch } from "react-redux";
 import { addAsset } from "../actions";
+import { useParams } from "react-router-dom";
 
 const useAssetFormHandler = (initialState = {}, props) => {
   const [isSubmited, setIsSubmited] = useState(false);
   const todayPersianDate = utils("fa").getToday();
-  const id = props.location.state?.id || "";
+  // const id = props.location.state?.id || "";
+  const id = +useParams().id || "";
   const dispatch = useDispatch();
 
   // initializing
