@@ -47,8 +47,21 @@ function getTimeFramedData(timeFrame, data) {
   return newData;
 }
 
+// mode is for determining whether the change is by last two data or whole period
+function getHeaderChange(timeFramedData, mode = "last") {
+  let headerChange;
+  if (mode === "last") {
+    headerChange = getDataWithChange(timeFramedData.slice(-2), ["id"])[1];
+  } else if (mode === "startToEnd") {
+    headerChange = getDataWithChange(
+      [timeFramedData[0], ...timeFramedData.slice(-1)],
+      "id"
+    )[1];
+  }
+  return headerChange;
+}
+
 const PortfolioHistory = ({ mappedAssets }) => {
-  // const [timeFrame, setTimeFrame] = useState(1);
   const [timeFrame, setTimeFrame] = useState({
     range: false,
     from: "",
@@ -85,14 +98,17 @@ const PortfolioHistory = ({ mappedAssets }) => {
 
   const timeFramedData = getTimeFramedData(timeFrame, sortedData);
   const dataWithChanges = getDataWithChange(timeFramedData, ["id"]);
-  const lastChangeData = dataWithChanges[dataWithChanges.length - 1];
+  const headerChangeData = getHeaderChange(
+    timeFramedData,
+    timeFrame.range ? "startToEnd" : "last"
+  );
 
   return (
     <div className="history-info">
       <TableContainer
         title="ارزش کل"
         empty={!historyRecord.length ? true : false}
-        valueInfo={lastChangeData?.overall}
+        valueInfo={headerChangeData?.overall}
       >
         <FilterBar
           timeFrameHandler={setTimeFrame}

@@ -11,9 +11,8 @@ function getDataWithChange(data, constKeys = []) {
       if (constKeys.includes(key)) continue;
 
       // checks for first record that previous info is not provided for it
-      const percentChange =
-        index === 0 ? 0 : getPercentChange(prevItem[key], item[key]);
-      const change = index === 0 ? 0 : Math.abs(prevItem[key] - item[key]);
+      const percentChange = index && getPercentChange(prevItem[key], item[key]);
+      const change = index && Math.abs(prevItem[key] - item[key]);
       newItem[key] = { percentChange, change, value: item[key] };
     }
 

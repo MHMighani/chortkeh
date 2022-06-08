@@ -7,7 +7,7 @@ const DateRangeSelect = ({ timeFrame, onTimeFrameChange }) => {
       [key]: value,
     }));
   }
-  const mutualProps = { label: "از:", placeholder: "" };
+
   return timeFrame.range ? (
     <div className="date-range">
       {["from", "to"].map((key) => (
@@ -15,7 +15,8 @@ const DateRangeSelect = ({ timeFrame, onTimeFrameChange }) => {
           key={`${key}-date`}
           onChange={(value) => changeHandler(value, key)}
           value={timeFrame[key]}
-          {...mutualProps}
+          label={key === "from" ? "از:" : "تا:"}
+          placeholder=""
         />
       ))}
     </div>
