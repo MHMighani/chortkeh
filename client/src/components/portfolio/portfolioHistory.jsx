@@ -41,7 +41,8 @@ function getTimeFramedData(timeFrame, data) {
   if (timeFrame.from !== "" && timeFrame.to !== "") {
     return newData.filter(
       (item) =>
-        item.id > getDateId(timeFrame.from) && item.id < getDateId(timeFrame.to)
+        item.id >= getDateId(timeFrame.from) &&
+        item.id <= getDateId(timeFrame.to)
     );
   }
   return newData;
