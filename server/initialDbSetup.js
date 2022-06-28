@@ -2,7 +2,7 @@
 const editJsonFile = require("edit-json-file");
 const { databasePath } = require("./config.json");
 
-const supportedPaths = ["assets", "history", "goldcurrency", "stock"];
+const supportedPaths = ["assets", "history", "goldcurrency", "stock", "users"];
 let file = editJsonFile(databasePath);
 const mainPaths = Object.keys(file.data);
 
