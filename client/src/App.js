@@ -12,6 +12,8 @@ import Footer from "./components/layout/footer";
 import { fetchAll } from "./actions";
 import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+import LoginForm from "./components/forms/loginForm";
+import SignupForm from "./components/forms/signupForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ function App() {
         <Route path="/add/goldcurrency/:id?" component={GoldCurrencyForm} />
         <Route path="/add/stock/:id?" component={StockForm} />
         <Route exact path="/add/cash/:id?" component={CashForm} />
+        <Route exact path="/login" component={LoginForm} />
+        <Route exact path="/signup" component={SignupForm} />
       </Switch>
       <Footer />
       <ToastContainer position="top-center" hideProgressBar rtl icon={false} />
