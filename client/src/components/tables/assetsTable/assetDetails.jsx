@@ -5,6 +5,9 @@ import { getCommaSepNum, columns, getPercentChange } from "../../../utils";
 import { deleteAssetById } from "../../../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { getDateId } from "../../../utils/";
+
+import TableContainer from "./tableContainer";
+
 const AssetDetails = (props) => {
   const { assetSubClass, marketPrice } = props.location.state;
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
@@ -53,17 +56,14 @@ const AssetDetails = (props) => {
   return (
     <div>
       {modalBody}
-      <div className="asset-detail">
-        <div className="asset-detail__header">
-          <span className="label">
-            {assetData.length && assetData[0].label}
-          </span>
-          <span className="value">{getCommaSepNum(marketPrice)}</span>
-        </div>
-        <div className="asset-detail__body">
-          <Table data={getProcessedData(assetData)} columns={columns.details} />
-        </div>
-      </div>
+      <TableContainer
+        dropdown={false}
+        dynamic={false}
+        valueInfo={{ value: getCommaSepNum(marketPrice) }}
+        title={assetData.length && assetData[0].label}
+      >
+        <Table data={getProcessedData(assetData)} columns={columns.details} />
+      </TableContainer>
     </div>
   );
 };

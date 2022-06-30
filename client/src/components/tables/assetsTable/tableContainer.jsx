@@ -4,12 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
 import StyledValue from "../../common/styledValue";
 
-const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
+const TableContainer = ({
+  children,
+  title,
+  addLink,
+  valueInfo,
+  empty,
+  dropdown = true,
+  dynamic = true,
+}) => {
   const headEl = useRef(null);
   const contentEl = useRef(null);
 
   function containerHeadClickHandler() {
-    if (empty) return;
+    if (empty || !dynamic) return;
     headEl.current.classList.toggle("active");
     const content = contentEl.current;
     if (content.style.maxHeight) {
@@ -20,7 +28,11 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
   }
 
   return (
-    <div className={`table-container ${empty ? "empty" : ""}`}>
+    <div
+      className={`table-container ${dynamic ? "dynamic" : "static"} ${
+        empty ? "empty" : ""
+      }`}
+    >
       <div
         ref={headEl}
         className="table-container__head"
@@ -44,9 +56,11 @@ const TableContainer = ({ children, title, addLink, valueInfo, empty }) => {
               <FontAwesomeIcon icon={faPlus} />
             </Link>
           )}
-          <span className="toggle-btn ">
-            <FontAwesomeIcon icon={faChevronDown} />
-          </span>
+          {dropdown && (
+            <span className="toggle-btn ">
+              <FontAwesomeIcon icon={faChevronDown} />
+            </span>
+          )}
         </div>
       </div>
       {!empty && (
