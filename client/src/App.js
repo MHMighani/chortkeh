@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import GoldCurrencyForm from "./components/forms/goldCurrencyForm";
 import { ToastContainer } from "react-toastify";
 import StockForm from "./components/forms/stockForm";
@@ -7,20 +6,12 @@ import CashForm from "./components/forms/cashForm";
 import AssetDetails from "./components/tables/assetsTable/assetDetails";
 import PortfolioDetails from "./components/portfolio/portfolioDetails";
 import Portfolio from "./components/portfolio/portfolio";
-import { fetchAll } from "./actions";
-import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "./components/forms/loginForm";
 import SignupForm from "./components/forms/signupForm";
 import Layout from "./components/layout";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAll());
-  }, [dispatch]);
-
   return (
     <div className="App">
       <Layout>
@@ -34,8 +25,13 @@ function App() {
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/signup" component={SignupForm} />
         </Switch>
+        <ToastContainer
+          position="top-center"
+          hideProgressBar
+          rtl
+          icon={false}
+        />
       </Layout>
-      <ToastContainer position="top-center" hideProgressBar rtl icon={false} />
     </div>
   );
 }

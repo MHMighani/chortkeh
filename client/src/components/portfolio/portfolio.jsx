@@ -1,9 +1,11 @@
 import _ from "lodash";
+import { Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalsByAssetClass, getQuotaStatus } from "../../utils";
-import { fetchPrices, fetchAssets, fetchHistoryRecord } from "../../actions";
+import { fetchAll } from "../../actions";
+import useToken from "../../hooks/useToken";
 
 const Portfolio = () => {
   const [quotaStatus, setQuotaStatus] = useState({
@@ -11,13 +13,12 @@ const Portfolio = () => {
     stock: 0,
     cash: 0,
   });
+  const { token } = useToken();
   const assets = useSelector((state) => state.assets);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAssets());
-    dispatch(fetchPrices());
-    dispatch(fetchHistoryRecord());
+    dispatch(fetchAll());
   }, [dispatch]);
 
   useEffect(() => {
@@ -25,6 +26,10 @@ const Portfolio = () => {
     const quotaStatus = getQuotaStatus(totals);
     setQuotaStatus({ ...quotaStatus });
   }, [assets]);
+
+  if (!token) {
+    return <Redirect to="login" />;
+  }
 
   const colors = {
     goldCurrency: "Gold",
