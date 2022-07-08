@@ -1,8 +1,10 @@
 import DarkModeToggleBtn from "../common/darkModeToggleBtn";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import UserContext from "../../context/userContext";
 import "./menu.scss";
 
 function Menu() {
+  const { logoutUser } = useContext(UserContext);
   const [menuActive, setMenuActive] = useState(false);
   const usermenuRef = useRef();
 
@@ -26,7 +28,9 @@ function Menu() {
         <div className="menu-item">
           <DarkModeToggleBtn />
         </div>
-        <div className="menu-item">خروج</div>
+        <div className="menu-item" onClick={() => logoutUser()}>
+          خروج
+        </div>
       </div>
     </div>
   );

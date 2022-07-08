@@ -1,15 +1,18 @@
 import Input from "./input";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AuthForm from "./authForm";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
-import { loginUser } from "../../services/userService";
+import { loginUser as loginuserApi } from "../../services/userService";
+import UserContext from "../../context/userContext";
 
 function LoginForm() {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   });
+
+  const { loginUser, token } = useContext(UserContext);
 
   const errors = useFormErrorHandler("login", formState);
 
@@ -20,12 +23,15 @@ function LoginForm() {
   const handleSubmit = async (e, setHeaderError) => {
     e.preventDefault();
     if (errors) return;
-    const response = await loginUser(formState);
+    const response = await loginuserApi(formState);
 
+    console.log(response);
     //check login response
     if (response && response.status === 200) {
       console.log("Successfull login");
       // redirect to homepage
+      // setToken({ token: response.data.accessToken });
+      loginUser({ token: response.data.accessToken });
     } else {
       setHeaderError("نام کاربری یا رمز عبور اشتباه است.");
     }
@@ -70,6 +76,10 @@ function LoginForm() {
       </Link>
     </>
   );
+
+  if (token) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="authPage">

@@ -11,16 +11,19 @@ import "./fonts/b-nazanin-regular.ttf";
 import "./styles.scss";
 import { Provider } from "react-redux";
 import { ThemeContextProvider } from "./context/themeContext";
+import { UserContextProvider } from "./context/userContext";
 
 const store = configureStore({ reducer: reducers, middleware: [thunk] });
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeContextProvider>
+    <UserContextProvider>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeContextProvider>
+    </UserContextProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { Redirect } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalsByAssetClass, getQuotaStatus } from "../../utils";
 import { fetchAll } from "../../actions";
-import useToken from "../../hooks/useToken";
+import UserContext from "../../context/userContext";
 
 const Portfolio = () => {
   const [quotaStatus, setQuotaStatus] = useState({
@@ -13,7 +13,8 @@ const Portfolio = () => {
     stock: 0,
     cash: 0,
   });
-  const { token } = useToken();
+  const { token } = useContext(UserContext);
+
   const assets = useSelector((state) => state.assets);
   const dispatch = useDispatch();
 
