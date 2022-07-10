@@ -1,5 +1,6 @@
 import axios from "axios";
 import { serverUrl } from "../config.json";
+import "./interceptors";
 
 const baseUrl = `${serverUrl}/assets`;
 

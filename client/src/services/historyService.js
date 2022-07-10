@@ -1,6 +1,7 @@
 import axios from "axios";
 import { serverUrl } from "../config.json";
 import getDateId from "../utils/getDateId";
+import "./interceptors";
 
 const baseUrl = `${serverUrl}/history`;
 
