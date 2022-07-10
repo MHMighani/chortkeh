@@ -1,10 +1,10 @@
 import Input from "./input";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import AuthForm from "./authForm";
 import { Link, Redirect } from "react-router-dom";
 import useFormErrorHandler from "../../hooks/useFormErrorHandler";
 import { loginUser as loginuserApi } from "../../services/userService";
-import UserContext from "../../context/userContext";
+import useAuth from "../../hooks/useAuth";
 
 function LoginForm() {
   const [formState, setFormState] = useState({
@@ -12,7 +12,7 @@ function LoginForm() {
     password: "",
   });
 
-  const { loginUser, token } = useContext(UserContext);
+  const { loginUser, token } = useAuth();
 
   const errors = useFormErrorHandler("login", formState);
 

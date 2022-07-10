@@ -1,10 +1,10 @@
 import DarkModeToggleBtn from "../common/darkModeToggleBtn";
-import { useState, useRef, useContext } from "react";
-import UserContext from "../../context/userContext";
+import { useState, useRef } from "react";
+import useAuth from "../../hooks/useAuth";
 import "./menu.scss";
 
 function Menu() {
-  const { logoutUser } = useContext(UserContext);
+  const { logoutUser } = useAuth();
   const [menuActive, setMenuActive] = useState(false);
   const usermenuRef = useRef();
 
