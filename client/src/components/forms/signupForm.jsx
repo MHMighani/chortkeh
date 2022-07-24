@@ -13,6 +13,8 @@ function SignupForm() {
     email: "",
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const errors = useFormErrorHandler("signup", formState);
 
   function handleChange(e) {
@@ -22,6 +24,7 @@ function SignupForm() {
   async function handleSubmit(e, setHeadError) {
     e.preventDefault();
 
+    setIsSubmitted(true);
     if (errors) return;
 
     const toSubmitFormState = { ...formState };
@@ -46,7 +49,7 @@ function SignupForm() {
         onChange={handleChange}
         type="text"
         required={true}
-        error={errors["username"]}
+        error={isSubmitted && errors["username"]}
       />
       <Input
         label="رمز عبور"
@@ -54,7 +57,7 @@ function SignupForm() {
         onChange={handleChange}
         type="password"
         required={true}
-        error={errors["password"]}
+        error={isSubmitted && errors["password"]}
       />
       <Input
         label="تکرار رمزعبور"
@@ -62,7 +65,7 @@ function SignupForm() {
         onChange={handleChange}
         type="password"
         required={true}
-        error={errors["passwordConfirm"]}
+        error={isSubmitted && errors["passwordConfirm"]}
       />
       <Input
         label="آدرس ایمیل"
@@ -70,7 +73,7 @@ function SignupForm() {
         onChange={handleChange}
         type="email"
         required={true}
-        error={errors["email"]}
+        error={isSubmitted && errors["email"]}
       />
       <button className="btn btn-primary" type="submit">
         ثبت نام

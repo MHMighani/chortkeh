@@ -11,6 +11,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { loginUser, token } = useAuth();
 
@@ -22,6 +23,9 @@ function LoginForm() {
 
   const handleSubmit = async (e, setHeaderError) => {
     e.preventDefault();
+    if (isSubmitted === false) {
+      setIsSubmitted(true);
+    }
     if (errors) return;
     const response = await loginuserApi(formState);
 
@@ -48,7 +52,7 @@ function LoginForm() {
         name="email"
         onChange={handleChange}
         type="email"
-        error={errors["email"]}
+        error={isSubmitted && errors["email"]}
         onBlur={handleFocusOut}
       />
       <Input
@@ -58,7 +62,7 @@ function LoginForm() {
         type="password"
         required={true}
         onBlur={handleFocusOut}
-        error={errors["password"]}
+        error={isSubmitted && errors["password"]}
       />
       <button className="btn btn-primary" type="submit">
         ورود
