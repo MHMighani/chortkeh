@@ -9,7 +9,7 @@ function Menu() {
   const usermenuRef = useRef();
 
   function handler(e) {
-    if (!usermenuRef.current.contains(e.target) && menuActive) {
+    if (!usermenuRef.current?.contains(e.target) && menuActive) {
       setMenuActive(false);
     }
   }
