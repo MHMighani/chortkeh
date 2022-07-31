@@ -110,6 +110,11 @@ option{
   }
 }
 
+.log-buttons .btn {
+  margin: 0 .5rem;
+  width: 75px;
+}
+
 .table{
   color: var(--text-color);
   background-color: var(--secondary-color);
