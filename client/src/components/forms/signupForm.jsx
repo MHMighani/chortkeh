@@ -1,36 +1,34 @@
 import Input from "./input";
-import { useState } from "react";
 import AuthForm from "./authForm";
+import { getFormFields } from "../../utils";
 import { Link } from "react-router-dom";
-import useFormErrorHandler from "../../hooks/useFormErrorHandler";
+import useAuthFormHandler from "../../hooks/useAuthFormHandler";
 import { signupUser } from "../../services/userService";
 
 function SignupForm() {
-  const [formState, setFormState] = useState({
-    username: "",
-    password: "",
-    passwordConfirm: "",
-    email: "",
-  });
+  const initialFormState = {
+    formName: "signup",
+    username: { name: "username", label: "نام کاربری", value: "", error: "" },
+    password: { name: "password", label: "رمزعبور", value: "", error: "" },
+    passwordConfirm: {
+      name: "passwordConfirm",
+      label: "تایید رمز عبور",
+      value: "",
+      error: "",
+    },
+    email: { name: "email", label: "ایمیل", value: "", error: "" },
+  };
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const errors = useFormErrorHandler("signup", formState);
-
-  function handleChange(e) {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  }
+  const { formState, handleChange, handlePreSubmit, checkShowError } =
+    useAuthFormHandler(initialFormState);
 
   async function handleSubmit(e, setHeadError) {
-    e.preventDefault();
-
-    setIsSubmitted(true);
-    if (errors) return;
+    if (!handlePreSubmit(e)) return;
 
     const toSubmitFormState = { ...formState };
     delete toSubmitFormState.passwordConfirm;
 
-    const response = await signupUser(toSubmitFormState);
+    const response = await signupUser(getFormFields(formState));
 
     // check signup response
     if (response && response.status === 200) {
@@ -38,42 +36,33 @@ function SignupForm() {
     } else {
       setHeadError("در حین ثبت‌نام مشکلی به وجود آمد.");
     }
-    console.log(response);
   }
 
   const body = (
     <>
       <Input
-        label="نام کاربری"
-        name="username"
+        {...formState["username"]}
         onChange={handleChange}
         type="text"
         required={true}
-        error={isSubmitted && errors["username"]}
       />
       <Input
-        label="رمز عبور"
-        name="password"
+        {...formState["password"]}
         onChange={handleChange}
         type="password"
         required={true}
-        error={isSubmitted && errors["password"]}
       />
       <Input
-        label="تکرار رمزعبور"
-        name="passwordConfirm"
+        {...formState["passwordConfirm"]}
         onChange={handleChange}
         type="password"
         required={true}
-        error={isSubmitted && errors["passwordConfirm"]}
       />
       <Input
-        label="آدرس ایمیل"
-        name="email"
+        {...formState["email"]}
         onChange={handleChange}
         type="email"
         required={true}
-        error={isSubmitted && errors["email"]}
       />
       <button className="btn btn-primary" type="submit">
         ثبت نام

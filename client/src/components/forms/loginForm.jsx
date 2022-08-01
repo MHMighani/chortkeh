@@ -1,35 +1,28 @@
 import Input from "./input";
-import { useState } from "react";
 import AuthForm from "./authForm";
+import { getFormFields } from "../../utils";
 import { Link, Redirect } from "react-router-dom";
-import useFormErrorHandler from "../../hooks/useFormErrorHandler";
-import { loginUser as loginuserApi } from "../../services/userService";
+import { loginUser as loginUserApi } from "../../services/userService";
 import useAuth from "../../hooks/useAuth";
+import useAuthFormHandler from "../../hooks/useAuthFormHandler";
 
 function LoginForm() {
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const initialFormState = {
+    formName: "login",
+    email: { name: "email", label: "ایمیل", value: "", error: "" },
+    password: { name: "password", label: "رمزعبور", value: "", error: "" },
+  };
+
+  const { formState, handleChange, handlePreSubmit, checkShowError } =
+    useAuthFormHandler(initialFormState);
 
   const { loginUser, token } = useAuth();
 
-  const errors = useFormErrorHandler("login", formState);
-
-  const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = async (e, setHeaderError) => {
-    e.preventDefault();
-    if (isSubmitted === false) {
-      setIsSubmitted(true);
-    }
-    if (errors) return;
-    const response = await loginuserApi(formState);
+    if (!handlePreSubmit(e)) return;
 
-    console.log(response);
+    const response = await loginUserApi(getFormFields(formState));
+
     //check login response
     if (response && response.status === 200) {
       console.log("Successfull login");
@@ -41,28 +34,19 @@ function LoginForm() {
     }
   };
 
-  const handleFocusOut = (e) => {
-    console.log(e.target.name);
-  };
-
   const body = (
     <>
       <Input
-        label="آدرس ایمیل"
-        name="email"
+        {...formState["email"]}
         onChange={handleChange}
         type="email"
-        error={isSubmitted && errors["email"]}
-        onBlur={handleFocusOut}
+        required={true}
       />
       <Input
-        label="گذرواژه"
-        name="password"
+        {...formState["password"]}
         onChange={handleChange}
         type="password"
         required={true}
-        onBlur={handleFocusOut}
-        error={isSubmitted && errors["password"]}
       />
       <button className="btn btn-primary" type="submit">
         ورود
