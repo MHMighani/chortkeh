@@ -1,7 +1,7 @@
 import Input from "./input";
 import AuthForm from "./authForm";
 import { getFormFields } from "../../utils";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginUser as loginUserApi } from "../../services/userService";
 import useAuth from "../../hooks/useAuth";
 import useAuthFormHandler from "../../hooks/useAuthFormHandler";
@@ -13,10 +13,10 @@ function LoginForm() {
     password: { name: "password", label: "رمزعبور", value: "", error: "" },
   };
 
-  const { formState, handleChange, handlePreSubmit, checkShowError } =
+  const { formState, handleChange, handlePreSubmit } =
     useAuthFormHandler(initialFormState);
 
-  const { loginUser, token } = useAuth();
+  const { loginUser } = useAuth();
 
   const handleSubmit = async (e, setHeaderError) => {
     if (!handlePreSubmit(e)) return;
@@ -27,7 +27,6 @@ function LoginForm() {
     if (response && response.status === 200) {
       console.log("Successfull login");
       // redirect to homepage
-      // setToken({ token: response.data.accessToken });
       loginUser({ token: response.data.accessToken });
     } else {
       setHeaderError("نام کاربری یا رمز عبور اشتباه است.");
@@ -64,10 +63,6 @@ function LoginForm() {
       </Link>
     </>
   );
-
-  if (token) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div className="authPage">
