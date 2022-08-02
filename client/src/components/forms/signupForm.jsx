@@ -4,6 +4,7 @@ import { getFormFields } from "../../utils";
 import { Link } from "react-router-dom";
 import useAuthFormHandler from "../../hooks/useAuthFormHandler";
 import { signupUser } from "../../services/userService";
+import useAuth from "../../hooks/useAuth";
 
 function SignupForm() {
   const initialFormState = {
@@ -19,20 +20,27 @@ function SignupForm() {
     email: { name: "email", label: "ایمیل", value: "", error: "" },
   };
 
-  const { formState, handleChange, handlePreSubmit, checkShowError } =
+  const { loginUser } = useAuth();
+
+  const { formState, handleChange, handlePreSubmit } =
     useAuthFormHandler(initialFormState);
 
   async function handleSubmit(e, setHeadError) {
     if (!handlePreSubmit(e)) return;
 
-    const toSubmitFormState = { ...formState };
+    const formFields = getFormFields(formState);
+    const toSubmitFormState = { ...formFields };
     delete toSubmitFormState.passwordConfirm;
 
     const response = await signupUser(getFormFields(formState));
 
     // check signup response
-    if (response && response.status === 200) {
-      // redirect
+
+    // successfull register
+    if (response && response.status === 201) {
+      //redirect after successfull login
+      loginUser({ token: response.data.accessToken });
+      //error
     } else {
       setHeadError("در حین ثبت‌نام مشکلی به وجود آمد.");
     }

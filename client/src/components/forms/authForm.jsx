@@ -1,8 +1,17 @@
 import "./authForm.scss";
 import { useState } from "react";
+import { Redirect } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 function AuthForm({ headerText, footer, body, authPageName, onSubmit }) {
   const [headError, setHeadError] = useState("");
+
+  const { token } = useAuth();
+
+  // redirect when user successfully registered
+  if (token) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="authPage">
