@@ -1,3 +1,5 @@
+import "./footer.scss";
+
 const Footer = () => {
   const link = (
     <a

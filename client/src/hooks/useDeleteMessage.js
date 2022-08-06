@@ -1,4 +1,4 @@
-import CustomModal from "../components/common/modal";
+import CustomModal from "../components/common/modal/modal";
 import { useState } from "react";
 
 const useDeleteMsgModal = (handleConfirm) => {

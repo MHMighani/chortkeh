@@ -1,19 +1,21 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
-import { updateHistoryRecord } from "../../actions";
-import Table from "../tables/table/table";
-import { saveOverallHistory } from "../../services/historyService";
-import TableContainer from "../tables/assetsTable/tableContainer";
-import FilterBar from "./filterBar/filterBar";
-import { getDateId } from "../../utils";
+import { updateHistoryRecord } from "../../../actions";
+import Table from "../../tables/table/table";
+import { saveOverallHistory } from "../../../services/historyService";
+import TableContainer from "../../tables/assetsTable/tableContainer";
+import FilterBar from "../filterBar/filterBar";
+import { getDateId } from "../../../utils";
 import {
   getFilteredDateByTimeFrame,
   getNormalizedOverallValue,
   getDataWithChange,
   getStyledData,
   columns,
-} from "../../utils";
+} from "../../../utils";
 import { useSelector, useDispatch } from "react-redux";
+
+import "./portfolioHistory.scss";
 
 /*
 The ideal version of this  app will record values every day

@@ -1,13 +1,15 @@
-import PortfolioHistory from "./portfolioHistory";
-import AssetsDataTables from "../tables/assetsTable/assetsDataTables";
-import { getMappedAssets } from "../../utils";
+import PortfolioHistory from "../portfolioHistory/portfolioHistory";
+import AssetsDataTables from "../../tables/assetsTable/assetsDataTables";
+import { getMappedAssets } from "../../../utils";
 import { useState, useEffect } from "react";
-import useDeleteMsgModal from "../../hooks/useDeleteMessage";
+import useDeleteMsgModal from "../../../hooks/useDeleteMessage";
 
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssetById, deleteAssetBySubClass } from "../../actions";
+import { deleteAssetById, deleteAssetBySubClass } from "../../../actions";
 
-import Charts from "../charts/charts";
+import "./portfolioDetails.scss";
+
+import Charts from "../../charts/charts";
 
 const PortfolioDetails = () => {
   const [mappedAssets, setMappedAssets] = useState([]);

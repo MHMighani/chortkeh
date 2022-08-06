@@ -1,4 +1,4 @@
-import StyledValue from "../components/common/styledValue";
+import StyledValue from "../components/common/styledValue/styledValue";
 
 // returns styled data for table cells
 export default function getStyledData(dataWithChanges, nuetralCols = []) {

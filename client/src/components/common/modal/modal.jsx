@@ -1,5 +1,7 @@
 import BootModal from "react-bootstrap/Modal";
 
+import "./modal.scss";
+
 function CustomModal({ title, show, body, handleClose, footer }) {
   return (
     <BootModal show={show} onHide={handleClose}>

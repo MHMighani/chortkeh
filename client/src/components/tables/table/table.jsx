@@ -6,6 +6,8 @@ import TableHeader from "./tableHeader";
 import { getPaginatedData } from "../../../utils";
 import Pagination from "../../common/pagination";
 
+import "./table.scss";
+
 function Table({
   data,
   columns,

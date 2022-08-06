@@ -1,0 +1,38 @@
+@use '../../sass/abatracts/' as *;
+
+
+.charts{
+    display: flex;
+    padding: 40px 0;
+    flex-flow: column wrap;
+    width: 90%;
+    justify-content: center;
+    margin:0 auto;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  
+  .chart-empty-message{
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .chartWrapper {
+    overflow-x: auto;
+    margin:auto 0; 
+  }
+  
+  .recharts-wrapper{
+    margin: auto;
+  }
+
+  @media (min-width: $large-screen-breakpoint) {
+    .charts{
+      flex-direction: row;
+      justify-content: center;
+      max-width: 1000px;
+      overflow: auto;
+    }
+
+  }
