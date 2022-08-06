@@ -1,3 +1,5 @@
+import "./toggleSwitch.scss";
+
 const ToggleSwitch = ({ handleClick, active }) => {
   return (
     <div

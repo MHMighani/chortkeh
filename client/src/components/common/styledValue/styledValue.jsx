@@ -4,7 +4,9 @@ import {
   faChevronDown,
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
-import getCommaSepNum from "../../utils/getCommaSepNum";
+import getCommaSepNum from "../../../utils/getCommaSepNum";
+
+import "./styledValue.scss";
 
 function getChevron(percentChange) {
   const chevron = isNaN(percentChange)

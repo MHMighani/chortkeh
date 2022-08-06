@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import ToggleSwitch from "./toggleSwitch";
+import ToggleSwitch from "./toggleSwitch/toggleSwitch";
 import ThemeContext from "../../context/themeContext";
 
 const DarkModeToggleBtn = () => {

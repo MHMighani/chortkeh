@@ -5,7 +5,7 @@ import StockForm from "./components/forms/stockForm";
 import CashForm from "./components/forms/cashForm";
 import AssetDetails from "./components/tables/assetsTable/assetDetails";
 import PortfolioDetails from "./components/portfolio/portfolioDetails";
-import Portfolio from "./components/portfolio/portfolio";
+import Portfolio from "./components/portfolio/portfolio/portfolio";
 import LoginForm from "./components/forms/loginForm";
 import SignupForm from "./components/forms/signupForm";
 import Layout from "./components/layout";

@@ -3,9 +3,11 @@ import { Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getTotalsByAssetClass, getQuotaStatus } from "../../utils";
-import { fetchAll } from "../../actions";
-import useAuth from "../../hooks/useAuth";
+import { getTotalsByAssetClass, getQuotaStatus } from "../../../utils";
+import { fetchAll } from "../../../actions";
+import useAuth from "../../../hooks/useAuth";
+
+import "./portfolio.scss";
 
 const Portfolio = () => {
   const [quotaStatus, setQuotaStatus] = useState({

@@ -2,7 +2,9 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
-import StyledValue from "../../common/styledValue";
+import StyledValue from "../../common/styledValue/styledValue";
+
+import "./tableContainer.scss";
 
 const TableContainer = ({
   children,

@@ -1,6 +1,8 @@
 import QuotaChart from "./quotaChart";
 import OverallChart from "./overallChart";
 
+import "./charts.scss";
+
 const ChartEmptyMessage = ({ message }) => {
   return (
     <div className="chart-empty-message">

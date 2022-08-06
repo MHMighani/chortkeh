@@ -1,4 +1,4 @@
-import PortfolioHistory from "./portfolioHistory";
+import PortfolioHistory from "./portfolioHistory/portfolioHistory";
 import AssetsDataTables from "../tables/assetsTable/assetsDataTables";
 import { getMappedAssets } from "../../utils";
 import { useState, useEffect } from "react";

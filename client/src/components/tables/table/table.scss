@@ -1,0 +1,60 @@
+//TODO: needs refactor
+
+.table{
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+  
+    td.operations{
+      button{
+        margin:0 20px;
+      }
+    }
+  
+    td,tr,tbody{
+      border-bottom-width:0 !important;
+      border-top:0 !important;
+    }
+}
+
+// responsive table
+.table-wrapper{
+  border:none !important;
+}
+
+.table {
+  overflow-x: auto;
+  
+  th,
+  td {
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: sub;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+
+    &.row-number{
+      width: 50px;
+    }
+
+    &:first-child {
+      background-color: var(--primary-color);
+    }
+
+    &:last-child {
+      border-bottom: 1px solid grey;
+    }
+
+    &:before {
+      content: attr(data-th) ": ";
+      font-weight: bold;
+      width: 6.5em;
+      display: inline-block;
+    }
+  }
+}
