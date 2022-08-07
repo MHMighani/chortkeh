@@ -2,13 +2,13 @@
 .authPage {
     padding-top: 40px;
     height: 100vh;
-    background-color: $authPageBackground;
+    background-color: var(--background-color);
 }
 
 .authForm{
     position: relative;
     margin: 0 auto;
-    background-color: $authFormBackground;
+    background-color: var(--primary-color);
     padding: $authFormPadding;
     max-width: $authFormMaxWidth;
     box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
