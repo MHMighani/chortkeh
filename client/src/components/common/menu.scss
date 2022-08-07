@@ -1,7 +1,3 @@
-$menuBorderColor: #d9d9d9;
-$menuBodyBackgroundColor: aqua;
-
-
 .usermenu{
     position: relative;
 
@@ -16,11 +12,10 @@ $menuBodyBackgroundColor: aqua;
     &__body{
         display: none;
         width: 150px;
-        background-color: $menuBodyBackgroundColor;
+        background-color: var(--primary-color);
         position: absolute;
         left: 20px;
         top:50px;
-        border: 1px solid $menuBorderColor;
         box-shadow: 0 2px 3px 0 rgb(0 0 0 / 16%);
         z-index: 999;
     }
