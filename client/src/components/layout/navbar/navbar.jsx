@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Menu from "../../common/menu";
 import useAuth from "../../../hooks/useAuth";
+import DarkModeToggleBtn from "../../common/darkModeToggleBtn";
 import { Navbar as BootNavbar } from "react-bootstrap";
 
 import "./navbar.scss";
@@ -12,6 +13,7 @@ const Navbar = () => {
 
   const logButtons = (
     <div className="log-buttons">
+      <DarkModeToggleBtn />
       <Link className="btn btn-light" to="/login">
         ورود
       </Link>
