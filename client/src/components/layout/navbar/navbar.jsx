@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
-import Menu from "../../common/menu";
+import Menu from "../../common/menu/menu.jsx";
 import useAuth from "../../../hooks/useAuth";
 import DarkModeToggleBtn from "../../common/darkModeToggleBtn";
 import { Navbar as BootNavbar } from "react-bootstrap";

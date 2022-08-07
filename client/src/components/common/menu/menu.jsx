@@ -1,6 +1,6 @@
-import DarkModeToggleBtn from "../common/darkModeToggleBtn";
+import DarkModeToggleBtn from "../darkModeToggleBtn";
 import { useState, useRef } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 import "./menu.scss";
 
 function Menu() {

@@ -1,7 +1,7 @@
 import "./authForm.scss";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../../hooks/useAuth";
 
 function AuthForm({ headerText, footer, body, authPageName, onSubmit }) {
   const [headError, setHeadError] = useState("");

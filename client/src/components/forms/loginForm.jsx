@@ -1,5 +1,5 @@
 import Input from "./input";
-import AuthForm from "./authForm";
+import AuthForm from "./authForm/authForm";
 import { getFormFields } from "../../utils";
 import { Link } from "react-router-dom";
 import { loginUser as loginUserApi } from "../../services/userService";
