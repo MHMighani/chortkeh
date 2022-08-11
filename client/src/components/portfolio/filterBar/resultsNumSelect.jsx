@@ -1,4 +1,10 @@
 function ResultsNumSelect({ onResultsNumChange }) {
+  const resultNums = [
+    { label: "10", value: 10 },
+    { label: "15", value: 15 },
+    { label: "30", value: 30 },
+  ];
+
   return (
     <div className="results-num filter">
       <label htmlFor="results-num__select"> نتایج در هر صفحه</label>
@@ -7,9 +13,11 @@ function ResultsNumSelect({ onResultsNumChange }) {
         onChange={(e) => onResultsNumChange(e.target.value)}
         id="results-num__select"
       >
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="30">30</option>
+        {resultNums.map((item) => (
+          <option key={item.value} value={item.value}>
+            {item.label}
+          </option>
+        ))}
       </select>
     </div>
   );

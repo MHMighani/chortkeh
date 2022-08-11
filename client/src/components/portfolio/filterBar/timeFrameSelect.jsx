@@ -1,5 +1,13 @@
 import React from "react";
 const TimeFrameSelect = ({ onTimeFrameChange }) => {
+  const timeStamps = [
+    { value: 1, label: "روزانه" },
+    { value: 7, label: "هفتگی" },
+    { value: 30, label: "ماهانه" },
+    { value: 365, label: "سالانه" },
+    { value: "range", label: "انتخاب بازه" },
+  ];
+
   function handler(value) {
     return onTimeFrameChange((prevState) =>
       value === "range"
@@ -16,11 +24,11 @@ const TimeFrameSelect = ({ onTimeFrameChange }) => {
         onChange={(e) => handler(e.target.value)}
         id="timeframe__select"
       >
-        <option value="1">روزانه</option>
-        <option value="7">هفتگی</option>
-        <option value="30">ماهانه</option>
-        <option value="365">سالانه</option>
-        <option value="range">انتخاب بازه</option>
+        {timeStamps.map((item) => (
+          <option key={item.value} value={item.value}>
+            {item.label}
+          </option>
+        ))}
       </select>
     </div>
   );
