@@ -1,0 +1,73 @@
+@keyframes firstBarBeads {
+    0% {
+      transform: translateX(-10%);
+    }
+  
+    50% {
+      transform: translateX(20%);
+    }
+    100% {
+      transform: translateX(-10%);
+    }
+  }
+  
+  @keyframes secondBarBeads {
+    0% {
+      transform: translateX(-50%);
+    }
+  
+    50% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  @keyframes thirdBarBeads {
+    0% {
+      transform: translateX(-10%);
+    }
+  
+    50% {
+      transform: translateX(30%);
+    }
+    100% {
+      transform: translateX(-10%);
+    }
+  }
+  
+  @keyframes fourthBarBeads {
+    0% {
+      transform: translateX(-40%);
+    }
+  
+    50% {
+      transform: translateX(15%);
+    }
+    100% {
+      transform: translateX(-40%);
+    }
+  }
+
+  .appLogo {
+    &:hover {
+      .beads-1 {
+        animation: firstBarBeads 2s infinite;
+      }
+      
+      .beads-2 {
+        animation: secondBarBeads 2s infinite;
+      }
+      
+      .beads-3 {
+        animation: thirdBarBeads 1s infinite;
+      }
+      
+      .beads-4 {
+        animation: fourthBarBeads 3s infinite;
+      }
+      
+    }
+  }
+  

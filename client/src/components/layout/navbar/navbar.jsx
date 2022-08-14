@@ -5,6 +5,7 @@ import Menu from "../../common/menu/menu.jsx";
 import useAuth from "../../../hooks/useAuth";
 import DarkModeToggleBtn from "../../common/darkModeToggleBtn";
 import { Navbar as BootNavbar } from "react-bootstrap";
+import AppLogo from "./appLogo/appLogo";
 
 import "./navbar.scss";
 
@@ -28,7 +29,8 @@ const Navbar = () => {
     <BootNavbar height="100">
       <Container>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <BootNavbar.Brand>چرتکه</BootNavbar.Brand>
+          <AppLogo />
+          {/* <BootNavbar.Brand>چرتکه</BootNavbar.Brand> */}
         </Link>
         {userSection}
       </Container>
