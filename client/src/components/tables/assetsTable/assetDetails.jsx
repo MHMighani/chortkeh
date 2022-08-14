@@ -1,6 +1,6 @@
 import Table from "../table/table";
 import { EditBtn, DeleteBtn } from "../../common/buttons";
-import useDeleteMsgModal from "../../../hooks/useDeleteMessage";
+import { useDeleteMsgModal } from "../../../hooks/";
 import { getCommaSepNum, columns, getPercentChange } from "../../../utils";
 import { deleteAssetById } from "../../../actions";
 import { useSelector, useDispatch } from "react-redux";

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { ReactComponent as UserAvatar } from "./user-avatar.svg";
 import DarkModeToggleBtn from "../darkModeToggleBtn";
-import useAuth from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks";
 import "./menu.scss";
 
 function Menu() {

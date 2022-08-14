@@ -1,5 +1,5 @@
 import React from "react";
-import useToken from "../hooks/useToken";
+import { useToken } from "../hooks";
 
 const UserContext = React.createContext({ user: {} });
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "./input";
 import { SubmitBtn } from "../common/buttons";
-import useAssetFormHandler from "../../hooks/useAssetFormHandler";
+import { useAssetFormHandler } from "../../hooks";
 import { useSelector } from "react-redux";
 
 const CashForm = (props) => {

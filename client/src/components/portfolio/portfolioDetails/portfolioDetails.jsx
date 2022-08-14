@@ -2,7 +2,7 @@ import PortfolioHistory from "../portfolioHistory/portfolioHistory";
 import AssetsDataTables from "../../tables/assetsTable/assetsDataTables";
 import { getMappedAssets } from "../../../utils";
 import { useState, useEffect } from "react";
-import useDeleteMsgModal from "../../../hooks/useDeleteMessage";
+import { useDeleteMsgModal } from "../../../hooks/";
 
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAssetById, deleteAssetBySubClass } from "../../../actions";

@@ -1,10 +1,9 @@
+import { Link } from "react-router-dom";
 import Input from "./input";
 import AuthForm from "./authForm/authForm";
 import { getFormFields } from "../../utils";
-import { Link } from "react-router-dom";
-import useAuthFormHandler from "../../hooks/useAuthFormHandler";
+import { useAuthFormHandler, useAuth } from "../../hooks";
 import { signupUser } from "../../services/userService";
-import useAuth from "../../hooks/useAuth";
 
 function SignupForm() {
   const initialFormState = {

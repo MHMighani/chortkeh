@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getTotalsByAssetClass, getQuotaStatus } from "../../../utils";
 import { fetchAll } from "../../../actions";
-import useAuth from "../../../hooks/useAuth";
+import { useAuth } from "../../../hooks";
 
 import "./portfolio.scss";
 
