@@ -1,5 +1,6 @@
-import DarkModeToggleBtn from "../darkModeToggleBtn";
 import { useState, useRef } from "react";
+import { ReactComponent as UserAvatar } from "./user-avatar.svg";
+import DarkModeToggleBtn from "../darkModeToggleBtn";
 import useAuth from "../../../hooks/useAuth";
 import "./menu.scss";
 
@@ -20,7 +21,9 @@ function Menu() {
       <button
         className="usermenu__button"
         onClick={() => setMenuActive(!menuActive)}
-      ></button>
+      >
+        <UserAvatar />
+      </button>
       <div className="usermenu__body">
         <div className="menu-item">مشخصات</div>
         <div className="menu-item">پروفایل</div>
