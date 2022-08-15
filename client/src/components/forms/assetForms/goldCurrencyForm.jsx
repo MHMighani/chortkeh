@@ -1,9 +1,9 @@
 import { useState } from "react";
-import SelectForm from "./selectForm";
-import Input from "./input";
-import { SubmitBtn } from "../common/buttons";
-import { useAssetFormHandler } from "../../hooks";
-import PurchaseDate from "../common/purchaseDate";
+import SelectForm from "../selectForm";
+import Input from "../input";
+import { SubmitBtn } from "../../common/buttons";
+import { useAssetFormHandler } from "../../../hooks";
+import PurchaseDate from "../../common/purchaseDate";
 import { useSelector } from "react-redux";
 
 const GoldCurrencyForm = (props) => {

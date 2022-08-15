@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import Input from "./input";
-import AuthForm from "./authForm/authForm";
-import { getFormFields } from "../../utils";
-import { loginUser as loginUserApi } from "../../services/userService";
-import { useAuthFormHandler, useAuth } from "../../hooks";
+import Input from "../input";
+import AuthForm from "./authForm";
+import { getFormFields } from "../../../utils";
+import { loginUser as loginUserApi } from "../../../services/userService";
+import { useAuthFormHandler, useAuth } from "../../../hooks";
 
 function LoginForm() {
   const initialFormState = {
