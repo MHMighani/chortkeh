@@ -1,5 +1,6 @@
 import React from "react";
 import Input from "../input";
+import AssetForm from "./assetForm";
 import { SubmitBtn } from "../../common/buttons";
 import { useAssetFormHandler } from "../../../hooks";
 import { useSelector } from "react-redux";
@@ -32,24 +33,24 @@ const CashForm = (props) => {
     setFormState({ ...formState, name: asset.label, assetId, ...asset });
   }
 
-  return (
-    <div className="add-form">
-      <form className="form-group" onSubmit={handleSubmit}>
-        <Input
-          label="نام منبع نقدی"
-          type="text"
-          id="cashFormDepositNameInput"
-          {...getFormElementProps("name")}
-        />
-        <Input
-          id="cashFormAmountInput"
-          label="موجودی"
-          {...getFormElementProps("amount")}
-        />
-        <SubmitBtn editState={editState} />
-      </form>
-    </div>
+  const body = (
+    <>
+      <Input
+        label="نام منبع نقدی"
+        type="text"
+        id="cashFormDepositNameInput"
+        {...getFormElementProps("name")}
+      />
+      <Input
+        id="cashFormAmountInput"
+        label="موجودی"
+        {...getFormElementProps("amount")}
+      />
+      <SubmitBtn editState={editState} />
+    </>
   );
+
+  return <AssetForm body={body} handleSubmit={handleSubmit} />;
 };
 
 export default CashForm;

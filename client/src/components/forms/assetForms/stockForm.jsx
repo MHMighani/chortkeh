@@ -5,6 +5,7 @@ import { useAssetFormHandler } from "../../../hooks";
 import { SubmitBtn } from "../../common/buttons";
 import { getMarketPriceData } from "../../../utils";
 import PurchaseDate from "../../common/purchaseDate";
+import AssetForm from "./assetForm";
 
 import { useSelector } from "react-redux";
 
@@ -96,64 +97,62 @@ const StockForm = (props) => {
     setSelectedOption(option);
   }
 
-  return (
-    <div className="add-form">
-      <form className="form-group" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <SelectForm
-            id="stockSelector"
-            label="انتخاب سهم"
-            options={options}
-            value={selectedOption}
-            onChange={changeSelectedOption}
-            isDisabled={editState}
-            error={errors["name"]}
-          />
-          <Input
-            id="stockFormLastTradePriceInput"
-            label="قیمت آخرین معامله"
-            value={formState.lastTradePrice}
-            min="0"
-            readOnly={true}
-          />
-          <Input
-            id="stockFormLastPriceInput"
-            label="قیمت پایانی"
-            value={formState.lastPrice}
-            min="0"
-            readOnly={true}
-          />
-          <Input
-            id="stockFormAmountInput"
-            label="مقدار سهام خریداری شده"
-            min="0"
-            {...getFormElementProps("amount")}
-          />
-          <Input
-            id="stockFormPurchasePriceInput"
-            label="قیمت خرید سهم"
-            min="0"
-            {...getFormElementProps("purchasePrice")}
-          />
-          <Input
-            id="stockFormTotalValue"
-            label="ارزش کل سهام خریداری شده"
-            value={formState.purchasePrice * formState.amount}
-            min="0"
-            name="totalPurchaseValue"
-            readOnly={true}
-          />
+  const body = (
+    <div className="form-group">
+      <SelectForm
+        id="stockSelector"
+        label="انتخاب سهم"
+        options={options}
+        value={selectedOption}
+        onChange={changeSelectedOption}
+        isDisabled={editState}
+        error={errors["name"]}
+      />
+      <Input
+        id="stockFormLastTradePriceInput"
+        label="قیمت آخرین معامله"
+        value={formState.lastTradePrice}
+        min="0"
+        readOnly={true}
+      />
+      <Input
+        id="stockFormLastPriceInput"
+        label="قیمت پایانی"
+        value={formState.lastPrice}
+        min="0"
+        readOnly={true}
+      />
+      <Input
+        id="stockFormAmountInput"
+        label="مقدار سهام خریداری شده"
+        min="0"
+        {...getFormElementProps("amount")}
+      />
+      <Input
+        id="stockFormPurchasePriceInput"
+        label="قیمت خرید سهم"
+        min="0"
+        {...getFormElementProps("purchasePrice")}
+      />
+      <Input
+        id="stockFormTotalValue"
+        label="ارزش کل سهام خریداری شده"
+        value={formState.purchasePrice * formState.amount}
+        min="0"
+        name="totalPurchaseValue"
+        readOnly={true}
+      />
 
-          <PurchaseDate
-            value={formState.purchaseDate}
-            onChange={handleDateChange}
-          />
+      <PurchaseDate
+        value={formState.purchaseDate}
+        onChange={handleDateChange}
+      />
 
-          <SubmitBtn editState={editState} />
-        </div>
-      </form>
+      <SubmitBtn editState={editState} />
     </div>
   );
+
+  return <AssetForm body={body} handleSubmit={handleSubmit} />;
 };
 
 export default StockForm;

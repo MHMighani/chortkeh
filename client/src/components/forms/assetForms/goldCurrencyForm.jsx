@@ -4,6 +4,7 @@ import Input from "../input";
 import { SubmitBtn } from "../../common/buttons";
 import { useAssetFormHandler } from "../../../hooks";
 import PurchaseDate from "../../common/purchaseDate";
+import AssetForm from "./assetForm";
 import { useSelector } from "react-redux";
 
 const GoldCurrencyForm = (props) => {
@@ -76,56 +77,56 @@ const GoldCurrencyForm = (props) => {
     setSelectedOption({ label: asset.label, value: asset.assetSubClass });
   }
 
-  return (
-    <div className="gold-form add-form">
-      <form className="form-group" onSubmit={handleSubmit}>
-        <SelectForm
-          label="نوع ارز یا سکه"
-          onChange={selectorHandler}
-          options={options}
-          error={errors["assetSubClass"]}
-          value={selectedOption}
-          isDisabled={editState}
-        />
+  const body = (
+    <>
+      <SelectForm
+        label="نوع ارز یا سکه"
+        onChange={selectorHandler}
+        options={options}
+        error={errors["assetSubClass"]}
+        value={selectedOption}
+        isDisabled={editState}
+      />
 
-        <Input
-          id="goldFormPurchasePriceInput"
-          label="قیمت خرید"
-          min="0"
-          {...getFormElementProps("purchasePrice")}
-        />
+      <Input
+        id="goldFormPurchasePriceInput"
+        label="قیمت خرید"
+        min="0"
+        {...getFormElementProps("purchasePrice")}
+      />
 
-        <Input
-          id="goldFormMarketPriceInput"
-          label="قیمت روز"
-          readOnly={true}
-          {...getFormElementProps("marketPrice")}
-        />
+      <Input
+        id="goldFormMarketPriceInput"
+        label="قیمت روز"
+        readOnly={true}
+        {...getFormElementProps("marketPrice")}
+      />
 
-        <Input
-          id="goldFormAmountInput"
-          label="مقدار"
-          min="0"
-          {...getFormElementProps("amount")}
-        />
+      <Input
+        id="goldFormAmountInput"
+        label="مقدار"
+        min="0"
+        {...getFormElementProps("amount")}
+      />
 
-        <Input
-          id="goldFormTotalValueInput"
-          label="ارزش کل"
-          name="totalValue"
-          readOnly={true}
-          value={formState.marketPrice * formState.amount || 0}
-        />
+      <Input
+        id="goldFormTotalValueInput"
+        label="ارزش کل"
+        name="totalValue"
+        readOnly={true}
+        value={formState.marketPrice * formState.amount || 0}
+      />
 
-        <PurchaseDate
-          value={formState.purchaseDate}
-          onChange={handleDateChange}
-        />
+      <PurchaseDate
+        value={formState.purchaseDate}
+        onChange={handleDateChange}
+      />
 
-        <SubmitBtn editState={editState} />
-      </form>
-    </div>
+      <SubmitBtn editState={editState} />
+    </>
   );
+
+  return <AssetForm body={body} handleSubmit={handleSubmit} />;
 };
 
 export default GoldCurrencyForm;

@@ -1,0 +1,35 @@
+@use '../../../sass/abatracts/' as *; 
+
+.add-form {
+    margin: 5rem auto;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+    justify-content: center;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    .form-group {
+      margin-bottom: 10px;
+    }
+  
+    label {
+      margin-bottom: 3px;
+    }
+  
+    .purchase-date {
+      label {
+        margin-left: 2rem;
+      }
+    }
+  
+    .btn.submit {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  
+  @media (min-width: $large-screen-breakpoint) {
+    .add-form{
+      padding: 2.5rem; 
+    }
+  }
