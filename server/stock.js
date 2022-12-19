@@ -12,7 +12,8 @@ async function getTseSymbols() {
 
   const reducer = (previousArr, currentValue) => {
     const symbolDataArray = currentValue.split(",");
-    if (symbolDataArray.length === 23) {
+    // TODO: better identifier
+    if (symbolDataArray.length === 25) {
       const mappedSymbol = {
         id: symbolDataArray[0],
         code: symbolDataArray[1],
