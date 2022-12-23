@@ -27,9 +27,9 @@ nearest prices to the start and end of the time frame
 
 // checks if data is ready to save in history record
 function checkMappedValidation(mappedAssets) {
-  const isDataFetchComplete = !mappedAssets?.some((item) => !item.data.length);
+  const isDataFetchComplete = !mappedAssets.some((item) => !item.data.length);
 
-  if (isDataFetchComplete) return true;
+  return isDataFetchComplete;
 }
 
 function getTimeFramedData(timeFrame, data) {

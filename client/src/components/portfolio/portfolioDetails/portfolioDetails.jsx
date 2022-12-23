@@ -3,13 +3,11 @@ import AssetsDataTables from "../../tables/assetsTable/assetsDataTables";
 import { getMappedAssets } from "../../../utils";
 import { useState, useEffect } from "react";
 import { useDeleteMsgModal } from "../../../hooks/";
-
+import Charts from "../../charts/charts";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAssetById, deleteAssetBySubClass } from "../../../actions";
 
 import "./portfolioDetails.scss";
-
-import Charts from "../../charts/charts";
 
 const PortfolioDetails = () => {
   const [mappedAssets, setMappedAssets] = useState([]);
