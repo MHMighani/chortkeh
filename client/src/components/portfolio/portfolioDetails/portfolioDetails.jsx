@@ -1,10 +1,10 @@
-import PortfolioHistory from "../portfolioHistory/portfolioHistory";
-import AssetsDataTables from "../../tables/assetsTable/assetsDataTables";
-import { getMappedAssets } from "../../../utils";
 import { useState, useEffect } from "react";
-import { useDeleteMsgModal } from "../../../hooks/";
-import Charts from "../../charts/charts";
 import { useSelector, useDispatch } from "react-redux";
+import PortfolioHistory from "components/portfolio/portfolioHistory/portfolioHistory";
+import AssetsDataTables from "components/tables/assetsTable/assetsDataTables";
+import { getMappedAssets } from "utils";
+import { useDeleteMsgModal } from "hooks/";
+import Charts from "components/charts/charts";
 import { deleteAssetById, deleteAssetBySubClass } from "../../../actions";
 
 import "./portfolioDetails.scss";
@@ -14,16 +14,14 @@ const PortfolioDetails = () => {
   const [modalBody, handleDelMsgDisplay] = useDeleteMsgModal(handleConfirm);
 
   const dispatch = useDispatch();
-  const assets = useSelector((state) => state.assets);
-  const prices = useSelector((state) => state.prices);
+  const [assets, prices] = useSelector((state) => [state.assets, state.prices]);
   const historyRecord = useSelector((state) => state.historyRecord);
 
   function handleConfirm(toDeleteAsset) {
     if (toDeleteAsset.assetClass === "cash") {
-      dispatch(deleteAssetById(toDeleteAsset.id));
-    } else {
-      dispatch(deleteAssetBySubClass(toDeleteAsset));
+      return dispatch(deleteAssetById(toDeleteAsset.id));
     }
+    return dispatch(deleteAssetBySubClass(toDeleteAsset));
   }
 
   // sets mappedAssets
@@ -35,23 +33,20 @@ const PortfolioDetails = () => {
     }
   }, [prices, assets]);
 
-  if (Object.values(prices).length) {
+  if (Object.values(prices).length > 0) {
     return (
       <div className="portfolio-details">
         {modalBody}
         <AssetsDataTables
-          mappedAssets={mappedAssets}
-          handleDelMsgDisplay={handleDelMsgDisplay}
-          historyRecord={historyRecord}
-          prices={prices}
+          {...{ mappedAssets, handleDelMsgDisplay, historyRecord, prices }}
         />
         <PortfolioHistory mappedAssets={mappedAssets} />
-        <Charts historyRecord={historyRecord} assetsData={mappedAssets} />
+        <Charts {...{ historyRecord }} assetsData={mappedAssets} />
       </div>
     );
-  } else {
-    return null;
   }
+
+  return null;
 };
 
 export default PortfolioDetails;
