@@ -32,10 +32,7 @@ function useAuthFormHandler(initialState) {
     }
 
     // check for errors
-    for (let field of Object.values(formState)) {
-      if (field.error !== "") return false;
-    }
-    return true;
+    return Object.values(formState).every((field) => field.error === "");
   }
 
   return {
