@@ -8,7 +8,7 @@ const DarkModeToggleBtn = () => {
   return (
     <ToggleSwitch
       handleClick={themeContext.toggleTheme}
-      active={themeContext.theme === "dark" ? true : false}
+      active={themeContext.theme === "dark"}
     />
   );
 };

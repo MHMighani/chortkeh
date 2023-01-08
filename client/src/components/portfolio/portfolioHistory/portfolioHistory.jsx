@@ -110,7 +110,7 @@ const PortfolioHistory = ({ mappedAssets }) => {
     <div className="history-info">
       <TableContainer
         title="ارزش کل"
-        empty={!historyRecord.length ? true : false}
+        empty={!historyRecord.length}
         valueInfo={headerChangeData?.overall}
       >
         <FilterBar

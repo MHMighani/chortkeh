@@ -24,7 +24,7 @@ const useAssetFormHandler = (initialState = {}, props) => {
 
   const errors = useFormErrorHandler(formState.assetClass, formState);
 
-  const editState = id ? true : false;
+  const editState = !!id;
 
   // gets form element and returns common props
   function getFormElementProps(name) {
