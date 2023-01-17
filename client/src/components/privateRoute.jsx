@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchAll } from "actions";
+import { fetchAll } from "redux/actions";
 import { useAuth } from "hooks";
 
 function PrivateRoute({ children, ...rest }) {

@@ -2,11 +2,11 @@ import {
   getAssets,
   addAsset as addAssetApi,
   editAsset as editAssetApi,
-} from "../services/assetsServices";
-import { getPrices } from "../services/pricesServices";
-import { getHistoryRecord } from "../services/historyService";
-import { deleteAssetBySubClass as deleteAssetBySubClassApi } from "../services/assetsServices";
-import { deleteAsset } from "../services/assetsServices";
+} from "../../services/assetsServices";
+import { getPrices } from "../../services/pricesServices";
+import { getHistoryRecord } from "../../services/historyService";
+import { deleteAssetBySubClass as deleteAssetBySubClassApi } from "../../services/assetsServices";
+import { deleteAsset } from "../../services/assetsServices";
 
 import * as actions from "./actionTypes";
 

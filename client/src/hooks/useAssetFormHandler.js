@@ -1,11 +1,11 @@
 import { useState } from "react";
 // import { editAsset } from "../services/assetsServices";
-import { editAsset } from "../actions";
+import { editAsset } from "../redux/actions";
 import notifications from "../utils/notifications";
 import useFormErrorHandler from "./useFormErrorHandler";
 import { utils } from "react-modern-calendar-datepicker";
 import { useDispatch } from "react-redux";
-import { addAsset } from "../actions";
+import { addAsset } from "../redux/actions";
 import { useParams } from "react-router-dom";
 
 const useAssetFormHandler = (initialState = {}, props) => {

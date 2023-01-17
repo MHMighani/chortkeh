@@ -5,7 +5,7 @@ import AssetsDataTables from "components/tables/assetsTable/assetsDataTables";
 import { getMappedAssets } from "utils";
 import { useDeleteMsgModal } from "hooks/";
 import Charts from "components/charts/charts";
-import { deleteAssetById, deleteAssetBySubClass } from "../../../actions";
+import { deleteAssetById, deleteAssetBySubClass } from "../../../redux/actions";
 
 import "./portfolioDetails.scss";
 

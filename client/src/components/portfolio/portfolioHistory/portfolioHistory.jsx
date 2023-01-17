@@ -1,6 +1,6 @@
 import _ from "lodash";
 import React, { useState, useEffect } from "react";
-import { updateHistoryRecord } from "../../../actions";
+import { updateHistoryRecord } from "../../../redux/actions";
 import Table from "../../tables/table/table";
 import { saveOverallHistory } from "../../../services/historyService";
 import TableContainer from "../../tables/assetsTable/tableContainer";

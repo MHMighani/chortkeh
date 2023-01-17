@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import reducers from "./reducers";
+import reducers from "./redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 
