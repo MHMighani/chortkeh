@@ -10,8 +10,12 @@ const providedLastHistory = {};
 
 const allHistoryData = [providedLastHistory];
 
+type History = {
+  [index: string]: number;
+};
+
 // returns array with x random numbers between 0 and 1
-function getRandomEfficiency(x) {
+function getRandomEfficiency(x: number) {
   const minusOrPositive = Math.random() > 0.5 ? 1 : -1;
   const arr = [];
   for (let i = 0; i < x; i++) {
@@ -20,24 +24,26 @@ function getRandomEfficiency(x) {
   return arr;
 }
 
-function getNewHistoryObject(lastHistoryObject, randomNumber) {
+function getNewHistoryValue(lastHistoryObject: number, randomNumber: number) {
   return Math.round(
     lastHistoryObject - (lastHistoryObject * randomNumber) / 100
   );
 }
 
-function getNewHistoryData(previous) {
+function getNewHistoryData(previous: History) {
   const randoms = getRandomEfficiency(3);
   const newHistory = { ...previous };
   let randomCounter = 0;
   let newOverall = 0;
+
   for (let key in previous) {
     if (["id", "overall"].includes(key)) continue;
-    newHistory[key] = getNewHistoryObject(
+
+    newHistory[key] = getNewHistoryValue(
       newHistory[key],
       randoms[randomCounter]
     );
-    newOverall += newHistory[key];
+    newOverall += +newHistory[key];
     randomCounter += 1;
   }
 

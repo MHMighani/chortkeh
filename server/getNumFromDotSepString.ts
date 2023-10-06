@@ -1,4 +1,4 @@
-function getNumFromDotSepString(stringNum) {
+function getNumFromDotSepString(stringNum: string): string {
   return stringNum.split(",").join("");
 }
 

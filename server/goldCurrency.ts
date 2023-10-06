@@ -1,6 +1,15 @@
 const { databasePath } = require("./config.json");
 const editJsonFile = require("edit-json-file");
 
+interface Prices {
+  coin: number;
+  halfCoin: number;
+  quarterCoin: number;
+  dollar: number;
+  euro: number;
+  coinEmami: number;
+}
+
 const labels = {
   coinEmami: "سکه امامی",
   coin: "سکه تمام بهار آزادی",
@@ -10,7 +19,7 @@ const labels = {
   euro: "یورو",
 };
 
-const prices = {
+const prices: Prices = {
   coin: 135400000,
   halfCoin: 78450000,
   quarterCoin: 48520000,
@@ -19,8 +28,8 @@ const prices = {
   coinEmami: 140920000,
 };
 
-function writePriceToJsonFile(prices) {
-  const names = Object.keys(prices);
+function writePriceToJsonFile(prices: Prices) {
+  const names = Object.keys(prices) as [keyof Prices];
 
   const pricesArray = names.map((name) => ({
     id: name,

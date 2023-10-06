@@ -10,7 +10,7 @@ const notIncludedPaths = supportedPaths.filter(
   (path) => !mainPaths.includes(path)
 );
 
-for (path of notIncludedPaths) {
+for (let path of notIncludedPaths) {
   file.set(path, []);
   file.save();
 }
