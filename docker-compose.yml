@@ -3,11 +3,15 @@ version: "3.8"
 services:
   frontend:
     build: ./client
+    working_dir: /app
     ports:
       - "3001:3000"
     volumes:
       - ./client:/app
-        
+      - /app/node_modules
+    command: npm run dev  
+    environment:
+      - NODE_ENV=development            
          
   backend:
     build: ./server
